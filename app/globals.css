@@ -1,0 +1,366 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — "Studio darkroom behind frosted glass"
+   Near-monochrome system with one chromatic switch: Studio Violet.
+--------------------------------------------------------------------------- */
+:root {
+  /* Palette sampled from the Pothraj Group emblem (#c6a36e) */
+  --color-gold: #c6a36e;
+  --color-gold-hover: #d4b583;
+  --color-gold-ink: #8a6a3a; /* gold for text on light surfaces (AA contrast) */
+  --color-champagne: #dcc7a0; /* gold for text on dark surfaces */
+  --color-sand: #f4ede1;
+  --color-linen: #eadfca;
+  --color-ivory: #fbf8f2;
+  --color-carbon: #1c1915;
+  --color-fog: #f3eee6;
+  --color-graphite: #3d3830;
+  --color-ash: #ddd4c6;
+  --color-silver: #b8afa1;
+  --color-smoke: #968c7d;
+  --color-midnight: #12100c;
+  --color-onyx: #0b0a08;
+
+  --nav-h: 64px;
+  /* Fluid side gutter: content spans the full screen at any width or zoom level */
+  --gutter: clamp(20px, 5vw, 128px);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --color-gold: var(--color-gold);
+  --color-gold-hover: var(--color-gold-hover);
+  --color-gold-ink: var(--color-gold-ink);
+  --color-champagne: var(--color-champagne);
+  --color-sand: var(--color-sand);
+  --color-linen: var(--color-linen);
+  --color-ivory: var(--color-ivory);
+  --color-carbon: var(--color-carbon);
+  --color-fog: var(--color-fog);
+  --color-graphite: var(--color-graphite);
+  --color-ash: var(--color-ash);
+  --color-silver: var(--color-silver);
+  --color-smoke: var(--color-smoke);
+  --color-midnight: var(--color-midnight);
+  --color-onyx: var(--color-onyx);
+
+  --font-serif: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-plex: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 8px;
+  --radius-image: 4px;
+  --radius-hero: 60px;
+  --radius-pill: 300px;
+
+  --shadow-card: rgba(28, 25, 21, 0.18) 0px 10px 30px 0px;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+html {
+  -webkit-text-size-adjust: 100%;
+  scrollbar-width: none; /* hide the browser scrollbar; Lenis still scrolls */
+  -ms-overflow-style: none;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+}
+
+body {
+  background: var(--color-ivory);
+  color: var(--color-carbon);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-midnight);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Typography helpers
+--------------------------------------------------------------------------- */
+@utility display-xl {
+  font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
+  font-variation-settings: "opsz" 144;
+  font-weight: 300;
+  font-size: clamp(48px, 7.2vw, 240px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+@utility display {
+  font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
+  font-variation-settings: "opsz" 144;
+  font-weight: 300;
+  font-size: clamp(40px, 5vw, 160px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+}
+@utility heading-lg {
+  font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
+  font-variation-settings: "opsz" 144;
+  font-weight: 350;
+  font-size: clamp(32px, 3.4vw, 104px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+@utility heading {
+  font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
+  font-variation-settings: "opsz" 144;
+  font-weight: 400;
+  font-size: clamp(24px, 2vw, 56px);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+}
+@utility eyebrow {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 12.5px;
+  line-height: 1.5;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+@utility plex-label {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 12.5px;
+  line-height: 1.6;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Editorial serif display — light, high-contrast optical size */
+@utility display-serif {
+  font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(58px, 9.4vw, 320px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  font-variation-settings: "opsz" 144;
+}
+@utility label-wide {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------------------
+   Layout
+--------------------------------------------------------------------------- */
+@utility container-x {
+  width: 100%;
+  padding-inline: var(--gutter);
+}
+@utility section-y {
+  padding-block: 88px;
+  @media (min-width: 1024px) {
+    padding-block: 128px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Buttons — every button is a pill
+--------------------------------------------------------------------------- */
+@utility btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 300px;
+  padding: 12px 24px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.006em;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    background-color 0.3s var(--ease-out-expo),
+    color 0.3s var(--ease-out-expo),
+    border-color 0.3s var(--ease-out-expo),
+    transform 0.3s var(--ease-out-expo);
+}
+@utility btn-gold {
+  background: var(--color-gold);
+  color: var(--color-midnight);
+  &:hover {
+    background: var(--color-gold-hover);
+  }
+}
+@utility btn-white {
+  background: #fff;
+  color: var(--color-carbon);
+  &:hover {
+    background: var(--color-sand);
+  }
+}
+@utility btn-dark {
+  background: var(--color-carbon);
+  color: #fff;
+  &:hover {
+    background: var(--color-graphite);
+  }
+}
+@utility btn-ghost {
+  background: transparent;
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(220, 199, 160, 0.55);
+  &:hover {
+    background: rgba(198, 163, 110, 0.12);
+    box-shadow: inset 0 0 0 1px var(--color-champagne);
+  }
+}
+@utility btn-outline {
+  background: transparent;
+  color: var(--color-carbon);
+  box-shadow: inset 0 0 0 1px var(--color-ash);
+  &:hover {
+    box-shadow: inset 0 0 0 1px var(--color-carbon);
+  }
+}
+
+@utility tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 300px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.57;
+}
+
+/* Underline that draws in on hover */
+@utility link-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s var(--ease-out-expo);
+  &:hover {
+    background-size: 100% 1px;
+  }
+}
+
+/* Film grain overlay */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+}
+
+/* Gold italic accent inside serif headings */
+.accent {
+  font-style: italic;
+  color: var(--color-gold-ink);
+}
+.bg-midnight .accent,
+.bg-carbon .accent,
+.text-white .accent {
+  color: var(--color-champagne);
+}
+
+/* Soft gold glow for dark sections */
+.glow-gold {
+  background-image: radial-gradient(60% 60% at 85% 0%, rgba(198, 163, 110, 0.16) 0%, transparent 70%),
+    radial-gradient(50% 50% at 0% 100%, rgba(198, 163, 110, 0.08) 0%, transparent 70%);
+}
+
+/* Outline display text */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(220, 199, 160, 0.3);
+}
+
+/* SplitText line masks */
+.split-line {
+  overflow: clip;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+/* Serif italics overhang their box — give the mask room for swashes and descenders */
+.display-serif .split-line {
+  padding: 0.02em 0.12em 0.2em;
+  margin: -0.02em -0.12em -0.2em;
+}
+
+/* ---------------------------------------------------------------------------
+   Motion — elements start hidden only when JS motion is active.
+   A fail-safe in <head> removes .js-motion if the bundle never boots.
+--------------------------------------------------------------------------- */
+.js-motion [data-reveal],
+.js-motion [data-split],
+.js-motion [data-stagger] > * {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Route curtain only exists while JS motion is active */
+.curtain {
+  display: none;
+}
+.js-motion .curtain {
+  display: flex;
+}

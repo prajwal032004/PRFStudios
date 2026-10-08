@@ -1,0 +1,182 @@
+"use client";
+
+import Link from "next/link";
+import { useRef } from "react";
+import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import { getLenis } from "@/lib/lenis";
+import { contact, nav, site } from "@/lib/site";
+import Icon from "./Icon";
+import Magnetic from "./motion/Magnetic";
+
+const studioLinks = [
+  { href: "/studio/", label: "About the studio" },
+  { href: "/work/", label: "Work & filmography" },
+  { href: "/facilities/", label: "Facilities" },
+  { href: "/legacy/", label: "Our legacy" },
+  { href: "/contact/", label: "Contact" },
+];
+
+export default function Footer() {
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      gsap.from("[data-wordmark] span", {
+        yPercent: 100,
+        duration: 1.4,
+        stagger: 0.05,
+        ease: "expo.out",
+        scrollTrigger: { trigger: "[data-wordmark]", start: "top 98%", once: true },
+      });
+      gsap.from("[data-foot-cta] > *", {
+        autoAlpha: 0,
+        y: 40,
+        stagger: 0.1,
+        duration: 1.2,
+        ease: "expo.out",
+        scrollTrigger: { trigger: "[data-foot-cta]", start: "top 85%", once: true },
+      });
+    },
+    { scope: root },
+  );
+
+  const toTop = () => {
+    const lenis = getLenis();
+    if (lenis) lenis.scrollTo(0, { duration: 1.6 });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const divisions = nav.find((n) => n.href === "/divisions/")!.children!;
+  const services = nav.find((n) => n.href === "/services/")!.children!;
+
+  return (
+    <footer ref={root} className="glow-gold relative overflow-hidden bg-midnight text-white">
+      {/* CTA band */}
+      <div className="container-x pb-20 pt-24 md:pb-28 md:pt-32">
+        <div data-foot-cta className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+          <div className="lg:max-w-[62%]">
+            <p className="eyebrow text-champagne">Start a project</p>
+            <h2 className="display mt-4">Have a story worth telling? <span className="accent">Let&apos;s make it together.</span></h2>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Magnetic>
+              <Link href="/contact/#enquiry" className="btn btn-gold">
+                Start a project <Icon name="arrow" size={18} />
+              </Link>
+            </Magnetic>
+            <Magnetic>
+              <a href={contact.phoneHref} className="btn btn-ghost">
+                <Icon name="phone" size={18} /> Call the studio
+              </a>
+            </Magnetic>
+          </div>
+        </div>
+      </div>
+
+      <div className="container-x">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 border-t border-white/10 py-16 sm:grid-cols-3 lg:grid-cols-[1.5fr_1fr_1fr_1fr_1.3fr]">
+          <div className="col-span-2 sm:col-span-3 lg:col-span-1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/brand/logo-prf-studios.webp" alt="PRF Studios" width={160} height={160} loading="lazy" className="h-28 w-auto" />
+            <p className="mt-6 max-w-xs text-[15px] leading-relaxed text-white/60">
+              An integrated film, music, digital-content and production-services platform in Bengaluru.
+            </p>
+            <div className="mt-8 flex items-center gap-3 text-xs uppercase tracking-[0.16em] text-white/40">
+              <span>A company of</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/pothraj-group-light.webp" alt="Pothraj Group" width={636} height={160} loading="lazy" className="h-6 w-auto opacity-80" />
+            </div>
+          </div>
+
+          <FooterColumn title="Studio" links={studioLinks} />
+          <FooterColumn title="Divisions" links={divisions} />
+          <FooterColumn title="Services" links={services} />
+
+          <div className="col-span-2 sm:col-span-3 lg:col-span-1">
+            <h3 className="plex-label text-white">Visit &amp; contact</h3>
+            <ul className="mt-5 space-y-4 text-[15px] text-white/60">
+              <li className="flex gap-3">
+                <Icon name="pin" size={18} className="mt-0.5 shrink-0 text-champagne" />
+                <span>
+                  {contact.addressLines.slice(0, 2).join(", ")}
+                  <br />
+                  {contact.addressLines.slice(2).join(", ")}
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <Icon name="mail" size={18} className="mt-0.5 shrink-0 text-champagne" />
+                <a href={`mailto:${contact.email}`} className="link-draw hover:text-white">
+                  {contact.email}
+                </a>
+              </li>
+              <li className="flex gap-3">
+                <Icon name="phone" size={18} className="mt-0.5 shrink-0 text-champagne" />
+                <a href={contact.phoneHref} className="link-draw hover:text-white">
+                  {contact.phone}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Oversized wordmark */}
+      <div aria-hidden="true" className="container-x select-none">
+        <p
+          data-wordmark
+          className="flex justify-between overflow-hidden text-[12.6vw] font-serif font-light leading-[0.9] tracking-[-0.01em] text-outline"
+        >
+          {"PRF STUDIOS".split("").map((ch, i) => (
+            <span key={i} className="inline-block">
+              {ch === " " ? " " : ch}
+            </span>
+          ))}
+        </p>
+      </div>
+
+      <div className="container-x">
+        <div className="flex flex-col gap-4 border-t border-white/10 py-7 text-sm text-white/45 md:flex-row md:items-center md:justify-between">
+          <p>
+            © {new Date().getFullYear()} {site.name}. A {site.parent} company. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6">
+            <Link href="/privacy/" className="hover:text-white">
+              Privacy
+            </Link>
+            <a href="/sitemap.xml" className="hover:text-white">
+              Sitemap
+            </a>
+            <button
+              type="button"
+              onClick={toTop}
+              className="group inline-flex items-center gap-2 rounded-full py-1 pl-3 pr-1 text-white/70 ring-1 ring-white/15 transition hover:text-white hover:ring-white/40"
+            >
+              Back to top
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 transition group-hover:bg-gold">
+                <Icon name="arrowUp" size={14} />
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+function FooterColumn({ title, links }: { title: string; links: { href: string; label: string }[] }) {
+  return (
+    <div>
+      <h3 className="plex-label text-white">{title}</h3>
+      <ul className="mt-5 space-y-3 text-[15px]">
+        {links.map((l) => (
+          <li key={l.href}>
+            <Link href={l.href} className="link-draw text-white/60 transition-colors hover:text-white">
+              {l.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
