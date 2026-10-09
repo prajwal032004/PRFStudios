@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRef } from "react";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
-import { getLenis } from "@/lib/lenis";
+import { scrollToTarget } from "@/lib/lenis";
 import { contact, nav, site } from "@/lib/site";
 import Icon from "./Icon";
 import Magnetic from "./motion/Magnetic";
@@ -42,9 +42,7 @@ export default function Footer() {
   );
 
   const toTop = () => {
-    const lenis = getLenis();
-    if (lenis) lenis.scrollTo(0, { duration: 1.6 });
-    else window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToTarget(0);
   };
 
   const divisions = nav.find((n) => n.href === "/divisions/")!.children!;

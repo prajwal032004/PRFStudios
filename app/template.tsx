@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { gsap, ScrollTrigger, useGSAP, prefersReducedMotion } from "@/lib/gsap";
-import { getLenis } from "@/lib/lenis";
+import { lockScroll, scrollToTarget } from "@/lib/lenis";
 import { initMotion } from "@/components/motion/initMotion";
 
 declare global {
@@ -30,12 +30,16 @@ export default function Template({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      if (!isFirst && !window.location.hash) getLenis()?.scrollTo(0, { immediate: true, force: true });
+      if (!isFirst && !window.location.hash) scrollToTarget(0, { immediate: true });
 
       const tl = gsap.timeline({ defaults: { ease: "expo.inOut" } });
       let loadDelay = 0.35;
 
+      let release: (() => void) | undefined;
+
       if (curtain && isFirst) {
+        // Hold the page still under the preloader so nothing scrolls past unseen.
+        release = lockScroll();
         const counter = curtain.querySelector<HTMLElement>("[data-count]");
         const progress = { v: 0 };
         tl.from(curtain.querySelectorAll("[data-pre]"), { autoAlpha: 0, y: 24, stagger: 0.08, duration: 0.8, ease: "expo.out" })
@@ -53,7 +57,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
           )
           .fromTo(curtain.querySelector("[data-bar]"), { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: "power2.inOut" }, 0.1)
           .to(curtain.querySelectorAll("[data-pre]"), { autoAlpha: 0, y: -20, stagger: 0.04, duration: 0.5, ease: "power2.in" })
-          .to(curtain, { yPercent: -100, duration: 1.1 }, "-=0.15")
+          .add(() => release?.(), "-=0.15")
+          .to(curtain, { yPercent: -100, duration: 1.1 }, "<")
           .set(curtain, { display: "none" });
         loadDelay = 1.75;
       } else if (curtain) {
@@ -73,6 +78,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
       // SplitText must measure the real webfont, not the fallback.
       if (document.fonts && document.fonts.status !== "loaded") document.fonts.ready.then(start);
       else start();
+
+      return () => release?.();
     },
     { scope: root },
   );

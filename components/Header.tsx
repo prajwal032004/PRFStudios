@@ -4,22 +4,26 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { getLenis } from "@/lib/lenis";
+import { lockScroll } from "@/lib/lenis";
 import { contact, nav } from "@/lib/site";
 import { divisions, photos } from "@/lib/content";
 import Logo from "./Logo";
 import Icon from "./Icon";
 
 const norm = (p: string) => (p.length > 1 && p.endsWith("/") ? p.slice(0, -1) : p);
+const mobileItems = [{ href: "/", label: "Home" }, ...nav, { href: "/contact/", label: "Contact" }];
 
 export default function Header() {
   const pathname = norm(usePathname() || "/");
   const bar = useRef<HTMLElement>(null);
   const overlay = useRef<HTMLDivElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
   const [menu, setMenu] = useState<string | null>(null); // desktop dropdown
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const openRef = useRef(false);
+  const barHidden = useRef(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const isActive = (href: string) => {
@@ -36,15 +40,30 @@ export default function Header() {
   }
 
   // Hide on scroll down, reveal on scroll up; frost once past the top.
+  // Lenis drives the native scroll position, so window scroll events carry its smoothed value.
   useGSAP(() => {
+    const el = bar.current!;
     let last = window.scrollY;
-    const show = gsap.quickTo(bar.current, "yPercent", { duration: 0.5, ease: "expo.out" });
+    let travel = 0; // accumulated distance in the current direction, ignores tiny jitters
+    const slide = (hide: boolean) => {
+      if (hide === barHidden.current) return;
+      barHidden.current = hide;
+      gsap.to(el, {
+        yPercent: hide ? -140 : 0,
+        duration: hide ? 0.45 : 0.6,
+        ease: hide ? "power3.in" : "expo.out",
+        overwrite: true,
+      });
+    };
     const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 8);
-      if (y > 240 && y > last + 4) show(-100);
-      else if (y < last - 4 || y <= 240) show(0);
+      const y = Math.max(0, window.scrollY);
+      const delta = y - last;
       last = y;
+      setScrolled(y > 12);
+      if (openRef.current || y < 160) return slide(false);
+      travel = Math.sign(delta) === Math.sign(travel) ? travel + delta : delta;
+      if (travel > 24) slide(true);
+      else if (travel < -12) slide(false);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -76,33 +95,58 @@ export default function Header() {
     { dependencies: [menu], scope: bar },
   );
 
-  // Mobile overlay.
+  // Mobile / tablet menu: curtain wipe, masked link rise, then the footer details.
+  const mounted = useRef(false);
+  const menuTl = useRef<gsap.core.Timeline | null>(null);
+  const releaseScroll = useRef<(() => void) | null>(null);
+  useEffect(() => () => releaseScroll.current?.(), []);
   useGSAP(
     () => {
       const el = overlay.current;
+      openRef.current = mobileOpen;
       if (!el) return;
-      const lenis = getLenis();
+      if (!mounted.current) {
+        mounted.current = true;
+        if (!mobileOpen) return; // nothing to close on first render
+      }
+
+      // The page behind the dialog is out of reach for focus and assistive tech.
+      const behind = [document.getElementById("main"), document.querySelector<HTMLElement>("body > footer")];
+      behind.forEach((n) => n?.toggleAttribute("inert", mobileOpen));
+
+      const items = el.querySelectorAll("[data-m-item]");
+      const fades = el.querySelectorAll("[data-m-fade]");
+      menuTl.current?.kill(); // rapid taps: never let open and close fight over the same props
+
       if (mobileOpen) {
-        lenis?.stop();
-        document.body.style.overflow = "hidden";
-        gsap
+        releaseScroll.current?.();
+        releaseScroll.current = lockScroll();
+        barHidden.current = false;
+        gsap.to(bar.current, { yPercent: 0, duration: 0.4, overwrite: true });
+        menuTl.current = gsap
           .timeline()
           .set(el, { display: "flex" })
-          .fromTo(el, { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.8, ease: "expo.inOut" })
           .fromTo(
-            el.querySelectorAll("[data-m-item]"),
-            { yPercent: 110, autoAlpha: 0 },
-            { yPercent: 0, autoAlpha: 1, stagger: 0.05, duration: 0.8, ease: "expo.out" },
-            "-=0.35",
-          );
-      } else {
-        lenis?.start();
-        document.body.style.overflow = "";
-        gsap
-          .timeline()
-          .to(el, { clipPath: "inset(0% 0% 100% 0%)", duration: 0.6, ease: "expo.inOut" })
-          .set(el, { display: "none" });
+            el,
+            { clipPath: "inset(0% 0% 100% 0%)" },
+            { clipPath: "inset(0% 0% 0% 0%)", duration: 0.75, ease: "expo.inOut" },
+          )
+          .fromTo(items, { yPercent: 105 }, { yPercent: 0, stagger: 0.045, duration: 0.9, ease: "expo.out" }, "-=0.35")
+          .fromTo(fades, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, stagger: 0.06, duration: 0.7, ease: "expo.out" }, "-=0.7")
+          .add(() => el.querySelector<HTMLElement>("[data-m-scroll]")?.focus({ preventScroll: true }), 0.4);
+        return;
       }
+
+      releaseScroll.current?.();
+      releaseScroll.current = null;
+      if (el.contains(document.activeElement)) toggle.current?.focus({ preventScroll: true });
+      menuTl.current = gsap
+        .timeline()
+        .to([...fades].reverse(), { autoAlpha: 0, y: 8, stagger: 0.02, duration: 0.2, ease: "power2.in" })
+        .to(items, { yPercent: -105, stagger: 0.02, duration: 0.3, ease: "power2.in" }, 0)
+        .to(el, { clipPath: "inset(0% 0% 100% 0%)", duration: 0.6, ease: "expo.inOut" }, 0.15)
+        .set(el, { display: "none" })
+        .add(() => setMobileSection(null));
     },
     { dependencies: [mobileOpen] },
   );
@@ -114,8 +158,15 @@ export default function Header() {
         setMobileOpen(false);
       }
     };
+    // Rotating a tablet into desktop width swaps to the full nav — drop the overlay.
+    const wide = window.matchMedia("(min-width: 1280px)");
+    const onWide = () => wide.matches && setMobileOpen(false);
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    wide.addEventListener("change", onWide);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      wide.removeEventListener("change", onWide);
+    };
   }, []);
 
   const openMenu = (key: string | null) => {
@@ -126,6 +177,15 @@ export default function Header() {
     clearTimeout(closeTimer.current);
     closeTimer.current = setTimeout(() => setMenu(null), 140);
   };
+
+  // Floating pill below 1280px, full-width bar on desktop.
+  const surface = mobileOpen
+    ? "bg-transparent"
+    : menu
+    ? "bg-midnight"
+    : scrolled
+    ? "bg-midnight/90 shadow-[0_10px_40px_rgba(0,0,0,0.28)] ring-1 ring-white/10 backdrop-blur-xl backdrop-saturate-150 xl:bg-midnight/80 xl:shadow-[0_1px_0_rgba(255,255,255,0.06)] xl:ring-0"
+    : "bg-transparent";
 
   return (
     <>
@@ -138,16 +198,23 @@ export default function Header() {
 
       <header
         ref={bar}
-        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-500 ${
-          menu || mobileOpen
-            ? "bg-midnight"
-            : scrolled
-            ? "bg-midnight/80 shadow-[0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl backdrop-saturate-150"
-            : "bg-gradient-to-b from-black/50 to-transparent"
-        }`}
+        className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] will-change-transform"
         onMouseLeave={scheduleClose}
       >
-        <nav aria-label="Primary" className="container-x flex h-16 items-center justify-between gap-4 md:h-[72px] xl:h-16 xl:gap-6">
+        {/* Legibility scrim over bright hero photos while the bar is clear */}
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/50 to-transparent transition-opacity duration-500 ${
+            scrolled || mobileOpen || menu ? "opacity-0" : "opacity-100"
+          }`}
+        />
+        <div
+          className={`relative mx-[max(8px,calc(var(--gutter)-14px))] mt-2.5 rounded-[22px] transition-[background-color,box-shadow] duration-500 ease-[var(--ease-out-expo)] md:mt-3 xl:mx-0 xl:mt-0 xl:rounded-none ${surface}`}
+        >
+        <nav
+          aria-label="Primary"
+          className="flex h-14 items-center justify-between gap-3 px-3.5 md:h-16 xl:gap-6 xl:px-[var(--gutter)]"
+        >
           <Logo onNavigate={() => setMobileOpen(false)} />
 
           <ul className="hidden items-center gap-1 xl:flex">
@@ -198,38 +265,54 @@ export default function Header() {
             </Link>
           </div>
 
-          <div className="flex items-center gap-3 xl:hidden">
-          {/* Tablet: keep the primary action in reach next to the menu button */}
-          <Link
-            href="/contact/#enquiry"
-            onClick={() => setMobileOpen(false)}
-            className="btn btn-gold hidden !py-2.5 !text-[15px] md:inline-flex"
-          >
-            Start a project
-          </Link>
-          <button
-            type="button"
-            onClick={() => setMobileOpen((o) => !o)}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            className="relative z-[60] flex h-11 w-11 items-center justify-center rounded-full text-white ring-1 ring-white/20 transition hover:bg-white/10"
-          >
-            <span className="relative block h-3 w-5">
-              <span
-                className={`absolute left-0 top-0 h-[1.5px] w-5 bg-current transition-transform duration-500 ease-[var(--ease-out-expo)] ${
-                  mobileOpen ? "translate-y-[5px] rotate-45" : ""
-                }`}
-              />
-              <span
-                className={`absolute bottom-0 left-0 h-[1.5px] w-5 bg-current transition-transform duration-500 ease-[var(--ease-out-expo)] ${
-                  mobileOpen ? "-translate-y-[5px] -rotate-45" : ""
-                }`}
-              />
-            </span>
-          </button>
+          <div className="flex shrink-0 items-center gap-2.5 xl:hidden">
+            {/* Tablet: keep the primary action in reach next to the menu button */}
+            <Link
+              href="/contact/#enquiry"
+              onClick={() => setMobileOpen(false)}
+              className={`btn btn-gold hidden !py-2.5 !text-[15px] transition-opacity duration-300 md:inline-flex ${
+                mobileOpen ? "pointer-events-none opacity-0" : ""
+              }`}
+              tabIndex={mobileOpen ? -1 : undefined}
+            >
+              Start a project
+            </Link>
+            <button
+              ref={toggle}
+              type="button"
+              onClick={() => setMobileOpen((o) => !o)}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              className={`relative flex h-11 w-11 items-center justify-center gap-3 rounded-full text-white ring-1 transition-[background-color,box-shadow] duration-300 sm:w-auto sm:pl-4 sm:pr-3.5 ${
+                mobileOpen ? "bg-white/10 ring-white/25" : "ring-white/20 hover:bg-white/10"
+              }`}
+            >
+              {/* Label rolls between Menu and Close */}
+              <span aria-hidden="true" className="relative hidden h-4 overflow-hidden text-[12px] font-medium uppercase leading-4 tracking-[0.18em] sm:block">
+                <span
+                  className={`block transition-transform duration-500 ease-[var(--ease-out-expo)] ${mobileOpen ? "-translate-y-4" : ""}`}
+                >
+                  <span className="block h-4">Menu</span>
+                  <span className="block h-4">Close</span>
+                </span>
+              </span>
+              <span aria-hidden="true" className="relative block h-[10px] w-[20px]">
+                <span
+                  className={`absolute left-0 top-0 h-[1.5px] w-full rounded-full bg-current transition-transform duration-500 ease-[var(--ease-out-expo)] ${
+                    mobileOpen ? "translate-y-[4.25px] rotate-45" : ""
+                  }`}
+                />
+                <span
+                  className={`absolute bottom-0 right-0 h-[1.5px] rounded-full bg-current transition-[transform,width] duration-500 ease-[var(--ease-out-expo)] ${
+                    mobileOpen ? "w-full -translate-y-[4.25px] -rotate-45" : "w-[70%]"
+                  }`}
+                />
+              </span>
+            </button>
           </div>
         </nav>
+        </div>
 
         {/* Desktop dropdown panels */}
         <div className="pointer-events-none absolute inset-x-0 top-full hidden xl:block">
@@ -322,85 +405,135 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile menu */}
+      {/* Mobile / tablet menu */}
       <div
         id="mobile-menu"
         ref={overlay}
         role="dialog"
         aria-modal="true"
         aria-label="Site menu"
-        className="fixed inset-x-0 top-0 z-40 hidden h-vp-100 flex-col overflow-y-auto overscroll-contain bg-midnight px-[var(--gutter)] pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-24 text-white md:pt-32 xl:hidden"
-        data-lenis-prevent
+        className="fixed inset-x-0 top-0 z-40 hidden h-vp-100 flex-col bg-midnight text-white xl:hidden"
       >
-        <ul className="flex flex-col md:grid md:grid-cols-2 md:gap-x-12">
-          {[{ href: "/", label: "Home" }, ...nav, { href: "/contact/", label: "Contact" }].map((item) => (
-            <li key={item.href} className="overflow-hidden border-b border-white/10">
-              <div data-m-item className="flex items-center justify-between">
-                <Link
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`block py-3.5 text-[clamp(28px,8vw,34px)] font-serif font-normal tracking-[-0.02em] md:py-5 md:text-[40px] ${
-                    isActive(item.href) ? "text-white" : "text-white/70"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-                {"children" in item && item.children && (
-                  <button
-                    type="button"
-                    aria-label={`Expand ${item.label}`}
-                    aria-expanded={mobileSection === item.href}
-                    onClick={() => setMobileSection(mobileSection === item.href ? null : item.href)}
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full ring-1 ring-white/20"
-                  >
-                    <Icon
-                      name="plus"
-                      size={18}
-                      className={`transition-transform duration-300 ${mobileSection === item.href ? "rotate-45" : ""}`}
-                    />
-                  </button>
-                )}
-              </div>
-              {"children" in item && item.children && (
-                <div
-                  className={`grid transition-[grid-template-rows] duration-500 ease-[var(--ease-out-expo)] ${
-                    mobileSection === item.href ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                  }`}
-                >
-                  <ul className="overflow-hidden" inert={mobileSection !== item.href}>
-                    {item.children.map((c) => (
-                      <li key={c.href} className="last:pb-4">
-                        <Link
-                          href={c.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="flex items-center justify-between py-2.5 text-[17px] text-white/70"
-                        >
-                          {c.label}
-                          <Icon name="arrow" size={16} className="text-white/40" />
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
+        <div aria-hidden="true" className="glow-gold pointer-events-none absolute inset-0" />
+        <div
+          data-m-scroll
+          data-lenis-prevent
+          tabIndex={-1}
+          className="relative flex flex-1 flex-col overflow-y-auto overscroll-contain px-[var(--gutter)] pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[calc(env(safe-area-inset-top)+92px)] outline-none md:pt-[calc(env(safe-area-inset-top)+120px)]"
+        >
+          <p data-m-fade className="eyebrow text-champagne/80">
+            Navigate
+          </p>
 
-        <div className="mt-auto pt-10 md:flex md:items-end md:justify-between md:gap-10">
-          <div data-m-item className="md:hidden">
-            <Link href="/contact/#enquiry" onClick={() => setMobileOpen(false)} className="btn btn-gold w-full">
-              Start a project
-            </Link>
-          </div>
-          <div data-m-item className="mt-8 grid gap-1 text-sm text-white/60 md:mt-0 md:text-[15px]">
-            <a href={`mailto:${contact.email}`} className="hover:text-white">
-              {contact.email}
-            </a>
-            <a href={contact.phoneHref} className="hover:text-white">
-              {contact.phone}
-            </a>
-            <p>{contact.address}</p>
+          <ul className="mt-3 md:mt-5 md:grid md:grid-cols-2 md:gap-x-12">
+            {mobileItems.map((item, i) => {
+              const active = isActive(item.href);
+              const expandable = "children" in item && item.children;
+              const open = mobileSection === item.href;
+              return (
+                <li key={item.href} className="border-b border-white/10">
+                  <div className="flex items-center gap-2 overflow-hidden pr-px">
+                    <div data-m-item className="flex min-w-0 flex-1 items-center gap-2">
+                      <Link
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        aria-current={active ? "page" : undefined}
+                        className="group flex min-w-0 flex-1 items-baseline gap-3 py-3 md:py-4"
+                      >
+                        <span className="w-6 shrink-0 text-[11px] font-medium tabular-nums tracking-[0.12em] text-white/35">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span
+                          className={`truncate font-serif text-[clamp(28px,8.2vw,36px)] font-normal leading-[1.15] tracking-[-0.02em] transition-colors duration-300 md:text-[40px] ${
+                            active ? "text-white" : "text-white/60 group-hover:text-white group-active:text-white"
+                          }`}
+                        >
+                          {item.label}
+                        </span>
+                        {active && <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 self-center rounded-full bg-gold" />}
+                      </Link>
+                      {expandable && (
+                        <button
+                          type="button"
+                          aria-label={`${open ? "Collapse" : "Expand"} ${item.label}`}
+                          aria-expanded={open}
+                          aria-controls={`m-sub-${i}`}
+                          onClick={() => setMobileSection(open ? null : item.href)}
+                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ring-1 transition-colors duration-300 ${
+                            open ? "bg-gold text-midnight ring-gold" : "text-white ring-white/20"
+                          }`}
+                        >
+                          <Icon
+                            name="plus"
+                            size={18}
+                            className={`transition-transform duration-500 ease-[var(--ease-out-expo)] ${open ? "rotate-45" : ""}`}
+                          />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  {expandable && (
+                    <div
+                      id={`m-sub-${i}`}
+                      className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[var(--ease-out-expo)] ${
+                        open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                      }`}
+                    >
+                      <ul className="overflow-hidden pl-9" inert={!open}>
+                        {item.children!.map((c) => (
+                          <li key={c.href} className="last:pb-4">
+                            <Link
+                              href={c.href}
+                              onClick={() => setMobileOpen(false)}
+                              aria-current={isActive(c.href) ? "page" : undefined}
+                              className={`flex items-center justify-between gap-4 rounded-[10px] px-3 py-2.5 text-[16px] transition-colors active:bg-white/5 ${
+                                isActive(c.href) ? "text-champagne" : "text-white/70"
+                              }`}
+                            >
+                              <span className="min-w-0">
+                                <span className="block">{c.label}</span>
+                                {c.note && <span className="mt-0.5 block text-[13px] text-white/40">{c.note}</span>}
+                              </span>
+                              <Icon name="arrow" size={16} className="shrink-0 text-white/35" />
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="mt-auto pt-10">
+            <div data-m-fade className="grid grid-cols-2 gap-2.5 md:max-w-md">
+              <a
+                href={contact.phoneHref}
+                className="flex items-center justify-center gap-2 rounded-full py-3 text-[15px] font-medium ring-1 ring-white/15 transition-colors active:bg-white/10"
+              >
+                <Icon name="phone" size={17} className="text-champagne" /> Call
+              </a>
+              <a
+                href={`mailto:${contact.email}`}
+                className="flex items-center justify-center gap-2 rounded-full py-3 text-[15px] font-medium ring-1 ring-white/15 transition-colors active:bg-white/10"
+              >
+                <Icon name="mail" size={17} className="text-champagne" /> Email
+              </a>
+            </div>
+            <div data-m-fade className="mt-2.5 md:hidden">
+              <Link href="/contact/#enquiry" onClick={() => setMobileOpen(false)} className="btn btn-gold w-full">
+                Start a project <Icon name="arrow" size={18} />
+              </Link>
+            </div>
+            <div
+              data-m-fade
+              className="mt-8 flex items-end justify-between gap-6 border-t border-white/10 pt-5 text-[13px] leading-relaxed text-white/45"
+            >
+              <p className="max-w-[26ch]">{contact.address}</p>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/pothraj-group-light.webp" alt="Pothraj Group" width={636} height={160} loading="lazy" className="h-6 w-auto shrink-0 opacity-60" />
+            </div>
           </div>
         </div>
       </div>

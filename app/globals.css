@@ -128,6 +128,14 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 .lenis.lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+/* Scroll lock that also holds when Lenis is off (reduced motion) */
+html.scroll-locked,
+html.scroll-locked body {
   overflow: hidden;
 }
 

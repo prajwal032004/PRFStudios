@@ -22,17 +22,46 @@ export default function Marquee({
       if (prefersReducedMotion()) return;
       const track = root.current?.querySelector<HTMLElement>("[data-track]");
       if (!track) return;
-      const loop = gsap.to(track, { xPercent: -50, ease: "none", duration: speed, repeat: -1 });
+      const loop = gsap.to(track, { xPercent: -50, ease: "none", duration: speed, repeat: -1, force3D: true });
+
+      // One eased value per frame instead of spawning tweens on every scroll event:
+      // velocity sets a target, the ticker glides timeScale towards it and back to cruise.
       let direction = 1;
+      let boost = 0;
+      let current = 1;
       const st = ScrollTrigger.create({
+        trigger: root.current,
+        start: "top bottom",
+        end: "bottom top",
         onUpdate(self) {
-          if (self.direction !== direction) direction = self.direction;
-          const boost = Math.min(Math.abs(self.getVelocity()) / 300, 6);
-          gsap.to(loop, { timeScale: direction * (1 + boost), duration: 0.3, overwrite: true });
-          gsap.to(loop, { timeScale: direction, duration: 1.2, delay: 0.3, overwrite: false });
+          direction = self.direction;
+          boost = Math.max(boost, Math.min(Math.abs(self.getVelocity()) / 400, 5));
         },
       });
-      return () => st.kill();
+      const tick = (_t: number, dt: number) => {
+        const f = Math.min(dt / 16.67, 3); // frame-rate independent
+        boost *= Math.pow(0.92, f);
+        const target = direction * (1 + boost);
+        current += (target - current) * (1 - Math.pow(0.88, f));
+        loop.timeScale(current);
+      };
+      // Only spend frames while the strip is on screen.
+      const visible = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          loop.resume();
+          gsap.ticker.add(tick);
+        } else {
+          loop.pause();
+          gsap.ticker.remove(tick);
+        }
+      });
+      visible.observe(root.current!);
+
+      return () => {
+        visible.disconnect();
+        gsap.ticker.remove(tick);
+        st.kill();
+      };
     },
     { scope: root },
   );
@@ -50,7 +79,7 @@ export default function Marquee({
 
   return (
     <div ref={root} className={`overflow-hidden whitespace-nowrap ${className}`}>
-      <div data-track className="flex w-max">
+      <div data-track className="flex w-max will-change-transform">
         {row(false)}
         {row(true)}
       </div>
