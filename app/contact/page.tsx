@@ -1,4 +1,5 @@
 import { contact } from "@/lib/site";
+import { engagementModels } from "@/lib/content";
 import { pageMeta } from "@/lib/meta";
 import Icon from "@/components/Icon";
 import ContactForm from "@/components/ContactForm";
@@ -6,9 +7,9 @@ import { JsonLd, breadcrumbLd } from "@/components/JsonLd";
 import { Breadcrumbs } from "@/components/ui";
 
 export const metadata = pageMeta({
-  title: "Contact — Start a Project",
+  title: "Contact — Work with PRF Studios",
   description:
-    "Talk to PRF Studios about a production, a feature film, music, digital content or a facilities booking. Trinity Pothraj, M. G. Road, Bengaluru · info@pothrajgroup.com · +91 90088 98922.",
+    "Talk to PRF Studios about a co-production, production services, music, digital or AI content, or a media enquiry. Trinity Pothraj Building, 154 Old Madras Road, Trinity Circle, Bengaluru 560008 · balaji@pothrajgroup.com · +91 91641 41888.",
   path: "/contact/",
   photo: "set",
   keywords: ["contact PRF Studios", "book recording studio Bengaluru", "film production enquiry"],
@@ -16,7 +17,7 @@ export const metadata = pageMeta({
 
 const details = [
   { icon: "pin", label: "Studio", value: contact.address, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.mapsQuery)}` },
-  { icon: "mail", label: "Email", value: contact.email, href: `mailto:${contact.email}` },
+  { icon: "mail", label: "Media / Business", value: contact.email, href: `mailto:${contact.email}` },
   { icon: "phone", label: "Phone", value: contact.phone, href: contact.phoneHref },
 ] as const;
 
@@ -34,11 +35,11 @@ export default function ContactPage() {
             Contact
           </p>
           <h1 data-split data-instant className="display-xl mt-4 max-w-[16ch]">
-            Let&apos;s make something worth watching.
+            Bring your project to the studio.
           </h1>
           <p data-reveal data-instant data-delay="0.35" className="mt-7 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">
-            Tell us about your film, album, series or brand project — or the rooms you need to book. We&apos;ll come back
-            with next steps.
+            Built for owned IP, open to serious collaboration. Tell us about your film, music, digital or AI-content project
+            — or the studio services you need — and we&apos;ll come back with next steps.
           </p>
         </div>
       </section>
@@ -81,11 +82,38 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section aria-label="Map" className="bg-ivory pb-24">
+      <section className="section-y bg-fog">
+        <div className="container-x grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+          <div>
+            <p data-reveal="fade" className="eyebrow text-gold-ink">
+              Ways to work with PRF
+            </p>
+            <h2 data-split className="heading-lg mt-4 text-onyx">
+              Clearly structured projects, <span className="accent">one studio.</span>
+            </h2>
+            <p data-reveal className="mt-5 max-w-md text-[17px] leading-relaxed text-graphite">
+              We work with producers, directors, writers, artists, agencies, platforms and technology partners.
+            </p>
+          </div>
+          <ol data-stagger className="divide-y divide-ash border-y border-ash">
+            {engagementModels.map((m, i) => (
+              <li key={m.title} className="flex gap-5 py-5">
+                <span className="plex-label w-7 shrink-0 pt-1 text-[12px] text-gold-ink">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="font-serif text-[21px] font-normal tracking-[-0.01em] text-onyx">{m.title}</h3>
+                  <p className="mt-1 text-[15px] leading-relaxed text-graphite">{m.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section aria-label="Map" className="bg-fog pb-24">
         <div className="container-x">
           <div data-clip className="relative aspect-[16/10] overflow-hidden rounded-[8px] ring-1 ring-ash md:aspect-[21/8]">
             <iframe
-              title="PRF Studios location — Trinity Pothraj, M. G. Road, Bengaluru"
+              title="PRF Studios — Trinity Pothraj Building, 154 Old Madras Road, Trinity Circle, Bengaluru"
               src={`https://www.google.com/maps?q=${encodeURIComponent(contact.mapsQuery)}&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

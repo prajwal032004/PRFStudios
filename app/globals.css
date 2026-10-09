@@ -242,6 +242,24 @@ html.scroll-locked body {
     font-size: clamp(44px, 8vw, 84px);
   }
 }
+/* Home hero headline is longer than a display word pair — a slightly smaller step of the same scale */
+@utility hero-title {
+  font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
+  font-weight: 300;
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  font-variation-settings: "opsz" 144;
+  font-size: clamp(42px, 11.4vw, 72px);
+  @media (min-width: 768px) {
+    font-size: clamp(76px, 9.6vw, 108px);
+  }
+  @media (min-width: 1280px) {
+    font-size: clamp(96px, 7.2vw, 240px);
+  }
+  @media (max-height: 520px) and (orientation: landscape) {
+    font-size: clamp(40px, 6.6vw, 72px);
+  }
+}
 @utility label-wide {
   font-size: 11.5px;
   font-weight: 500;
@@ -446,7 +464,8 @@ html.scroll-locked body {
   margin-bottom: -0.08em;
 }
 /* Serif italics overhang their box — give the mask room for swashes and descenders */
-.display-serif .split-line {
+.display-serif .split-line,
+.hero-title .split-line {
   padding: 0.02em 0.12em 0.2em;
   margin: -0.02em -0.12em -0.2em;
 }

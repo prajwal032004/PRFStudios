@@ -88,7 +88,7 @@ export default function DivisionsScroller() {
               Divisions
             </p>
             <h2 id="divisions-title" data-split className="heading-lg mt-4">
-              One platform, <span className="accent">four specialist teams.</span>
+              One studio. <span className="accent">Multiple creative divisions.</span>
             </h2>
           </div>
           <p data-reveal className="max-w-md text-[17px] text-white/60 md:text-lg">

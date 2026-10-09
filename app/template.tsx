@@ -64,7 +64,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
           const r = anchor();
           const vw = window.innerWidth;
           const vh = window.innerHeight;
-          const scale = Math.min(vw < 768 ? 1.5 : 2.4, (vw * 0.82) / r.width);
+          const scale = Math.min(vw < 768 ? 1.7 : 3, (vw * 0.82) / r.width);
           pose = {
             scale,
             x: vw / 2 - (r.width * scale) / 2 - r.left,
@@ -200,7 +200,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
           className="curtain fixed inset-0 z-[100] items-center justify-center bg-midnight"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img data-mark src="/brand/emblem.webp" alt="" width={56} height={56} className="h-14 w-auto" />
+          <img data-mark src="/brand/prf-emblem-gold.webp" alt="" width={168} height={160} className="h-16 w-auto" />
         </div>
       )}
       {children}

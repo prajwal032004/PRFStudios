@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { divisions, mission, philosophy, photos, vision } from "@/lib/content";
+import { aiCapability, divisions, filmLead, groupLeaders, mission, philosophy, photos, vision } from "@/lib/content";
 import { pageMeta } from "@/lib/meta";
 import Icon from "@/components/Icon";
 import { ArrowLink, PageHero, SectionHeading } from "@/components/ui";
 
 export const metadata = pageMeta({
-  title: "About the Studio",
+  title: "About PRF Studios",
   description:
-    "PRF Studios is a Bengaluru-based integrated entertainment and content-production company with a legacy extending back to 1994 — combining development, production, music, digital content, studio infrastructure and post-production.",
+    "PRF Studios is a Bengaluru-based integrated entertainment and content-production platform with a legacy dating back to 1994 — Videa Films, PRF Music, PRF Digital, studio services and an AI-enabled content capability.",
   path: "/studio/",
   photo: "set",
   keywords: ["about PRF Studios", "Bengaluru production company", "Kannada film studio"],
@@ -42,15 +42,20 @@ export default function StudioPage() {
   return (
     <>
       <PageHero
-        eyebrow="About the studio"
-        title="An integrated studio for stories, music and screen."
-        lead="PRF Studios is a Bengaluru-based integrated entertainment and content-production company with a legacy extending back to 1994."
+        eyebrow="About PRF Studios"
+        title="Stories. Music. Technology. Production."
+        lead="PRF Studios is a Bengaluru-based integrated entertainment and content-production platform. We develop original projects, collaborate with producers and creative talent, and provide the technical and production capability required to move content from development through delivery."
         photo="set"
-        crumbs={[{ name: "Studio", path: "/studio/" }]}
+        crumbs={[{ name: "About", path: "/studio/" }]}
       >
-        <Link href="/contact/#enquiry" className="btn btn-gold">
-          Start a project <Icon name="arrow" size={18} />
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <Link href="/films/" className="btn btn-gold">
+            Explore projects <Icon name="arrow" size={18} />
+          </Link>
+          <Link href="/contact/#enquiry" className="btn btn-ghost">
+            Work with PRF Studios
+          </Link>
+        </div>
       </PageHero>
 
       {/* Story */}
@@ -58,32 +63,36 @@ export default function StudioPage() {
         <div className="container-x grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
           <div>
             <p data-reveal="fade" className="eyebrow text-gold-ink">
-              Who we are
+              Executive profile
             </p>
             <h2 data-split className="heading-lg mt-4 text-onyx">
-              From four banners to one platform.
+              A legacy reimagined for a new era of entertainment.
             </h2>
           </div>
           <div className="space-y-6 text-lg leading-relaxed text-graphite">
             <p data-reveal>
-              The Pothraj Group&apos;s entertainment journey developed through established banners —{" "}
+              PRF Studios is the contemporary entertainment platform within the Pothraj ecosystem, bringing film production,
+              music, digital content, studio infrastructure, post-production and emerging media into one coordinated
+              creative business.
+            </p>
+            <p data-reveal>
+              Its entertainment heritage developed through established banners —{" "}
               <strong className="font-semibold text-carbon">Swati Movies</strong>,{" "}
               <strong className="font-semibold text-carbon">Saptaswara Audio Company</strong>,{" "}
               <strong className="font-semibold text-carbon">Sri Raghavendra Films</strong> and{" "}
-              <strong className="font-semibold text-carbon">Shivashakti Cine Combines</strong> — working across feature
-              production, music publishing and distribution.
+              <strong className="font-semibold text-carbon">Shivashakti Cine Combines</strong> — across film production,
+              music publishing and distribution. The purpose of PRF Studios is not to erase those earlier identities, but to
+              carry forward their experience, relationships and catalogue knowledge within one modern, technology-aware
+              studio platform.
             </p>
             <p data-reveal>
-              Today, PRF Studios brings that experience together. The studio combines creative development, physical
-              production, music, digital content, studio infrastructure and post-production services — giving producers,
-              artists and brands a single partner from the first idea to the final deliverable.
-            </p>
-            <p data-reveal>
-              Our work runs through four divisions: <Link href="/divisions/production-services/" className="link-draw font-medium text-carbon">PRF Studios</Link>{" "}
-              for production services, <Link href="/divisions/videa-films/" className="link-draw font-medium text-carbon">Videa Films</Link>{" "}
-              for feature films, <Link href="/divisions/prf-music/" className="link-draw font-medium text-carbon">PRF Music</Link>{" "}
-              for music, and <Link href="/divisions/prf-digital/" className="link-draw font-medium text-carbon">PRF Digital</Link>{" "}
-              for digital-first content.
+              The platform develops original intellectual property, supports feature-film production through{" "}
+              <Link href="/divisions/videa-films/" className="link-draw font-medium text-carbon">Videa Films</Link>, builds music
+              through <Link href="/divisions/prf-music/" className="link-draw font-medium text-carbon">PRF Music</Link>, develops
+              online programming through <Link href="/divisions/prf-digital/" className="link-draw font-medium text-carbon">PRF Digital</Link>,
+              and provides professional{" "}
+              <Link href="/divisions/production-services/" className="link-draw font-medium text-carbon">production and post-production capability</Link>{" "}
+              for owned and external projects.
             </p>
           </div>
         </div>
@@ -107,7 +116,7 @@ export default function StudioPage() {
           <SectionHeading
             dark
             eyebrow="What we do"
-            title="Stories. Music. Technology. Production."
+            title="Four strengths every project draws on."
             lead="Four words that describe the studio — and the four strengths every project draws on."
           />
           <div data-stagger className="mt-12 grid gap-8 sm:grid-cols-2 md:mt-16 md:gap-10 xl:grid-cols-4 xl:gap-8">
@@ -123,6 +132,43 @@ export default function StudioPage() {
             <Link href="/services/" className="btn btn-gold">
               See how we work
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* AI & emerging media */}
+      <section id="ai" className="section-y scroll-mt-16 bg-ivory">
+        <div className="container-x">
+          <SectionHeading
+            eyebrow="AI & emerging media"
+            title={<>Building a practical AI-enabled <span className="accent">creative production capability.</span></>}
+            lead={aiCapability.intro}
+          />
+          <div data-stagger className="mt-10 grid gap-4 md:mt-14 md:grid-cols-3">
+            {aiCapability.model.map((m) => (
+              <article key={m.label} className="flex flex-col rounded-[8px] bg-fog p-6 md:p-8">
+                <p className="plex-label text-[12px] text-gold-ink">{m.label}</p>
+                <h3 className="mt-3 font-serif text-[24px] font-normal tracking-[-0.015em] text-onyx">{m.name}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-graphite">{m.text}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-12 grid gap-8 border-t border-ash pt-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <div>
+              <p data-reveal className="plex-label text-carbon">
+                Priority use cases
+              </p>
+              <p data-reveal className="mt-4 max-w-sm text-[15px] leading-relaxed text-graphite">
+                {aiCapability.stance}
+              </p>
+            </div>
+            <ul data-stagger="0.05" className="flex flex-wrap content-start gap-2.5">
+              {aiCapability.useCases.map((u) => (
+                <li key={u} className="tag bg-sand text-[15px] text-carbon">
+                  <span className="h-1.5 w-1.5 rounded-full bg-gold" /> {u}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -162,12 +208,42 @@ export default function StudioPage() {
         </div>
       </section>
 
+      {/* Leadership */}
+      <section className="section-y bg-midnight text-white">
+        <div className="container-x">
+          <SectionHeading dark eyebrow="Leadership" title={<>Stewardship, <span className="accent">carried forward.</span></>} />
+          <div className="mt-10 grid gap-4 md:mt-14 lg:grid-cols-[1.3fr_1fr]">
+            <article data-reveal className="flex flex-col justify-between gap-10 rounded-[8px] bg-white/[0.04] p-6 ring-1 ring-white/10 md:p-10">
+              <figure>
+                <blockquote className="font-serif text-[clamp(22px,2.4vw,32px)] font-light leading-[1.3] tracking-[-0.01em]">
+                  &ldquo;{filmLead.quote}&rdquo;
+                </blockquote>
+              </figure>
+              <div>
+                <p className="font-serif text-[24px] font-normal tracking-[-0.01em]">{filmLead.name}</p>
+                <p className="plex-label mt-2 text-[12px] text-champagne">{filmLead.role}</p>
+                <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-white/60">{filmLead.bio}</p>
+              </div>
+            </article>
+            <div data-stagger className="grid gap-4">
+              {groupLeaders.map((l) => (
+                <article key={l.name} className="rounded-[8px] bg-white/[0.04] p-6 ring-1 ring-white/10 md:p-8">
+                  <p className="plex-label text-[12px] text-champagne">{l.role}</p>
+                  <h3 className="mt-3 font-serif text-[24px] font-normal tracking-[-0.01em]">{l.name}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-white/60">{l.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Divisions quick links */}
       <section className="bg-fog">
         <div className="container-x py-20 md:py-24">
           <SectionHeading
             eyebrow="Divisions"
-            title="Meet the four teams."
+            title="One studio. Multiple creative divisions."
             action={<ArrowLink href="/divisions/">All divisions</ArrowLink>}
           />
           <ul data-stagger className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-12 xl:grid-cols-4">
@@ -206,14 +282,14 @@ export default function StudioPage() {
         <div className="container-x grid items-center gap-12 lg:grid-cols-2">
           <div>
             <p data-reveal="fade" className="eyebrow text-gold-ink">
-              Part of the Pothraj Group
+              A Pothraj Company
             </p>
             <h2 data-split className="heading-lg mt-4 text-onyx">
               Backed by a group that builds for generations.
             </h2>
             <p data-reveal className="mt-5 text-lg leading-relaxed text-graphite">
-              The Pothraj Group was founded in Mysuru in 1981 by M. K. Pothraj and is led today by Chairman &amp; Managing
-              Director Balajhi Pothraj. Its businesses span infrastructure, hospitality, education, beverages, agri-energy,
+              The Pothraj Group was founded in Mysuru in 1981 by M. K. Pothraj and is led today by Chairman &amp; CEO
+              Balajhi Pothraj. Its businesses span infrastructure, hospitality, education, beverages, agri-energy,
               commerce and media — and PRF Studios is the group&apos;s home for film, music and content.
             </p>
           </div>

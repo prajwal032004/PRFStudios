@@ -7,7 +7,7 @@ import { PageHero } from "@/components/ui";
 export const metadata = pageMeta({
   title: "Divisions — Production, Videa Films, PRF Music & PRF Digital",
   description:
-    "Four specialist divisions under one roof: PRF Studios production services, Videa Films feature banner, PRF Music and PRF Digital — from shooting floor to soundtrack to YouTube.",
+    "One studio, multiple creative divisions: Videa Films for feature-film production, PRF Music, PRF Digital and PRF Studios production services — from development to delivery.",
   path: "/divisions/",
   photo: "cinema",
   keywords: ["Videa Films", "PRF Music", "PRF Digital", "production services Bengaluru"],
@@ -18,8 +18,8 @@ export default function DivisionsPage() {
     <>
       <PageHero
         eyebrow="Divisions"
-        title="Four teams. One integrated studio."
-        lead="Each division has its own specialism — production, cinema, music and digital. Together they take a project from first idea to final release."
+        title="One studio. Multiple creative divisions."
+        lead="A connected operating model designed to retain creative control, reduce production fragmentation and build long-term film, music and digital intellectual property."
         photo="cinema"
         crumbs={[{ name: "Divisions", path: "/divisions/" }]}
         compact

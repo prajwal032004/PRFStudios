@@ -5,7 +5,7 @@ import { gsap, useGSAP } from "@/lib/gsap";
 import { contact } from "@/lib/site";
 import Icon from "./Icon";
 
-const interests = ["Full production", "Videa Films", "PRF Music", "PRF Digital", "Facilities booking", "Something else"];
+const interests = ["Co-production", "Production services", "Videa Films", "PRF Music", "Digital & AI content", "Media enquiry", "Something else"];
 const budgets = ["Not sure yet", "Under ₹10 lakh", "₹10–50 lakh", "₹50 lakh – ₹1 crore", "₹1 crore+"];
 
 // The site is a static export, so the enquiry opens the visitor's mail app with a

@@ -9,11 +9,12 @@ import Icon from "./Icon";
 import Magnetic from "./motion/Magnetic";
 
 const studioLinks = [
-  { href: "/studio/", label: "About the studio" },
-  { href: "/work/", label: "Work & filmography" },
-  { href: "/facilities/", label: "Facilities" },
-  { href: "/legacy/", label: "Our legacy" },
-  { href: "/contact/", label: "Contact" },
+  { href: "/studio/", label: "About PRF Studios" },
+  { href: "/films/", label: "Films & current slate" },
+  { href: "/facilities/", label: "Studio infrastructure" },
+  { href: "/legacy/", label: "Heritage since 1994" },
+  { href: "/media/", label: "Media & press kit" },
+  { href: "/contact/", label: "Work with PRF" },
 ];
 
 export default function Footer() {
@@ -76,15 +77,27 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-t border-white/10 py-12 sm:grid-cols-3 md:gap-y-12 md:py-16 xl:grid-cols-[1.5fr_1fr_1fr_1fr_1.3fr]">
           <div className="col-span-2 sm:col-span-3 md:col-span-2 xl:col-span-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/logo-prf-studios.webp" alt="PRF Studios" width={160} height={160} loading="lazy" className="h-20 w-auto md:h-24 xl:h-28" />
+            <img
+              src="/brand/prf-studios-gold.webp"
+              alt="PRF Studios — A Pothraj Company"
+              width={520}
+              height={440}
+              loading="lazy"
+              className="h-28 w-auto md:h-32 xl:h-36"
+            />
             <p className="mt-6 max-w-xs text-[15px] leading-relaxed text-white/60">
-              An integrated film, music, digital-content and production-services platform in Bengaluru.
+              A Bengaluru-based integrated film, music and digital-content studio with an entertainment legacy dating back
+              to 1994.
             </p>
-            <div className="mt-8 flex items-center gap-3 text-xs uppercase tracking-[0.16em] text-white/40">
-              <span>A company of</span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/pothraj-group-light.webp" alt="Pothraj Group" width={636} height={160} loading="lazy" className="h-6 w-auto opacity-80" />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/pothraj-group-light.webp"
+              alt="Pothraj Group"
+              width={636}
+              height={160}
+              loading="lazy"
+              className="mt-8 h-6 w-auto opacity-70"
+            />
           </div>
 
           <FooterColumn title="Studio" links={studioLinks} />
@@ -104,9 +117,12 @@ export default function Footer() {
               </li>
               <li className="flex gap-3">
                 <Icon name="mail" size={18} className="mt-0.5 shrink-0 text-champagne" />
-                <a href={`mailto:${contact.email}`} className="link-draw hover:text-white">
-                  {contact.email}
-                </a>
+                <span>
+                  <span className="block text-[12px] uppercase tracking-[0.14em] text-white/35">Media / Business</span>
+                  <a href={`mailto:${contact.email}`} className="link-draw hover:text-white">
+                    {contact.email}
+                  </a>
+                </span>
               </li>
               <li className="flex gap-3">
                 <Icon name="phone" size={18} className="mt-0.5 shrink-0 text-champagne" />
@@ -136,7 +152,7 @@ export default function Footer() {
       <div className="container-x">
         <div className="flex flex-col gap-4 border-t border-white/10 pb-[max(1.75rem,env(safe-area-inset-bottom))] pt-7 text-sm text-white/45 md:flex-row md:items-center md:justify-between">
           <p>
-            © {new Date().getFullYear()} {site.name}. A {site.parent} company. All rights reserved.
+            © {new Date().getFullYear()} {site.name}. {site.descriptor}. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <Link href="/privacy/" className="hover:text-white">

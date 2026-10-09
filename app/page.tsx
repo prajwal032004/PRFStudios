@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { banners, disciplines, films, photos, studioStats } from "@/lib/content";
+import { aiCapability, banners, disciplines, filmLead, films, photos, projects, studioStats } from "@/lib/content";
 import { pageMeta } from "@/lib/meta";
 import Icon from "@/components/Icon";
 import Marquee from "@/components/motion/Marquee";
@@ -12,13 +12,15 @@ import { ArrowLink, FilmPoster, SectionHeading } from "@/components/ui";
 
 export const metadata = {
   ...pageMeta({
-    title: "Film, Music & Production Studio in Bengaluru",
+    title: "Films, Music, Digital Content & Production Services",
     description:
-      "PRF Studios is a Bengaluru-based integrated film, music, digital-content and production-services platform. Development, shooting floor, music recording, editing, CG and delivery — with a legacy since 1994.",
+      "Bengaluru-based PRF Studios develops films, music and digital content and provides integrated production, post-production and studio services.",
     path: "/",
   }),
-  title: { absolute: "PRF Studios — Film, Music & Production Studio in Bengaluru" },
+  title: { absolute: "PRF Studios | Films, Music, Digital Content & Production Services" },
 };
+
+const bombayDada = projects[0];
 
 // Legacy timeline: 1994 → the four banners → today
 const timeline = [
@@ -43,13 +45,13 @@ export default function Home() {
           {/* Top: label + editorial headline */}
           <div>
             <p data-reveal="fade" data-instant className="label-wide flex flex-wrap items-center gap-x-4 gap-y-1 text-white/70">
-              Est. 1994 — Bengaluru, Karnataka
+              Entertainment legacy since 1994 — Bengaluru
               <span className="hidden h-px w-12 bg-gold/70 md:block" />
-              <span className="hidden text-white/45 md:inline">A Pothraj Group company</span>
+              <span className="hidden text-white/45 md:inline">A Pothraj Company</span>
             </p>
-            <h1 data-split data-instant className="display-serif mt-5 text-[#fbf7f0] md:mt-8">
-              <span className="block">Stories for</span>
-              <span className="block italic text-champagne">generations.</span>
+            <h1 data-split data-instant className="hero-title mt-5 text-[#fbf7f0] md:mt-8">
+              <span className="block">Built on legacy.</span>
+              <span className="block italic text-champagne">Created for the future.</span>
             </h1>
             <p data-reveal="fade" data-instant data-delay="0.6" className="label-wide mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-white/55 md:mt-10 md:gap-x-4">
               {["Stories", "Music", "Technology", "Production"].map((w, i) => (
@@ -65,35 +67,54 @@ export default function Home() {
           <div className="mt-12 flex flex-col gap-8 md:mt-16 md:gap-10 xl:flex-row xl:items-end xl:justify-between">
             <div className="max-w-[640px]">
               <p data-reveal data-instant data-delay="0.45" className="text-[16px] leading-relaxed text-white/80 md:text-[19px]">
-                An integrated film, music, digital-content and production-services platform in Bengaluru — carrying a
-                Kannada cinema legacy into development, production, music, editing, CG and delivery for every
-                screen.
+                With a creative legacy dating back to 1994, PRF Studios brings film production, music, digital content,
+                studio infrastructure and post-production together under one integrated platform. From the first idea to
+                the final screen, we help bring stories to life.
               </p>
               <div data-reveal data-instant data-delay="0.6" className="mt-7 grid gap-3 min-[420px]:flex min-[420px]:flex-wrap min-[420px]:items-center md:mt-8">
                 <Magnetic className="w-full min-[420px]:w-auto">
-                  <Link href="/contact/#enquiry" className="btn btn-gold w-full min-[420px]:w-auto">
-                    Start a project <Icon name="arrow" size={18} />
+                  <Link href="/films/" className="btn btn-gold w-full min-[420px]:w-auto">
+                    Explore projects <Icon name="arrow" size={18} />
                   </Link>
                 </Magnetic>
                 <Magnetic className="w-full min-[420px]:w-auto">
-                  <Link href="/work/" className="btn btn-ghost w-full min-[420px]:w-auto">
-                    View our work
+                  <Link href="/contact/#enquiry" className="btn btn-ghost w-full min-[420px]:w-auto">
+                    Work with PRF Studios
                   </Link>
                 </Magnetic>
               </div>
             </div>
 
-            <div data-reveal="fade" data-instant data-delay="0.8" className="flex items-center justify-between gap-10 xl:flex-col xl:items-end">
-              <span className="flex items-center gap-3 text-[13px] text-white/50 xl:order-2">
+            {/* Current feature project */}
+            <div data-reveal="fade" data-instant data-delay="0.8" className="flex flex-col gap-6 xl:items-end">
+              <Link
+                href="/films/"
+                data-cursor="View"
+                className="group flex max-w-[400px] items-center gap-5 rounded-[8px] bg-black/35 p-4 pr-5 ring-1 ring-white/15 backdrop-blur-md transition-colors duration-500 hover:bg-black/50 hover:ring-gold/50"
+              >
+                <span className="grain relative flex h-20 w-14 shrink-0 items-end overflow-hidden rounded-[4px] bg-gradient-to-br from-[#4a3822] via-[#231a10] to-[#0f0c08] p-1.5">
+                  <span className="font-serif text-[10px] italic leading-none text-champagne">BD</span>
+                </span>
+                <span className="min-w-0">
+                  <span className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-champagne">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" />
+                    Featured · Videa Films
+                  </span>
+                  <span className="mt-1 block font-serif text-[26px] font-light leading-tight tracking-[-0.01em] text-white">
+                    {bombayDada.title}
+                  </span>
+                  <span className="mt-0.5 block text-[13px] text-white/60">
+                    {bombayDada.credits} · Retro comedy
+                  </span>
+                </span>
+                <Icon name="arrowUpRight" size={18} className="ml-auto shrink-0 text-white/60 transition group-hover:text-gold" />
+              </Link>
+              <span className="hidden items-center gap-3 text-[13px] text-white/50 md:flex">
                 <span className="relative flex h-8 w-[18px] justify-center rounded-full ring-1 ring-white/30">
                   <span className="mt-1.5 h-1.5 w-[2px] animate-bounce rounded-full bg-white" />
                 </span>
-                <span className="hidden md:inline">Scroll</span>
+                Scroll
               </span>
-              <Link href="/studio/" className="label-wide group flex items-center gap-4 text-white">
-                <span className="h-px w-10 bg-gold transition-all md:w-16 duration-700 ease-[var(--ease-out-expo)] group-hover:w-24" />
-                Explore the studio
-              </Link>
             </div>
           </div>
         </div>
@@ -113,31 +134,26 @@ export default function Home() {
             </p>
             <div>
               <p data-scrub-words className="text-[clamp(24px,6.6vw,30px)] md:text-[clamp(30px,4vw,40px)] xl:text-[clamp(36px,3.4vw,46px)] font-serif font-light leading-[1.15] tracking-[-0.02em] text-onyx">
-                PRF Studios brings creative development, physical production, music, digital content, studio
-                infrastructure and post-production together — so a story can travel from idea to every screen without
-                leaving one roof.
+                PRF Studios develops original intellectual property, produces feature films through Videa Films, builds
+                music through PRF Music and digital programming through PRF Digital — and provides professional
+                production and post-production capability for owned and external projects.
               </p>
               <div data-reveal className="mt-10">
-                <ArrowLink href="/studio/">About the studio</ArrowLink>
+                <ArrowLink href="/studio/">About PRF Studios</ArrowLink>
               </div>
             </div>
           </div>
 
-          <dl data-stagger className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-[8px] bg-ash ring-1 ring-ash md:mt-20 md:grid-cols-3 xl:grid-cols-5">
-            {studioStats.map((s, i) => (
-              <div
-                key={s.label}
-                className={`bg-ivory p-5 md:p-6 xl:p-8 ${i === 0 ? "col-span-2 md:col-span-1" : ""} ${
-                  i === studioStats.length - 1 ? "md:col-span-2 xl:col-span-1" : ""
-                }`}
-              >
+          <dl data-stagger className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-[8px] bg-ash ring-1 ring-ash md:mt-20 md:grid-cols-4">
+            {studioStats.map((s) => (
+              <div key={s.label} className="bg-ivory p-5 md:p-6 xl:p-8">
                 <dt className="sr-only">{s.label}</dt>
                 <dd>
                   <span
                     data-counter={s.value}
                     data-counter-from={s.from ?? 0}
                     data-counter-suffix={s.suffix}
-                    className="block font-serif text-[clamp(38px,11vw,56px)] md:text-[clamp(44px,6vw,64px)] xl:text-[clamp(56px,4.4vw,120px)] font-light leading-none tracking-[-0.03em] text-onyx tabular-nums"
+                    className="block font-serif text-[clamp(38px,11vw,56px)] md:text-[clamp(44px,6vw,64px)] xl:text-[clamp(64px,5.2vw,140px)] font-light leading-none tracking-[-0.03em] text-onyx tabular-nums"
                   >
                     {s.value}
                     {s.suffix}
@@ -217,10 +233,10 @@ export default function Home() {
         <div className="container-x">
           <SectionHeading
             dark
-            eyebrow="Legacy"
+            eyebrow="Heritage"
             title={<>A legacy that began <span className="accent">in 1994.</span></>}
             lead="PRF Studios is the contemporary expression of an entertainment journey built across film production, music publishing and film distribution."
-            action={<ArrowLink dark href="/legacy/">Our legacy</ArrowLink>}
+            action={<ArrowLink dark href="/legacy/">Heritage since 1994</ArrowLink>}
           />
 
           {/* 1994 → Today: the line draws as the section scrolls through */}
@@ -252,7 +268,7 @@ export default function Home() {
         <div className="mt-12 md:mt-16">
           <div className="container-x flex items-end justify-between gap-4">
             <p data-reveal className="plex-label text-white">Heritage filmography</p>
-            <Link href="/work/" className="link-draw text-sm text-white/70 hover:text-white">
+            <Link href="/films/" className="link-draw text-sm text-white/70 hover:text-white">
               View all work
             </Link>
           </div>
@@ -262,7 +278,7 @@ export default function Home() {
           >
             {films.map((f, i) => (
               <li key={f.title} className="w-[min(46vw,210px)] shrink-0 md:w-[220px] xl:w-[230px]">
-                <Link href="/work/" data-cursor="View" className="block transition-transform duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-2">
+                <Link href="/films/" data-cursor="View" className="block transition-transform duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-2">
                   <FilmPoster title={f.title} banner={f.banner} tone={f.tone} index={i} />
                 </Link>
               </li>
@@ -275,10 +291,10 @@ export default function Home() {
       <section className="section-y bg-ivory">
         <div className="container-x">
           <SectionHeading
-            eyebrow="Current slate"
-            title={<>The next chapter is <span className="accent">already in production.</span></>}
-            lead="Four films, one growing studio ecosystem — advanced through Videa Films, with PRF Music supporting music and audio development and the wider studio providing production, post-production and technical support."
-            action={<ArrowLink href="/divisions/videa-films/">About Videa Films</ArrowLink>}
+            eyebrow="Featured projects"
+            title={<>Bombay Dada and the <span className="accent">current slate.</span></>}
+            lead="Bombay Dada leads the public launch of Videa Films, alongside a slate that combines mainstream cinema, cross-language development and longer-term franchise and IP thinking."
+            action={<ArrowLink href="/films/">All projects</ArrowLink>}
           />
           <div className="mt-10 md:mt-14">
             <SlateCards />
@@ -290,9 +306,44 @@ export default function Home() {
               <span className="text-gold-ink">Creatively differentiated.</span>
             </p>
             <p data-reveal className="max-w-md text-[14px] text-smoke">
-              Project titles, posters and stills will be published as each project is announced.
+              Project stages and final rights structures remain subject to definitive production documentation.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* ----------------------------------------------------------- Leadership */}
+      <section className="section-y bg-sand">
+        <div className="container-x grid gap-10 lg:grid-cols-[1fr_2fr] lg:items-end lg:gap-20">
+          <div>
+            <p data-reveal="fade" className="eyebrow text-gold-ink">
+              Leadership
+            </p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              data-reveal="fade"
+              src="/brand/videa-films-black.webp"
+              alt="Videa Films — A Pothraj Company"
+              width={460}
+              height={315}
+              loading="lazy"
+              className="mt-6 h-auto w-[min(220px,60%)]"
+            />
+            <p data-reveal className="mt-8 font-serif text-[26px] font-normal tracking-[-0.01em] text-onyx">
+              {filmLead.name}
+            </p>
+            <p data-reveal className="plex-label mt-2 text-[13px] text-smoke">
+              {filmLead.role}
+            </p>
+          </div>
+          <figure data-reveal className="border-l border-gold pl-6 md:pl-10">
+            <blockquote className="font-serif text-[clamp(26px,3.6vw,52px)] font-light leading-[1.18] tracking-[-0.02em] text-onyx">
+              &ldquo;{filmLead.quote}&rdquo;
+            </blockquote>
+            <figcaption className="mt-6">
+              <ArrowLink href="/films/">Videa Films &amp; the current slate</ArrowLink>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -302,7 +353,12 @@ export default function Home() {
       {/* ------------------------------------------------------- Ways to work */}
       <section className="section-y bg-ivory">
         <div className="container-x">
-          <SectionHeading center eyebrow="Working with us" title={<>Two ways to <span className="accent">work with us.</span></>} />
+          <SectionHeading
+            center
+            eyebrow="Work with PRF"
+            title={<>A production partner built <span className="accent">around flexibility.</span></>}
+            lead="Engage PRF Studios for complete project execution or selected services across development, production planning, studio support, music, post-production, digital adaptation and delivery."
+          />
           <div data-stagger className="mt-10 grid gap-4 md:mt-14 md:grid-cols-2 md:gap-5">
             <article className="relative flex flex-col overflow-hidden rounded-[8px] bg-carbon p-6 text-white md:p-8 xl:p-10">
               <span className="tag w-fit bg-gold text-midnight">Most complete</span>
@@ -348,6 +404,38 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ------------------------------------------------------ Technology layer */}
+      <section className="section-y glow-gold relative overflow-hidden bg-midnight text-white">
+        <div className="container-x grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-20">
+          <div>
+            <p data-reveal="fade" className="eyebrow text-champagne">
+              AI &amp; emerging media
+            </p>
+            <h2 data-split className="heading-lg mt-4">
+              Technology as an enabler, <span className="accent">story as the identity.</span>
+            </h2>
+            <p data-reveal className="mt-6 max-w-xl text-[17px] leading-relaxed text-white/65 md:text-lg">
+              {aiCapability.intro}
+            </p>
+            <p data-reveal className="mt-4 max-w-xl text-[15px] leading-relaxed text-white/50">
+              {aiCapability.stance}
+            </p>
+            <div data-reveal className="mt-8">
+              <ArrowLink dark href="/studio/#ai">
+                The technology layer
+              </ArrowLink>
+            </div>
+          </div>
+          <ul data-stagger="0.05" className="flex flex-wrap gap-2.5">
+            {aiCapability.useCases.map((u) => (
+              <li key={u} className="tag bg-white/[0.06] text-[14px] text-white/85 ring-1 ring-white/10 md:text-[15px]">
+                <span className="h-1.5 w-1.5 rounded-full bg-gold" /> {u}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* ------------------------------------------------------- Pothraj Group */}
       <section className="border-t border-ash bg-ivory">
         <div className="container-x flex flex-col items-start gap-6 py-12 md:flex-row md:items-center md:justify-between md:gap-10 md:py-14">
@@ -356,8 +444,8 @@ export default function Home() {
             <img src="/brand/pothraj-group-dark.webp" alt="Pothraj Group" width={636} height={160} loading="lazy" className="h-9 w-auto md:h-11 xl:h-12" />
           </div>
           <p data-reveal data-delay="0.1" className="max-w-xl text-[15px] leading-relaxed text-graphite">
-            PRF Studios is part of the Pothraj Group — a diversified enterprise rooted in Mysuru since 1981, spanning
-            infrastructure, hospitality, education, beverages, agri-energy, commerce and media.
+            PRF Studios — A Pothraj Company. The Pothraj Group is a diversified enterprise rooted in Mysuru since 1981,
+            spanning infrastructure, hospitality, education, beverages, agri-energy, commerce and media.
           </p>
         </div>
       </section>

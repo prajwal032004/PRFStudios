@@ -17,11 +17,11 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Services"
+        eyebrow="Studio & services"
         title="Every stage of production, under one roof."
         lead="Choose end-to-end execution, or book exactly the stage you need. Either way, the same team and the same standard."
         photo="edit"
-        crumbs={[{ name: "Services", path: "/services/" }]}
+        crumbs={[{ name: "Studio & Services", path: "/services/" }]}
         compact
       >
         <div className="flex flex-wrap gap-3">

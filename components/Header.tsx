@@ -308,7 +308,7 @@ export default function Header() {
                       type="button"
                       aria-label={`Show ${item.label} menu`}
                       aria-expanded={open}
-                      aria-controls={`panel-${item.label}`}
+                      aria-controls={`panel-${item.href.replaceAll("/", "")}`}
                       onClick={() => setMenu(open ? null : item.href)}
                       onFocus={() => openMenu(item.href)}
                       className={`flex h-10 items-center pl-1 pr-3.5 transition-colors ${open ? "text-gold" : "text-white/55 hover:text-white"}`}
@@ -396,7 +396,7 @@ export default function Header() {
         <div className="pointer-events-none absolute inset-x-0 top-full hidden xl:block">
           {/* Divisions — mega panel */}
           <div
-            id="panel-Divisions"
+            id="panel-divisions"
             data-panel="/divisions/"
             onMouseEnter={() => openMenu("/divisions/")}
             onMouseLeave={scheduleClose}
@@ -407,7 +407,7 @@ export default function Header() {
                 <div>
                   <p className="eyebrow text-champagne">Divisions</p>
                   <p className="mt-3 text-[22px] font-bold leading-tight tracking-[-0.02em] text-white">
-                    Four specialist teams. One integrated studio.
+                    One studio. Multiple creative divisions.
                   </p>
                 </div>
                 <Link href="/divisions/" className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white">
@@ -438,7 +438,7 @@ export default function Header() {
 
           {/* Services — process list */}
           <div
-            id="panel-Services"
+            id="panel-services"
             data-panel="/services/"
             onMouseEnter={() => openMenu("/services/")}
             onMouseLeave={scheduleClose}
@@ -447,14 +447,19 @@ export default function Header() {
             <div className="container-x grid grid-cols-[1fr_2.6fr] gap-10 py-8">
               <div data-item className="flex flex-col justify-between border-r border-white/10 pr-10">
                 <div>
-                  <p className="eyebrow text-champagne">Services</p>
+                  <p className="eyebrow text-champagne">Studio &amp; Services</p>
                   <p className="mt-3 text-[22px] font-bold leading-tight tracking-[-0.02em] text-white">
-                    End-to-end, or exactly the stage you need.
+                    From idea to set to edit to sound to screen.
                   </p>
                 </div>
-                <Link href="/services/" className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white">
-                  How we work <Icon name="arrow" size={16} />
-                </Link>
+                <div className="mt-6 flex flex-col gap-2">
+                  <Link href="/services/" className="inline-flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white">
+                    How we work <Icon name="arrow" size={16} />
+                  </Link>
+                  <Link href="/facilities/" className="inline-flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white">
+                    Studio infrastructure <Icon name="arrow" size={16} />
+                  </Link>
+                </div>
               </div>
               <ul className="grid grid-cols-2 gap-x-8">
                 {nav

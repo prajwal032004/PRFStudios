@@ -43,58 +43,35 @@ export type Division = {
 
 export const divisions: Division[] = [
   {
-    slug: "production-services",
-    name: "PRF Studios",
-    label: "Production",
-    short: "Production services & studio infrastructure",
-    summary:
-      "Creative development, production planning, shooting-floor access, editing, CG, sound, music recording, post-production supervision and project delivery.",
-    intro: [
-      "PRF Studios is the operating core of the platform — the people, rooms and process that take a project from a page of ideas to a delivered master.",
-      "Producers can bring us a complete production or a single requirement. Either way, every job runs through the same planning discipline, the same supervision and the same standard of delivery.",
-    ],
-    covers: [
-      "Creative development and production planning",
-      "Shooting-floor access and on-set coordination",
-      "Editing, CG and visual finishing",
-      "Sound, music recording and audio production",
-      "Post-production supervision",
-      "Final project delivery and deliverables management",
-    ],
-    audiences: ["Feature-film producers", "Directors & independent filmmakers", "Brands & agencies", "Music labels & artists"],
-    services: ["development", "pre-production", "production", "post-production", "delivery-support"],
-    photo: "set",
-  },
-  {
     slug: "videa-films",
     name: "Videa Films",
-    label: "Cinema",
+    label: "Film production",
     short: "Feature-film production banner",
     summary:
-      "Developing commercially viable and culturally rooted cinema for theatrical, satellite, digital and international audiences.",
+      "Feature-film development and production for theatrical, satellite, digital and international audiences. Story-led, commercially aware and professionally managed.",
     intro: [
-      "Videa Films is the feature-film banner of PRF Studios, carrying forward a production legacy that began in 1994. The studio's current four-film slate is being developed through this banner.",
-      "We look for stories that are commercially viable and culturally rooted — films that can open in theatres, live on satellite and streaming, and find audiences abroad — supported by PRF Music, the studio's post-production infrastructure and its full-fledged shooting floor near Bengaluru.",
+      "Videa Films is the feature-film banner leading the studio's current movie-production phase, with a focus on distinctive concepts, disciplined execution and mainstream audience connection.",
+      "It is being built as a professionally managed production house — combining strong concepts, talent partnerships and quality mainstream entertainment, supported by PRF Music, the studio's post-production infrastructure and a full-fledged shooting floor near Bengaluru. Bombay Dada is its first major public project.",
     ],
     covers: [
-      "Original feature development",
-      "Co-productions and partnerships",
-      "Theatrical release planning",
-      "Satellite and digital rights strategy",
-      "International festival and market positioning",
+      "Feature-film development and production",
+      "Cross-language projects — Kannada, Malayalam, Tamil",
+      "Franchise and long-term IP development",
+      "Project-specific co-productions and creative partnerships",
+      "Theatrical, satellite, digital and international release planning",
     ],
     audiences: ["Writers & directors", "Co-producers", "Distributors", "Streaming & satellite partners"],
     services: ["development", "pre-production", "production", "post-production", "delivery-support"],
     photo: "cinema",
-    logo: "/brand/logo-videa-films.webp",
+    logo: "/brand/videa-films-white.webp",
   },
   {
     slug: "prf-music",
     name: "PRF Music",
-    label: "Music",
+    label: "Music & audio",
     short: "Soundtracks, independent & regional music",
     summary:
-      "Film soundtracks, independent music, devotional and regional content, music videos and artist collaborations.",
+      "Film soundtracks, independent music, devotional and regional content, artist collaborations, music videos and digital release strategy.",
     intro: [
       "PRF Music continues a publishing tradition that began with Saptaswara Audio Company — more than 150 music titles, including approximately 45–50 devotional titles — and carries it into original soundtracks and artist collaborations.",
       "From a film's full soundtrack to an independent single, devotional album or regional collection, PRF Music handles composition support, recording, production and the music video that carries it.",
@@ -105,6 +82,7 @@ export const divisions: Division[] = [
       "Devotional and regional music",
       "Music video production",
       "Artist collaborations",
+      "Digital release strategy and catalogue stewardship",
     ],
     audiences: ["Film producers", "Composers & independent artists", "Devotional & regional performers", "Labels & publishers"],
     services: ["music-and-sound", "production", "digital-and-promotion"],
@@ -113,10 +91,10 @@ export const divisions: Division[] = [
   {
     slug: "prf-digital",
     name: "PRF Digital",
-    label: "Digital",
+    label: "Digital first",
     short: "YouTube, short-form & branded content",
     summary:
-      "YouTube programming, short-form entertainment, interviews, behind-the-scenes features, promotional films, branded content and original digital series.",
+      "YouTube programming, short-form entertainment, interviews, behind-the-scenes content, branded entertainment and original digital series.",
     intro: [
       "PRF Digital is where the studio meets the feed. It builds programming for YouTube and social platforms with the same craft we bring to the big screen.",
       "That includes the content around a film — interviews, behind-the-scenes, promotional cuts — as well as branded work and original series made for digital first.",
@@ -132,6 +110,29 @@ export const divisions: Division[] = [
     audiences: ["Films in release", "Brands & agencies", "Creators & presenters", "Platforms & channels"],
     services: ["production", "post-production", "digital-and-promotion"],
     photo: "edit",
+  },
+  {
+    slug: "production-services",
+    name: "PRF Studios",
+    label: "Studio services",
+    short: "Studio services & production infrastructure",
+    summary:
+      "Creative development, production planning, shooting support, editing, CG, sound, music recording, post-production supervision and final delivery.",
+    intro: [
+      "PRF Studios is the operating core of the platform — the people, rooms and process that take a project from a page of ideas to a delivered master.",
+      "Producers can bring us a complete production or a single requirement. Either way, every job runs through the same planning discipline, the same supervision and the same standard of delivery.",
+    ],
+    covers: [
+      "Creative development and production planning",
+      "Shooting-floor access and on-set coordination",
+      "Editing, CG and visual finishing",
+      "Sound, music recording and audio production",
+      "Post-production supervision",
+      "Final project delivery and deliverables management",
+    ],
+    audiences: ["Feature-film producers", "Directors & independent filmmakers", "Brands & agencies", "Music labels & artists"],
+    services: ["development", "pre-production", "production", "post-production", "delivery-support"],
+    photo: "set",
   },
 ];
 
@@ -189,7 +190,7 @@ export const services: Service[] = [
     slug: "production",
     name: "Production",
     step: "03",
-    short: "Shooting-floor access, crew and on-set management, start to wrap.",
+    short: "Shoot management, production coordination, controlled studio access and project execution.",
     description:
       "From our shooting floor to location work, PRF Studios provides the space, coordination and supervision a shoot needs. We manage the day-to-day of production so directors can focus on performance and picture.",
     includes: [
@@ -205,7 +206,7 @@ export const services: Service[] = [
     slug: "music-and-sound",
     name: "Music & Sound",
     step: "04",
-    short: "Music recording, soundtrack production, artist collaboration and audio finishing.",
+    short: "Recording, soundtrack development, artist collaboration, sound production and audio finishing.",
     description:
       "Sound is half of the picture. Our music-recording and audio-production rooms handle a film's songs and soundtrack through to the finished mix — backed by the publishing experience of Saptaswara Audio Company and PRF Music.",
     includes: [
@@ -257,7 +258,7 @@ export const services: Service[] = [
     slug: "delivery-support",
     name: "Delivery Support",
     step: "07",
-    short: "Content packaging, platform-ready delivery and distribution coordination.",
+    short: "Promotional adaptation, platform-ready packaging and distribution coordination.",
     description:
       "Each platform asks for something different. We prepare and manage the deliverables a project needs to reach theatres, satellite channels, streaming services and international partners — so the last mile doesn't become the hardest one.",
     includes: [
@@ -305,7 +306,7 @@ export const banners: Banner[] = [
     mark: "150+",
     metric: "Music titles",
     description:
-      "A music-publishing house that produced and released more than 150 titles, including approximately 45–50 devotional titles — a devotional library later acquired by Lahari Music.",
+      "More than 150 music titles, including a substantial devotional catalogue of approximately 45–50 titles — a significant portion of which was later sold to Lahari Music.",
   },
   {
     slug: "sri-raghavendra-films",
@@ -322,9 +323,9 @@ export const banners: Banner[] = [
     name: "Shivashakti Cine Combines",
     role: "Film distribution",
     mark: "150+",
-    metric: "Distributed titles",
+    metric: "Films distributed",
     description:
-      "A Bengaluru distribution operation across Kannada, Tamil and Telugu cinema, with selected Hindi titles — more than 150 films distributed.",
+      "More than 150 films distributed across Kannada, Tamil, Telugu and selected Hindi cinema.",
   },
 ];
 
@@ -397,18 +398,152 @@ export const disciplines = ["Development", "Production", "Music", "Recording", "
 /* -------------------------------------------------------------------------- */
 
 export const studioStats = [
-  { value: 1994, from: 1960, suffix: "", label: "Entertainment legacy begins" },
+  { value: 1994, from: 1960, suffix: "", label: "Entertainment legacy" },
   { value: 10, suffix: "+", label: "Feature films produced" },
   { value: 150, suffix: "+", label: "Music titles" },
-  { value: 150, suffix: "+", label: "Distributed titles" },
-  { value: 4, suffix: "", label: "Active film projects" },
+  { value: 150, suffix: "+", label: "Films distributed" },
 ];
 
-export const slate = [
-  { code: "Project 01", stage: "In development" },
-  { code: "Project 02", stage: "In production" },
-  { code: "Project 03", stage: "In development" },
-  { code: "Project 04", stage: "In development" },
+/* -------------------------------------------------------------------------- */
+/* Current slate & IP — PRF Studios profile, October 2026                     */
+/* -------------------------------------------------------------------------- */
+
+export type Project = {
+  slug: string;
+  title: string;
+  subtitle?: string;
+  kind: "Film" | "Development" | "IP / Film";
+  languages?: string;
+  credits?: string;
+  genre?: string;
+  flag?: string;
+  text: string;
+};
+
+export const projects: Project[] = [
+  {
+    slug: "bombay-dada",
+    title: "Bombay Dada",
+    kind: "Film",
+    flag: "First major public project",
+    credits: "Sharan × Diganth",
+    genre: "Retro comedy · Alternate history",
+    text: "A mainstream entertainer that blends comedy, nostalgia and an imaginative alternate-history premise against a recognisable Bombay setting. The project anchors the public launch phase of Videa Films within the PRF Studios ecosystem.",
+  },
+  {
+    slug: "koosa-mattu-kutumba",
+    title: "Koosa Mattu Kutumba",
+    kind: "Film",
+    languages: "Kannada / Malayalam",
+    text: "A Videa Films project within the current cross-language production pipeline.",
+  },
+  {
+    slug: "maarsan",
+    title: "Maarsan",
+    subtitle: "Mallappa vs Marappa",
+    kind: "Film",
+    languages: "Kannada / Tamil",
+    text: "A Videa Films project designed for regional-language adaptation and scalable audience reach.",
+  },
+  {
+    slug: "mkp-sarai-king",
+    title: "MKP",
+    subtitle: "Sarai King",
+    kind: "Development",
+    languages: "Kannada",
+    text: "Story and project development in progress; intended as an owned or controlled studio IP track.",
+  },
+  {
+    slug: "jungle-diaries",
+    title: "Jungle Diaries",
+    subtitle: "Naagarahole",
+    kind: "IP / Film",
+    languages: "Kannada",
+    text: "Jungle Diaries is the umbrella IP; Naagarahole is the first Kannada project being developed under it.",
+  },
+];
+
+export const slateNote =
+  "Project titles, casting, collaborators, production status, IP structures and commercial arrangements are subject to definitive agreements and final public announcements.";
+
+/* -------------------------------------------------------------------------- */
+/* Leadership                                                                 */
+/* -------------------------------------------------------------------------- */
+
+export const filmLead = {
+  name: "Vindhya Balaji Pothraj",
+  role: "Head of Film Production · Videa Films",
+  bio: "Her approach brings corporate discipline, structured planning and long-term thinking into creative production. Videa Films is being built as a professionally managed production house capable of combining strong concepts, talent partnerships and quality mainstream entertainment.",
+  quote: "Bombay Dada is the first step in our journey and the beginning of a larger vision across cinema, music and digital content.",
+};
+
+export const videaPrinciples = [
+  { title: "Story-led", text: "Clear concepts, strong character worlds and audience relevance." },
+  { title: "Professionally managed", text: "Budget discipline, scheduling, documentation and production governance." },
+  { title: "Audience-focused", text: "Commercially viable cinema with cultural grounding and multi-platform potential." },
+];
+
+// As published on the Pothraj Group website.
+export const groupLeaders = [
+  {
+    name: "M. K. Pothraj",
+    role: "Founder · Pothraj Group",
+    text: "Established the foundations of the Group in 1981 through trust, entrepreneurship and regional relationships.",
+  },
+  {
+    name: "Balajhi Pothraj",
+    role: "Chairman & CEO · Pothraj Group",
+    text: "Unified the businesses into Pothraj Group and expanded it into a diversified institution.",
+  },
+];
+
+/* -------------------------------------------------------------------------- */
+/* AI & emerging media — capability only (no commercial or ownership terms)   */
+/* -------------------------------------------------------------------------- */
+
+export const aiCapability = {
+  intro:
+    "PRF Studios is developing an in-house AI-enabled content capability for concept development, video production, creative iteration and new digital formats — combining physical infrastructure, specialist creative supervision and a dedicated operating team.",
+  stance:
+    "The technology layer supports — not replaces — the studio's core strengths in story, production discipline, music and post.",
+  model: [
+    {
+      label: "Creative hub",
+      name: "PRF Studios",
+      text: "Creative brief, pre-production, post-production, green-room access and shooting facilities for AI-assisted content and hybrid productions.",
+    },
+    {
+      label: "Specialist partner",
+      name: "Synkyn / Dhiraj Kishore",
+      text: "Creative and technical advisory for AI content workflows, team supervision and project delivery.",
+    },
+    {
+      label: "Infrastructure",
+      name: "Pothraj Infrastructure",
+      text: "Studio and operating infrastructure to support the creative team, production requirements and scale-up of the capability.",
+    },
+  ],
+  useCases: [
+    "Concept visualisation",
+    "Previsualisation",
+    "AI-assisted video content",
+    "Short-form digital programming",
+    "Marketing assets",
+    "Franchise / IP development",
+    "Hybrid live-action + AI experimentation",
+  ],
+};
+
+/* -------------------------------------------------------------------------- */
+/* Partnerships                                                               */
+/* -------------------------------------------------------------------------- */
+
+export const engagementModels = [
+  { title: "Owned productions", text: "Studio-led film, music and digital IP developed within the PRF ecosystem." },
+  { title: "Co-productions", text: "Project-specific collaboration with external producers and creative partners." },
+  { title: "Production services", text: "Selective or end-to-end studio, post-production, music and delivery support." },
+  { title: "Digital & AI content", text: "New-format content, promotional assets, short-form programming and emerging-media experimentation." },
+  { title: "Music & rights", text: "Soundtrack creation, artist collaboration, catalogue stewardship and digital release strategy." },
 ];
 
 export const vision =

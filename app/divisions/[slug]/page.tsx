@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { divisions, photos, services } from "@/lib/content";
+import { divisions, filmLead, photos, projects, services } from "@/lib/content";
 import { pageMeta } from "@/lib/meta";
 import Icon from "@/components/Icon";
 import { ArrowLink, PageHero, SectionHeading } from "@/components/ui";
@@ -51,7 +51,7 @@ export default async function DivisionPage({ params }: PageProps<"/divisions/[sl
           </Link>
           {d.logo && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={d.logo} alt={`${d.name} logo`} className="ml-3 h-16 w-auto" />
+            <img src={d.logo} alt={`${d.name} — A Pothraj Company`} className="ml-3 h-20 w-auto" />
           )}
         </div>
       </PageHero>
@@ -76,6 +76,44 @@ export default async function DivisionPage({ params }: PageProps<"/divisions/[sl
           </div>
         </div>
       </section>
+
+      {/* Videa Films: leadership and the current slate */}
+      {d.slug === "videa-films" && (
+        <section className="section-y bg-sand">
+          <div className="container-x grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+            <figure data-reveal className="border-l border-gold pl-6 md:pl-10">
+              <p className="eyebrow text-gold-ink">Leadership</p>
+              <blockquote className="mt-5 font-serif text-[clamp(24px,3vw,40px)] font-light leading-[1.22] tracking-[-0.015em] text-onyx">
+                &ldquo;{filmLead.quote}&rdquo;
+              </blockquote>
+              <figcaption className="mt-6">
+                <span className="block font-serif text-[22px] text-onyx">{filmLead.name}</span>
+                <span className="plex-label mt-1 block text-[12px] text-smoke">{filmLead.role}</span>
+              </figcaption>
+              <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-graphite">{filmLead.bio}</p>
+            </figure>
+            <div>
+              <p data-reveal className="plex-label text-carbon">
+                Current slate
+              </p>
+              <ul data-stagger className="mt-4 divide-y divide-ash border-y border-ash">
+                {projects.map((p) => (
+                  <li key={p.slug} className="flex items-baseline justify-between gap-4 py-4">
+                    <span>
+                      <span className="font-serif text-[21px] text-onyx">{p.title}</span>
+                      {p.subtitle && <span className="font-serif text-[17px] italic text-gold-ink"> — {p.subtitle}</span>}
+                    </span>
+                    <span className="shrink-0 text-[13px] text-smoke">{p.languages ?? p.credits}</span>
+                  </li>
+                ))}
+              </ul>
+              <div data-reveal className="mt-8">
+                <ArrowLink href="/films/">All projects</ArrowLink>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* What it covers — dark presentation */}
       <section className="section-y bg-midnight text-white">

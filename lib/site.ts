@@ -1,10 +1,16 @@
 export const site = {
   name: "PRF Studios",
-  legalName: "PRF Studios — A Pothraj Group Company",
+  legalName: "PRF Studios — A Pothraj Company",
+  /** Approved brand descriptor — use exactly this, never earlier variants. */
+  descriptor: "A POTHRAJ COMPANY",
   url: "https://prfstudios.in",
   tagline: "Stories. Music. Technology. Production.",
+  headline: "Entertainment built on legacy. Created for the future.",
   description:
-    "PRF Studios is a Bengaluru-based integrated film, music, digital-content and production-services platform — a Pothraj Group company with a legacy in Kannada cinema since 1994.",
+    "Bengaluru-based PRF Studios develops films, music and digital content and provides integrated production, post-production and studio services — with an entertainment legacy dating back to 1994.",
+  /** Short media boilerplate (October 2026 profile). */
+  boilerplate:
+    "PRF Studios is a Bengaluru-based integrated film, music and digital-content studio with an entertainment legacy dating back to 1994. Through Videa Films, PRF Music, PRF Digital and its studio-services platform, PRF Studios develops original entertainment and supports creative partners from concept through production, post-production and delivery.",
   founded: "1994",
   locale: "en_IN",
   parent: "Pothraj Group",
@@ -13,11 +19,12 @@ export const site = {
     "film production Bengaluru",
     "production house Bengaluru",
     "Kannada film production",
+    "Videa Films",
+    "Bombay Dada",
     "music recording studio Bengaluru",
-    "music recording and sound production",
     "post-production Bengaluru",
     "editing and CG studio",
-    "Videa Films",
+    "AI content production",
     "PRF Music",
     "PRF Digital",
     "Pothraj Group",
@@ -25,35 +32,40 @@ export const site = {
 };
 
 export const contact = {
-  addressLines: ["Trinity Pothraj", "M. G. Road", "Bengaluru, Karnataka", "India"],
-  address: "Trinity Pothraj, M. G. Road, Bengaluru, Karnataka, India",
-  street: "Trinity Pothraj, M. G. Road",
+  addressLines: ["Trinity Pothraj Building", "154 Old Madras Road, Trinity Circle", "Bengaluru 560008", "Karnataka, India"],
+  address: "Trinity Pothraj Building, 154 Old Madras Road, Trinity Circle, Bengaluru 560008",
+  street: "Trinity Pothraj Building, 154 Old Madras Road, Trinity Circle",
   city: "Bengaluru",
   region: "Karnataka",
+  postalCode: "560008",
   country: "IN",
-  email: "info@pothrajgroup.com",
-  phone: "+91 90088 98922",
-  phoneHref: "tel:+919008898922",
-  mapsQuery: "Trinity Pothraj, M.G. Road, Bengaluru, Karnataka",
+  /** Media and business enquiries */
+  email: "balaji@pothrajgroup.com",
+  phone: "+91 91641 41888",
+  phoneHref: "tel:+919164141888",
+  phoneIntl: "+91-91641-41888",
+  mapsQuery: "Trinity Pothraj Building, 154 Old Madras Road, Trinity Circle, Bengaluru 560008",
 };
 
 export type NavItem = { href: string; label: string; children?: { href: string; label: string; note?: string }[] };
 
+// Primary navigation, following the October 2026 website blueprint.
 export const nav: NavItem[] = [
-  { href: "/studio/", label: "Studio" },
+  { href: "/studio/", label: "About" },
+  { href: "/films/", label: "Films" },
   {
     href: "/divisions/",
     label: "Divisions",
     children: [
-      { href: "/divisions/production-services/", label: "PRF Studios", note: "Production services & infrastructure" },
-      { href: "/divisions/videa-films/", label: "Videa Films", note: "Feature-film banner" },
-      { href: "/divisions/prf-music/", label: "PRF Music", note: "Soundtracks & independent music" },
-      { href: "/divisions/prf-digital/", label: "PRF Digital", note: "YouTube, short-form & branded" },
+      { href: "/divisions/videa-films/", label: "Videa Films", note: "Feature-film production" },
+      { href: "/divisions/prf-music/", label: "PRF Music", note: "Music & audio" },
+      { href: "/divisions/prf-digital/", label: "PRF Digital", note: "Digital-first content" },
+      { href: "/divisions/production-services/", label: "PRF Studios", note: "Studio services" },
     ],
   },
   {
     href: "/services/",
-    label: "Services",
+    label: "Studio & Services",
     children: [
       { href: "/services/development/", label: "Development" },
       { href: "/services/pre-production/", label: "Pre-Production" },
@@ -64,7 +76,6 @@ export const nav: NavItem[] = [
       { href: "/services/delivery-support/", label: "Delivery Support" },
     ],
   },
-  { href: "/work/", label: "Work" },
-  { href: "/facilities/", label: "Facilities" },
-  { href: "/legacy/", label: "Legacy" },
+  { href: "/legacy/", label: "Heritage" },
+  { href: "/media/", label: "Media" },
 ];

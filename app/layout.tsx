@@ -19,7 +19,7 @@ const fraunces = Fraunces({
 });
 const plex = IBM_Plex_Sans({ variable: "--font-ibm-plex-sans", subsets: ["latin"], weight: ["600"], display: "swap" });
 
-const title = "PRF Studios — Film, Music & Production Studio in Bengaluru";
+const title = "PRF Studios | Films, Music, Digital Content & Production Services";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     title,
     description: site.description,
-    images: [{ url: "/og/set.jpg", width: 1200, height: 630, alt: "PRF Studios — Stories. Music. Technology. Production." }],
+    images: [{ url: "/og/set.jpg", width: 1200, height: 630, alt: "PRF Studios — Entertainment built on legacy. Created for the future." }],
   },
   twitter: {
     card: "summary_large_image",

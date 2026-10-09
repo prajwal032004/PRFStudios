@@ -5,7 +5,7 @@ import Icon from "@/components/Icon";
 import { PageHero, SectionHeading } from "@/components/ui";
 
 export const metadata = pageMeta({
-  title: "Our Legacy — Since 1994",
+  title: "Heritage — Since 1994",
   description:
     "The story behind PRF Studios: Swati Movies, Saptaswara Audio Company, Sri Raghavendra Films and Shivashakti Cine Combines — production, music publishing and distribution across Kannada, Tamil and Telugu cinema, with selected Hindi titles, since 1994.",
   path: "/legacy/",
@@ -23,7 +23,7 @@ const chapters = [
   {
     mark: "Today",
     title: "PRF Studios",
-    text: "The banners come together as one integrated platform for film, music, digital content and production services — with Videa Films, PRF Music and PRF Digital alongside.",
+    text: "The banners come together as one integrated platform for film, music, digital content and production services — with Videa Films, PRF Music and PRF Digital alongside. The purpose is not to erase these earlier identities, but to carry forward their experience, relationships and catalogue knowledge within one modern, technology-aware studio platform.",
   },
 ];
 
@@ -31,11 +31,11 @@ export default function LegacyPage() {
   return (
     <>
       <PageHero
-        eyebrow="Legacy"
-        title="A legacy in entertainment since 1994."
-        lead="Four banners across production, music publishing and distribution laid the foundations for PRF Studios."
+        eyebrow="Heritage since 1994"
+        title="Historic banners. One contemporary identity."
+        lead="PRF Studios consolidates production, music publishing and distribution experience accumulated through earlier group banners over more than three decades."
         photo="cinema"
-        crumbs={[{ name: "Legacy", path: "/legacy/" }]}
+        crumbs={[{ name: "Heritage", path: "/legacy/" }]}
         compact
       />
 
@@ -92,7 +92,7 @@ export default function LegacyPage() {
             Rooted in Karnataka. Made for every screen.
           </p>
           <div data-reveal className="mt-10 flex justify-center gap-3">
-            <Link href="/work/" className="btn btn-white">
+            <Link href="/films/" className="btn btn-white">
               See the filmography
             </Link>
             <Link href="/studio/" className="btn btn-ghost">
