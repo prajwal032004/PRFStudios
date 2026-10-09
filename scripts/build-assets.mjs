@@ -103,34 +103,6 @@ for (const p of photos) {
   await sharp(`${SRC}/${p}.jpg`).resize({ width: 800 }).webp({ quality: 76 }).toFile(`${PUB}/images/${p}-sm.webp`);
 }
 
-// --- Open Graph images (1200x630), one per hero photograph -----------------
-await mkdir(`${PUB}/og`, { recursive: true });
-for (const p of photos) {
-  const W = 1200;
-  const H = 630;
-  const photo = await sharp(`${SRC}/${p}.jpg`).resize(W, H, { fit: "cover", position: "centre" }).modulate({ brightness: 0.75 }).toBuffer();
-  const overlay = Buffer.from(`
-    <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="g" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stop-color="#111" stop-opacity="0.95"/>
-          <stop offset="0.6" stop-color="#111" stop-opacity="0.55"/>
-          <stop offset="1" stop-color="#111" stop-opacity="0.1"/>
-        </linearGradient>
-      </defs>
-      <rect width="${W}" height="${H}" fill="url(#g)"/>
-      <text x="72" y="330" font-family="Georgia, Times New Roman, serif" font-weight="400" font-size="88" letter-spacing="-1" fill="#fbf8f2">PRF Studios</text>
-      <text x="72" y="400" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="500" font-size="34" fill="#ffffff" fill-opacity="0.82">Entertainment built on legacy. Created for the future.</text>
-      <rect x="72" y="460" width="340" height="52" rx="26" fill="#c6a36e"/>
-      <text x="242" y="494" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="600" font-size="22" fill="#12100c">Bengaluru · Legacy since 1994</text>
-      <text x="72" y="580" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="500" font-size="20" fill="#ffffff" fill-opacity="0.6">prfstudios.in · A POTHRAJ COMPANY</text>
-    </svg>`);
-  const logo = await sharp(await tint(prfEmblemInk, BRAND.gold)).resize({ height: 120 }).toBuffer();
-  const og = await sharp(photo)
-    .composite([{ input: overlay }, { input: logo, top: 64, left: 72 }])
-    .jpeg({ quality: 86, mozjpeg: true })
-    .toBuffer();
-  await writeFile(`${PUB}/og/${p}.jpg`, og);
-}
+// Open Graph banners are rendered from scripts/og/og-template.html — run `npm run og`.
 
 console.log("Assets built.");

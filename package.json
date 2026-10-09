@@ -7,7 +7,8 @@
     "build": "next build && node scripts/fix-export.mjs",
     "start": "npx serve out",
     "lint": "eslint",
-    "assets": "node scripts/build-assets.mjs"
+    "assets": "node scripts/build-assets.mjs",
+    "og": "node scripts/build-og.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

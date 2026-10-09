@@ -1,0 +1,366 @@
+<!doctype html>
+<!-- Open Graph banner (1200 × 630). Rendered to /public/og/<photo>.jpg by scripts/build-og.mjs.
+     Query: ?photo=set|cinema|music|edit
+     The build script waits for `window.__ogReady === true` before taking the screenshot. -->
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1200" />
+  <title>PRF Studios — Open Graph banner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Inter:wght@500;600&display=block"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c6a36e;
+      --champagne: #dcc7a0;
+      --ivory: #fbf8f2;
+      --midnight: #12100c;
+      --carbon: #1c1915;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    html,
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      background: var(--midnight);
+      color: var(--ivory);
+      font-family: Inter, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .banner {
+      position: relative;
+      width: 1200px;
+      height: 630px;
+      isolation: isolate;
+      overflow: hidden;
+      background:
+        radial-gradient(55% 75% at 0% 0%, rgba(198, 163, 110, 0.16) 0%, transparent 70%),
+        radial-gradient(40% 60% at 60% 100%, rgba(198, 163, 110, 0.08) 0%, transparent 70%),
+        var(--midnight);
+    }
+
+    /* Faint root lattice behind the text column (same tile as the site footer) */
+    .lattice {
+      position: absolute;
+      inset: 0 560px 0 0;
+      z-index: -2;
+      opacity: 0.07;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 500' width='256' height='200'><g fill='none' stroke='%23c6a36e' stroke-width='4'><g transform='translate(-307 -575)'><path d='M352 635 L902 635'/><path d='M627 590 L627 802'/><path d='M627 640 L481 765'/><path d='M627 640 L773 765'/><path d='M549 700 L580 800'/><path d='M705 700 L674 800'/><path d='M532 640 L532 690'/><path d='M722 640 L722 690'/><path d='M447 680 L447 744'/><path d='M807 680 L807 744'/><path d='M400 711 L472 640'/><path d='M854 711 L782 640'/><path d='M385 640 L385 690'/><path d='M869 640 L869 690'/></g><g transform='translate(13 -325)'><path d='M352 635 L902 635'/><path d='M627 590 L627 802'/><path d='M627 640 L481 765'/><path d='M627 640 L773 765'/><path d='M549 700 L580 800'/><path d='M705 700 L674 800'/><path d='M532 640 L532 690'/><path d='M722 640 L722 690'/><path d='M447 680 L447 744'/><path d='M807 680 L807 744'/><path d='M400 711 L472 640'/><path d='M854 711 L782 640'/><path d='M385 640 L385 690'/><path d='M869 640 L869 690'/></g><g transform='translate(-627 -325)'><path d='M352 635 L902 635'/><path d='M627 590 L627 802'/><path d='M627 640 L481 765'/><path d='M627 640 L773 765'/><path d='M549 700 L580 800'/><path d='M705 700 L674 800'/><path d='M532 640 L532 690'/><path d='M722 640 L722 690'/><path d='M447 680 L447 744'/><path d='M807 680 L807 744'/><path d='M400 711 L472 640'/><path d='M854 711 L782 640'/><path d='M385 640 L385 690'/><path d='M869 640 L869 690'/></g></g></svg>");
+      background-size: 256px 200px;
+      -webkit-mask-image: radial-gradient(90% 80% at 20% 70%, #000 20%, transparent 75%);
+      mask-image: radial-gradient(90% 80% at 20% 70%, #000 20%, transparent 75%);
+    }
+
+    /* Filmic grain over everything */
+    .grain {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.09;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    /* ---------------------------------------------------------------- Still */
+    .still {
+      position: absolute;
+      left: 664px;
+      top: 52px;
+      width: 484px;
+      height: 526px;
+    }
+
+    .still .offset {
+      position: absolute;
+      inset: 0;
+      transform: translate(16px, 16px);
+      border: 1px solid rgba(198, 163, 110, 0.45);
+      border-radius: 72px 6px 6px 6px;
+    }
+
+    .still .card {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border-radius: 72px 6px 6px 6px;
+      background: #1d1912 center / cover no-repeat;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .still .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(18, 16, 12, 0) 45%, rgba(18, 16, 12, 0.88) 100%),
+        linear-gradient(90deg, rgba(18, 16, 12, 0.35) 0%, rgba(18, 16, 12, 0) 35%);
+    }
+
+    .still .caption {
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      bottom: 28px;
+      z-index: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .caption .label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--champagne);
+    }
+
+    .caption .title {
+      margin-top: 6px;
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 300;
+      font-size: 30px;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+
+    .caption .url {
+      flex-shrink: 0;
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: var(--gold);
+      color: var(--midnight);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    /* Emblem badge overlapping the still's rounded corner */
+    .badge {
+      position: absolute;
+      left: 600px;
+      top: 22px;
+      z-index: 2;
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 35%, #221d16 0%, var(--midnight) 70%);
+      box-shadow: 0 0 0 1px rgba(198, 163, 110, 0.55), 0 0 0 8px var(--midnight), 0 0 0 9px rgba(198, 163, 110, 0.25), 0 18px 40px rgba(0, 0, 0, 0.6), 0 0 60px rgba(198, 163, 110, 0.18);
+      display: grid;
+      place-items: center;
+    }
+
+    .badge svg {
+      width: 92px;
+      height: auto;
+      color: var(--gold);
+      filter: drop-shadow(0 0 6px rgba(198, 163, 110, 0.35));
+    }
+
+    /* ---------------------------------------------------------------- Text */
+    .content {
+      position: absolute;
+      left: 72px;
+      top: 58px;
+      bottom: 54px;
+      width: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .word img {
+      display: block;
+      height: 34px;
+      width: auto;
+    }
+
+    .word span {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.34em;
+      color: rgba(220, 199, 160, 0.95);
+    }
+
+    .word span::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .eyebrow {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(251, 248, 242, 0.6);
+    }
+
+    h1 {
+      margin-top: 16px;
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 300;
+      font-variation-settings: "opsz" 144;
+      font-size: 68px;
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+    }
+
+    h1 em {
+      display: block;
+      font-style: italic;
+      color: var(--champagne);
+    }
+
+    .stats {
+      display: flex;
+      border-top: 1px solid rgba(251, 248, 242, 0.16);
+      padding-top: 20px;
+    }
+
+    .stat {
+      flex: 1;
+      padding-right: 18px;
+    }
+
+    .stat+.stat {
+      padding-left: 22px;
+      border-left: 1px solid rgba(251, 248, 242, 0.12);
+    }
+
+    .stat b {
+      display: block;
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 300;
+      font-size: 40px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--gold);
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: rgba(251, 248, 242, 0.72);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="banner">
+    <div class="lattice"></div>
+
+    <div class="content">
+      <div class="word">
+        <img src="../../public/brand/prf-wordmark-white.webp" alt="PRF Studios" />
+        <span>A POTHRAJ COMPANY</span>
+      </div>
+
+      <div>
+        <p class="eyebrow">Entertainment legacy since 1994</p>
+        <h1>Built on legacy.<em>Created for<br />the future.</em></h1>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>1994</b><span>Legacy</span></div>
+        <div class="stat"><b>10+</b><span>Feature films</span></div>
+        <div class="stat"><b>150+</b><span>Music titles</span></div>
+      </div>
+    </div>
+
+    <div class="still">
+      <div class="offset"></div>
+      <div class="card" id="card">
+        <div class="caption">
+          <div>
+            <p class="label" id="cap-label">Shooting floor</p>
+            <p class="title" id="cap-title">Bengaluru</p>
+          </div>
+          <span class="url">prfstudios.in</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="badge" aria-hidden="true">
+      <svg viewBox="280 140 700 680">
+        <g fill="none" stroke="currentColor" stroke-width="16">
+          <path d="M308 586 A332 332 0 1 1 946 586" />
+          <path d="M512 234 L627 352" /><path d="M512 234 C575 228 622 262 627 300" />
+          <path d="M742 234 L627 352" /><path d="M742 234 C679 228 632 262 627 300" />
+          <path d="M387 352 L627 352" /><path d="M387 352 C430 280 540 262 612 338" />
+          <path d="M867 352 L627 352" /><path d="M867 352 C824 280 714 262 642 338" />
+          <path d="M443 520 L627 352" /><path d="M443 520 C436 420 500 368 590 356" />
+          <path d="M811 520 L627 352" /><path d="M811 520 C818 420 754 368 664 356" />
+          <path d="M627 385 L527 493" /><path d="M527 493 C590 502 622 470 627 405" />
+          <path d="M627 385 L727 493" /><path d="M727 493 C664 502 632 470 627 405" />
+          <path d="M627 400 L627 802" /><path d="M352 635 L902 635" />
+          <path d="M627 640 L481 765" /><path d="M627 640 L773 765" />
+          <path d="M549 700 L580 800" /><path d="M705 700 L674 800" />
+          <path d="M532 640 L532 690" /><path d="M722 640 L722 690" />
+          <path d="M447 680 L447 744" /><path d="M807 680 L807 744" />
+          <path d="M400 711 L472 640" /><path d="M854 711 L782 640" />
+          <path d="M385 640 L385 690" /><path d="M869 640 L869 690" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="grain"></div>
+  </div>
+
+  <script>
+    // Only allow known photo keys; fall back to "set" for anything else.
+    const CAPTIONS = {
+      set: ["Production", "Shooting floor"],
+      cinema: ["Videa Films", "Feature cinema"],
+      music: ["PRF Music", "Recording & sound"],
+      edit: ["Post-production", "Edit, CG & finishing"],
+    };
+    const requested = new URLSearchParams(location.search).get("photo");
+    const photo = requested in CAPTIONS ? requested : "set";
+    const src = `../../public/images/${photo}.webp`;
+    document.getElementById("cap-label").textContent = CAPTIONS[photo][0];
+    document.getElementById("cap-title").textContent = CAPTIONS[photo][1];
+
+    // Signal the screenshot script once fonts, photo and logos have all loaded.
+    window.__ogReady = false;
+    const loadPhoto = new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        document.getElementById("card").style.backgroundImage = `url(${src})`;
+        resolve();
+      };
+      img.onerror = resolve; // keep the dark fallback rather than hang
+      img.src = src;
+    });
+    const loadImgs = [...document.images].map((i) =>
+      i.complete ? Promise.resolve() : new Promise((r) => { i.onload = i.onerror = r; })
+    );
+    Promise.all([document.fonts.ready, loadPhoto, ...loadImgs]).then(() => {
+      window.__ogReady = true;
+    });
+  </script>
+</body>
+
+</html>

@@ -130,17 +130,11 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* Scroll lock that also holds when Lenis is off (reduced motion) */
 html.scroll-locked,
 html.scroll-locked body {
   overflow: hidden;
 }
 
-/* ---------------------------------------------------------------------------
-   Typography helpers
---------------------------------------------------------------------------- */
-/* Three tiers: phone (<768), tablet (768–1279), desktop (1280+).
-   Short landscape phones get their own clamp so a hero never overflows the fold. */
 @utility display-xl {
   font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
   font-variation-settings: "opsz" 144;
@@ -573,6 +567,7 @@ html.scroll-locked body {
 .js-motion.preloading [data-nav-reveal] {
   visibility: hidden;
 }
+
 /* Emblem props: root lattice texture (gold roots, brick-tiled, faded at the edges) */
 .root-lattice::before {
   content: "";
