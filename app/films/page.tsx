@@ -89,6 +89,11 @@ export default function FilmsPage() {
             <p data-reveal className="mt-6 max-w-xl text-[17px] leading-relaxed text-white/70 md:text-lg">
               {filmLead.bio}
             </p>
+            <div data-reveal className="mt-8">
+              <ArrowLink dark href={`/leadership/${filmLead.slug}/`}>
+                Full profile
+              </ArrowLink>
+            </div>
           </div>
           <div>
             <figure data-reveal className="border-l border-gold pl-6 md:pl-10">

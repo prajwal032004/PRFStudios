@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { aiCapability, banners, disciplines, filmLead, films, photos, projects, studioStats } from "@/lib/content";
-import { pageMeta } from "@/lib/meta";
+import { ogVideo, pageMeta } from "@/lib/meta";
+import { site } from "@/lib/site";
 import Icon from "@/components/Icon";
 import Marquee from "@/components/motion/Marquee";
 import Magnetic from "@/components/motion/Magnetic";
@@ -17,6 +18,8 @@ export const metadata = {
     description:
       "Bengaluru-based PRF Studios develops films, music and digital content and provides integrated production, post-production and studio services.",
     path: "/",
+    // Studio showreel becomes og:video once configured in lib/site.ts
+    ...(site.showreel ? { openGraph: { type: "video.other", videos: [ogVideo(site.showreel)] } } : {}),
   }),
   title: { absolute: "PRF Studios | Films, Music, Digital Content & Production Services" },
 };
@@ -89,7 +92,7 @@ export default function Home() {
             {/* Current feature project */}
             <div data-reveal="fade" data-instant data-delay="0.8" className="flex flex-col gap-6 xl:items-end">
               <Link
-                href="/films/"
+                href={`/films/${bombayDada.slug}/`}
                 data-cursor="View"
                 className="group flex max-w-[400px] items-center gap-5 rounded-[8px] bg-black/35 p-4 pr-5 ring-1 ring-white/15 backdrop-blur-md transition-colors duration-500 hover:bg-black/50 hover:ring-gold/50"
               >
@@ -337,6 +340,9 @@ export default function Home() {
             <p data-reveal className="plex-label mt-2 text-[13px] text-smoke">
               {filmLead.role}
             </p>
+            <div data-reveal className="mt-6">
+              <ArrowLink href={`/leadership/${filmLead.slug}/`}>Profile</ArrowLink>
+            </div>
           </div>
           <figure data-reveal className="border-l border-gold pl-6 md:pl-10">
             <blockquote className="font-serif text-[clamp(26px,3.6vw,52px)] font-light leading-[1.18] tracking-[-0.02em] text-onyx">

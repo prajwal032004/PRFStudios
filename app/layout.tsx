@@ -6,6 +6,7 @@ import SmoothScroll from "@/components/motion/SmoothScroll";
 import Cursor from "@/components/motion/Cursor";
 import { JsonLd, organizationLd, websiteLd } from "@/components/JsonLd";
 import { site } from "@/lib/site";
+import { twitterHandles } from "@/lib/meta";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
@@ -54,7 +55,9 @@ export const metadata: Metadata = {
     title,
     description: site.description,
     images: [`/og/set.jpg?v=${site.ogVersion}`],
+    ...twitterHandles(),
   },
+  ...(site.social.facebookAppId ? { facebook: { appId: site.social.facebookAppId } } : {}),
   robots: {
     index: true,
     follow: true,
@@ -82,7 +85,10 @@ const motionBoot = `(function(){try{if(matchMedia('(prefers-reduced-motion: redu
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-IN" className={`${inter.variable} ${plex.variable} ${fraunces.variable}`} suppressHydrationWarning>
+    <html
+      lang="en-IN"
+      prefix="og: https://ogp.me/ns# video: https://ogp.me/ns/video# profile: https://ogp.me/ns/profile#"
+      className={`${inter.variable} ${plex.variable} ${fraunces.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: vhFallback + motionBoot }} />
       </head>

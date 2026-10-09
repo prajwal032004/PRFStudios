@@ -1,6 +1,8 @@
 <!doctype html>
 <!-- Open Graph banner (1200 × 630). Rendered to /public/og/<photo>.jpg by scripts/build-og.mjs.
      Query: ?photo=set|cinema|music|edit
+            &data=<JSON> (optional, for film / profile pages):
+              { eyebrow, title, em, stats: [[value, label], …], label, caption }
      The build script waits for `window.__ogReady === true` before taking the screenshot. -->
 <html lang="en">
 
@@ -225,6 +227,10 @@
       letter-spacing: -0.03em;
     }
 
+    h1.long {
+      font-size: 58px;
+    }
+
     h1 em {
       display: block;
       font-style: italic;
@@ -245,6 +251,11 @@
     .stat+.stat {
       padding-left: 22px;
       border-left: 1px solid rgba(251, 248, 242, 0.12);
+    }
+
+    .stats .stat b.small {
+      font-size: 27px;
+      line-height: 1.48;
     }
 
     .stat b {
@@ -279,11 +290,11 @@
       </div>
 
       <div>
-        <p class="eyebrow">Entertainment legacy since 1994</p>
-        <h1>Built on legacy.<em>Created for<br />the future.</em></h1>
+        <p class="eyebrow" id="eyebrow">Entertainment legacy since 1994</p>
+        <h1 id="headline">Built on legacy.<em>Created for<br />the future.</em></h1>
       </div>
 
-      <div class="stats">
+      <div class="stats" id="stats">
         <div class="stat"><b>1994</b><span>Legacy</span></div>
         <div class="stat"><b>10+</b><span>Feature films</span></div>
         <div class="stat"><b>150+</b><span>Music titles</span></div>
@@ -342,6 +353,44 @@
     const src = `../../public/images/${photo}.webp`;
     document.getElementById("cap-label").textContent = CAPTIONS[photo][0];
     document.getElementById("cap-title").textContent = CAPTIONS[photo][1];
+
+    // Page-specific banner (film, profile): replace headline, stats and caption.
+    let data = null;
+    try {
+      data = JSON.parse(new URLSearchParams(location.search).get("data") || "null");
+    } catch {}
+    if (data) {
+      const $ = (id) => document.getElementById(id);
+      if (data.eyebrow) $("eyebrow").textContent = data.eyebrow;
+      if (data.title) {
+        const h1 = $("headline");
+        h1.textContent = data.title;
+        if (data.em) {
+          const em = document.createElement("em");
+          em.textContent = data.em;
+          h1.appendChild(em);
+        }
+        if (Math.max(data.title.length, (data.em || "").length) > 15) h1.classList.add("long");
+      }
+      if (Array.isArray(data.stats)) {
+        const stats = $("stats");
+        stats.replaceChildren(
+          ...data.stats.slice(0, 3).map(([value, label]) => {
+            const d = document.createElement("div");
+            d.className = "stat";
+            const b = document.createElement("b");
+            b.textContent = value;
+            if (String(value).length > 7) b.classList.add("small");
+            const sp = document.createElement("span");
+            sp.textContent = label;
+            d.append(b, sp);
+            return d;
+          }),
+        );
+      }
+      if (data.label) $("cap-label").textContent = data.label;
+      if (data.caption) $("cap-title").textContent = data.caption;
+    }
 
     // Signal the screenshot script once fonts, photo and logos have all loaded.
     window.__ogReady = false;

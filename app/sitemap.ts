@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { divisions, services } from "@/lib/content";
+import { divisions, filmLead, projects, services } from "@/lib/content";
 import { site } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -21,6 +21,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("/services/", 0.9),
     ...services.map((s) => page(`/services/${s.slug}/`, 0.7)),
     page("/films/", 0.9, "weekly"),
+    ...projects.map((p) => page(`/films/${p.slug}/`, 0.8, "weekly")),
+    page(`/leadership/${filmLead.slug}/`, 0.6),
     page("/media/", 0.6),
     page("/facilities/", 0.8),
     page("/legacy/", 0.6, "yearly"),

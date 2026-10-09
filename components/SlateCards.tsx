@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef } from "react";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { projects } from "@/lib/content";
@@ -51,6 +52,7 @@ export default function SlateCards() {
   return (
     <ul ref={root} data-stagger="0.1" className="grid gap-3 sm:grid-cols-2 md:gap-4 xl:grid-cols-4 xl:gap-5">
       <li data-slate-card data-featured="true" className="sm:col-span-2 xl:row-span-2">
+        <Link href={`/films/${featured.slug}/`} data-cursor="View" aria-label={`${featured.title} — project details`} className="block h-full">
         <article
           data-slate-inner
           className="grain relative flex h-full min-h-[420px] flex-col justify-between overflow-hidden rounded-[8px] bg-gradient-to-br from-[#3d2e1c] via-[#17120c] to-[#0b0906] p-6 text-white ring-1 ring-white/10 md:min-h-[520px] md:p-9"
@@ -78,10 +80,12 @@ export default function SlateCards() {
             <p className="mt-5 text-[15px] leading-relaxed text-white/70 md:text-[16px]">{featured.text}</p>
           </div>
         </article>
+        </Link>
       </li>
 
       {rest.map((p, i) => (
         <li key={p.slug} data-slate-card>
+          <Link href={`/films/${p.slug}/`} data-cursor="View" aria-label={`${p.title} — project details`} className="block h-full">
           <article
             data-slate-inner
             className="grain relative flex h-full min-h-[200px] flex-col justify-between md:min-h-[260px] overflow-hidden rounded-[8px] bg-gradient-to-br from-[#2e2418] via-[#16110c] to-[#0b0906] p-5 text-white ring-1 ring-white/10 md:p-6"
@@ -107,6 +111,7 @@ export default function SlateCards() {
               <p className="mt-3 text-[14px] leading-relaxed text-white/60">{p.text}</p>
             </div>
           </article>
+          </Link>
         </li>
       ))}
     </ul>

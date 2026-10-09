@@ -223,6 +223,11 @@ export default function StudioPage() {
                 <p className="font-serif text-[24px] font-normal tracking-[-0.01em]">{filmLead.name}</p>
                 <p className="plex-label mt-2 text-[12px] text-champagne">{filmLead.role}</p>
                 <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-white/60">{filmLead.bio}</p>
+                <div className="mt-6">
+                  <ArrowLink dark href={`/leadership/${filmLead.slug}/`}>
+                    Full profile
+                  </ArrowLink>
+                </div>
               </div>
             </article>
             <div data-stagger className="grid gap-4">

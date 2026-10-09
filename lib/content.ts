@@ -386,6 +386,8 @@ export const studioStats = [
   { value: 150, suffix: "+", label: "Films distributed" },
 ];
 
+export type Video = { url: string; type: string; width: number; height: number };
+
 export type Project = {
   slug: string;
   title: string;
@@ -396,6 +398,15 @@ export type Project = {
   genre?: string;
   flag?: string;
   text: string;
+  /** Lead cast — emitted as video:actor. */
+  actors?: string[];
+  /** Fill in once officially announced; each is emitted only when set. */
+  directors?: string[];
+  writers?: string[];
+  /** ISO date, e.g. "2027-03-14". */
+  releaseDate?: string;
+  /** Trailer hosted under /public (e.g. "/media/bombay-dada-trailer.mp4") — emitted as og:video. */
+  trailer?: Video;
 };
 
 export const projects: Project[] = [
@@ -405,6 +416,7 @@ export const projects: Project[] = [
     kind: "Film",
     flag: "First major public project",
     credits: "Sharan × Diganth",
+    actors: ["Sharan", "Diganth"],
     genre: "Retro comedy · Alternate history",
     text: "A mainstream entertainer that blends comedy, nostalgia and an imaginative alternate-history premise against a recognisable Bombay setting. The project anchors the public launch phase of Videa Films within the PRF Studios ecosystem.",
   },
@@ -445,7 +457,11 @@ export const slateNote =
   "Project titles, casting, collaborators, production status, IP structures and commercial arrangements are subject to definitive agreements and final public announcements.";
 
 export const filmLead = {
+  slug: "vindhya-balaji-pothraj",
   name: "Vindhya Balaji Pothraj",
+  firstName: "Vindhya",
+  lastName: "Pothraj",
+  jobTitle: "Head of Film Production",
   role: "Head of Film Production · Videa Films",
   bio: "Her approach brings corporate discipline, structured planning and long-term thinking into creative production. Videa Films is being built as a professionally managed production house capable of combining strong concepts, talent partnerships and quality mainstream entertainment.",
   quote: "Bombay Dada is the first step in our journey and the beginning of a larger vision across cinema, music and digital content.",
