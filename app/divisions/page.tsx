@@ -30,12 +30,12 @@ export default function DivisionsPage() {
           {divisions.map((d, i) => {
             const flip = i % 2 === 1;
             return (
-              <article key={d.slug} className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+              <article key={d.slug} className="grid items-center gap-7 md:gap-10 lg:grid-cols-2 lg:gap-16">
                 <Link
                   href={`/divisions/${d.slug}/`}
                   data-cursor="Explore"
                   data-clip
-                  className={`group relative block aspect-[4/3] overflow-hidden rounded-[8px] ${flip ? "lg:order-2 lg:rounded-tr-[60px]" : "lg:rounded-tl-[60px]"}`}
+                  className={`group relative block aspect-[4/3] overflow-hidden rounded-[8px] md:aspect-[16/10] lg:aspect-[4/3] ${flip ? "lg:order-2 lg:rounded-tr-[60px]" : "lg:rounded-tl-[60px]"}`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img

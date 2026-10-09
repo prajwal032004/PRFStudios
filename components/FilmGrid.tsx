@@ -40,14 +40,14 @@ export default function FilmGrid() {
 
   return (
     <div ref={root}>
-      <div role="group" aria-label="Filter by banner" className="flex flex-wrap gap-2">
+      <div role="group" aria-label="Filter by banner" className="-mx-[var(--gutter)] flex gap-2 overflow-x-auto px-[var(--gutter)] pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden">
         {filters.map((f) => (
           <button
             key={f.slug}
             type="button"
             aria-pressed={filter === f.slug}
             onClick={() => choose(f.slug)}
-            className={`tag transition-colors duration-300 ${
+            className={`tag shrink-0 transition-colors duration-300 ${
               filter === f.slug ? "bg-carbon text-white" : "bg-sand text-carbon hover:bg-linen"
             }`}
           >
@@ -56,7 +56,7 @@ export default function FilmGrid() {
         ))}
       </div>
 
-      <ul className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+      <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:mt-10 xl:grid-cols-4 xl:gap-6">
         {films.map((f, i) => {
           const visible = filter === "all" || f.bannerSlug === filter;
           return (

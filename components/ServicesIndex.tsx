@@ -44,14 +44,17 @@ export default function ServicesIndex() {
             <Link
               href={`/services/${s.slug}/`}
               onPointerEnter={(e) => enter(i, e)}
-              className="group grid grid-cols-[48px_1fr_auto] items-center gap-4 border-b border-ash py-6 transition-colors duration-500 md:grid-cols-[80px_1.1fr_1.4fr_auto] md:gap-8 md:py-8"
+              className="group grid grid-cols-[36px_1fr_auto] items-center gap-3 border-b border-ash py-5 transition-colors duration-500 md:grid-cols-[64px_1fr_auto] md:gap-6 md:py-7 xl:grid-cols-[80px_1.1fr_1.4fr_auto] xl:gap-8 xl:py-8"
             >
               <span className="plex-label text-smoke transition-colors group-hover:text-gold-ink">{s.step}</span>
-              <span className="text-[24px] font-serif font-normal tracking-[-0.02em] text-carbon transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-2 md:text-[34px]">
-                {s.name}
+              {/* Tablet stacks the summary under the name; desktop gives it its own column */}
+              <span className="flex min-w-0 flex-col gap-1.5 xl:contents">
+                <span className="text-[22px] font-serif font-normal leading-tight tracking-[-0.02em] text-carbon transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-2 min-[400px]:text-[24px] md:text-[32px] xl:text-[34px]">
+                  {s.name}
+                </span>
+                <span className="hidden max-w-[52ch] text-[15px] leading-relaxed text-graphite md:block">{s.short}</span>
               </span>
-              <span className="hidden text-[15px] leading-relaxed text-graphite md:block">{s.short}</span>
-              <span className="flex h-11 w-11 items-center justify-center rounded-full ring-1 ring-ash transition duration-500 group-hover:bg-carbon group-hover:text-white group-hover:ring-carbon">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full ring-1 ring-ash transition duration-500 md:h-11 md:w-11 group-hover:bg-carbon group-hover:text-white group-hover:ring-carbon">
                 <Icon name="arrowUpRight" size={18} />
               </span>
             </Link>
@@ -62,7 +65,7 @@ export default function ServicesIndex() {
       <div
         ref={preview}
         aria-hidden="true"
-        className="pointer-events-none fixed left-0 top-0 z-30 hidden h-[220px] w-[320px] overflow-hidden rounded-[8px] shadow-[var(--shadow-card)] lg:block"
+        className="pointer-events-none fixed left-0 top-0 z-30 hidden h-[220px] w-[320px] overflow-hidden rounded-[8px] shadow-[var(--shadow-card)] [@media(hover:hover)_and_(min-width:1280px)]:block"
       >
         {services.map((s, i) => (
           // eslint-disable-next-line @next/next/no-img-element

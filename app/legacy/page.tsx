@@ -53,11 +53,11 @@ export default function LegacyPage() {
             <span aria-hidden="true" className="absolute bottom-0 left-[7px] top-2 w-px bg-ash" />
             <span aria-hidden="true" data-progress-line className="absolute bottom-0 left-[7px] top-2 w-px origin-top bg-gold" />
             {chapters.map((c) => (
-              <li key={c.title} data-reveal className="relative pb-14 pl-12 last:pb-0">
+              <li key={c.title} data-reveal className="relative pb-12 pl-10 last:pb-0 md:pb-14 md:pl-12">
                 <span className="absolute left-0 top-2 h-[15px] w-[15px] rounded-full border-2 border-gold bg-ivory" />
                 <p className="plex-label text-gold-ink">{c.mark}</p>
-                <h2 className="mt-1 text-[30px] font-serif font-normal tracking-[-0.02em] text-onyx md:text-[36px]">{c.title}</h2>
-                <p className="mt-3 max-w-xl text-lg leading-relaxed text-graphite">{c.text}</p>
+                <h2 className="mt-1 text-[26px] font-serif font-normal tracking-[-0.02em] text-onyx md:text-[36px]">{c.title}</h2>
+                <p className="mt-3 max-w-xl text-[17px] leading-relaxed text-graphite md:text-lg">{c.text}</p>
                 {"films" in c && c.films && (
                   <ul className="mt-5 flex flex-wrap gap-2">
                     {c.films.map((f) => (
@@ -79,7 +79,7 @@ export default function LegacyPage() {
           <img src={photos.music.src} alt="" loading="lazy" className="h-full w-full object-cover" />
         </div>
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-midnight via-midnight/70 to-midnight/40" />
-        <div className="container-x py-28 text-center md:py-40">
+        <div className="container-x py-24 text-center md:py-32 xl:py-40">
           <p data-reveal="fade" className="eyebrow text-champagne">
             Kannada · Tamil · Telugu
           </p>

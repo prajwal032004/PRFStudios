@@ -39,7 +39,7 @@ export default function FacilitiesPage() {
           {facilities.map((f, i) => {
             const flip = i % 2 === 1;
             return (
-              <article key={f.name} className="grid items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+              <article key={f.name} className="grid items-center gap-7 md:gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
                 <div
                   data-clip
                   className={`relative aspect-[16/10] overflow-hidden rounded-[8px] ${flip ? "lg:order-2 lg:rounded-tr-[60px]" : "lg:rounded-tl-[60px]"}`}
@@ -69,7 +69,7 @@ export default function FacilitiesPage() {
       <section className="section-y bg-midnight text-white">
         <div className="container-x">
           <SectionHeading dark eyebrow="Booking" title="How booking works." lead="Simple, transparent and planned around your schedule." />
-          <ol data-stagger className="mt-14 grid gap-px overflow-hidden rounded-[8px] bg-white/10 md:grid-cols-4">
+          <ol data-stagger className="mt-10 grid gap-px overflow-hidden rounded-[8px] bg-white/10 sm:grid-cols-2 md:mt-14 xl:grid-cols-4">
             {[
               { title: "Tell us the brief", text: "Share the project, the rooms you need and your preferred dates." },
               { title: "We plan it", text: "We confirm availability, crew and technical requirements with you." },

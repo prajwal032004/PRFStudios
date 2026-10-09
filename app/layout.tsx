@@ -61,7 +61,13 @@ export const viewport: Viewport = {
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
+  // Chrome Android: the on-screen keyboard overlays content instead of shrinking dvh layouts.
+  interactiveWidget: "resizes-visual",
 };
+
+// Browsers without dvh (Chrome Android < 108, older WebViews): mirror the visible height into --vh.
+const vhFallback = `(function(){try{if(window.CSS&&CSS.supports('height','1dvh'))return;var r=document.documentElement,f=function(){r.style.setProperty('--vh',window.innerHeight*0.01+'px')};f();addEventListener('resize',f,{passive:true});addEventListener('orientationchange',f)}catch(e){}})();`;
 
 // Hide motion targets before first paint; un-hide if the JS bundle never boots.
 const motionBoot = `(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('js-motion');setTimeout(function(){if(!window.__motionBooted)d.classList.remove('js-motion')},5000)}catch(e){}})();`;
@@ -70,9 +76,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-IN" className={`${inter.variable} ${plex.variable} ${fraunces.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: motionBoot }} />
+        <script dangerouslySetInnerHTML={{ __html: vhFallback + motionBoot }} />
       </head>
-      <body className="min-h-screen bg-ivory">
+      <body className="min-h-vp-100 bg-ivory">
         <JsonLd data={[organizationLd, websiteLd]} />
         <SmoothScroll />
         <Header />

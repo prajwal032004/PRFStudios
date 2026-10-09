@@ -115,7 +115,7 @@ export default function StudioPage() {
             title="Stories. Music. Technology. Production."
             lead="Four words that describe the studio — and the four strengths every project draws on."
           />
-          <div data-stagger className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          <div data-stagger className="mt-12 grid gap-8 sm:grid-cols-2 md:mt-16 md:gap-10 xl:grid-cols-4 xl:gap-8">
             {pillars.map((p) => (
               <div key={p.label} className="border-t border-white/15 pt-6">
                 <p className="plex-label text-white">{p.label}</p>
@@ -138,7 +138,7 @@ export default function StudioPage() {
           <SectionHeading eyebrow="Principles" title="How we approach every project." />
           <div data-stagger className="mt-14 grid gap-5 md:grid-cols-2">
             {principles.map((p, i) => (
-              <article key={p.title} className="flex gap-6 rounded-[8px] bg-fog p-7 md:p-8">
+              <article key={p.title} className="flex gap-4 rounded-[8px] bg-fog p-6 sm:gap-6 md:p-8">
                 <span className="plex-label text-gold-ink">0{i + 1}</span>
                 <div>
                   <h3 className="text-[22px] font-serif font-normal tracking-[-0.01em] text-onyx">{p.title}</h3>
@@ -152,13 +152,13 @@ export default function StudioPage() {
 
       {/* Divisions quick links */}
       <section className="bg-fog">
-        <div className="container-x py-24">
+        <div className="container-x py-20 md:py-24">
           <SectionHeading
             eyebrow="Divisions"
             title="Meet the four teams."
             action={<ArrowLink href="/divisions/">All divisions</ArrowLink>}
           />
-          <ul data-stagger className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul data-stagger className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-12 xl:grid-cols-4">
             {divisions.map((d) => (
               <li key={d.slug}>
                 <Link
@@ -205,7 +205,7 @@ export default function StudioPage() {
               commerce and media — and PRF Studios is the group&apos;s home for film, music and content.
             </p>
           </div>
-          <div data-reveal="scale" className="flex items-center justify-center rounded-[8px] bg-midnight p-12 md:p-16">
+          <div data-reveal="scale" className="flex items-center justify-center rounded-[8px] bg-midnight p-10 md:p-16">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/pothraj-group-light.webp" alt="Pothraj Group" width={636} height={160} loading="lazy" className="h-16 w-auto md:h-20" />
           </div>

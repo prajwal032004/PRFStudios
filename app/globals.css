@@ -26,6 +26,16 @@
   /* Fluid side gutter: content spans the full screen at any width or zoom level */
   --gutter: clamp(20px, 5vw, 128px);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* One viewport-height unit. Uses dvh (tracks Chrome Android's collapsing URL bar)
+     where supported; older browsers fall back to vh, and the boot script in <head>
+     patches --vh with the real innerHeight on engines without dvh support. */
+  --vh: 1vh;
+}
+@supports (height: 1dvh) {
+  :root {
+    --vh: 1dvh;
+  }
 }
 
 @theme inline {
@@ -62,12 +72,18 @@
 --------------------------------------------------------------------------- */
 html {
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  /* Off-canvas reveals (x-translated, scaled) must never create sideways scroll on phones */
+  overflow-x: clip;
   scrollbar-width: none; /* hide the browser scrollbar; Lenis still scrolls */
   -ms-overflow-style: none;
   scroll-padding-top: calc(var(--nav-h) + 16px);
 }
 
 body {
+  overflow-x: clip;
+  min-height: calc(var(--vh) * 100);
   background: var(--color-ivory);
   color: var(--color-carbon);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -118,37 +134,69 @@ html.lenis body {
 /* ---------------------------------------------------------------------------
    Typography helpers
 --------------------------------------------------------------------------- */
+/* Three tiers: phone (<768), tablet (768–1279), desktop (1280+).
+   Short landscape phones get their own clamp so a hero never overflows the fold. */
 @utility display-xl {
   font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
   font-variation-settings: "opsz" 144;
   font-weight: 300;
-  font-size: clamp(48px, 7.2vw, 240px);
-  line-height: 0.98;
+  font-size: clamp(38px, 10.6vw, 64px);
+  line-height: 1;
   letter-spacing: -0.03em;
+  @media (min-width: 768px) {
+    font-size: clamp(60px, 8.4vw, 100px);
+    line-height: 0.98;
+  }
+  @media (min-width: 1280px) {
+    font-size: clamp(92px, 7.2vw, 240px);
+  }
+  @media (max-height: 520px) and (orientation: landscape) {
+    font-size: clamp(36px, 6.4vw, 64px);
+  }
 }
 @utility display {
   font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
   font-variation-settings: "opsz" 144;
   font-weight: 300;
-  font-size: clamp(40px, 5vw, 160px);
-  line-height: 1.02;
+  font-size: clamp(34px, 9vw, 52px);
+  line-height: 1.04;
   letter-spacing: -0.025em;
+  @media (min-width: 768px) {
+    font-size: clamp(50px, 6.4vw, 76px);
+    line-height: 1.02;
+  }
+  @media (min-width: 1280px) {
+    font-size: clamp(64px, 5vw, 160px);
+  }
 }
 @utility heading-lg {
   font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
   font-variation-settings: "opsz" 144;
   font-weight: 350;
-  font-size: clamp(32px, 3.4vw, 104px);
-  line-height: 1.06;
+  font-size: clamp(30px, 8.2vw, 42px);
+  line-height: 1.08;
   letter-spacing: -0.02em;
+  @media (min-width: 768px) {
+    font-size: clamp(40px, 4.8vw, 56px);
+    line-height: 1.06;
+  }
+  @media (min-width: 1280px) {
+    font-size: clamp(48px, 3.4vw, 104px);
+  }
 }
 @utility heading {
   font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
   font-variation-settings: "opsz" 144;
   font-weight: 400;
-  font-size: clamp(24px, 2vw, 56px);
+  font-size: clamp(22px, 6vw, 26px);
   line-height: 1.2;
   letter-spacing: -0.012em;
+  @media (min-width: 768px) {
+    font-size: clamp(26px, 2.8vw, 32px);
+  }
+  @media (min-width: 1280px) {
+    font-size: clamp(28px, 2vw, 56px);
+  }
 }
 @utility eyebrow {
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -171,16 +219,30 @@ html.lenis body {
 @utility display-serif {
   font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
   font-weight: 300;
-  font-size: clamp(58px, 9.4vw, 320px);
-  line-height: 0.92;
+  font-size: clamp(46px, 14.2vw, 92px);
+  line-height: 0.94;
   letter-spacing: -0.035em;
   font-variation-settings: "opsz" 144;
+  @media (min-width: 768px) {
+    font-size: clamp(92px, 12vw, 124px);
+    line-height: 0.92;
+  }
+  @media (min-width: 1280px) {
+    font-size: clamp(120px, 9.4vw, 320px);
+  }
+  @media (max-height: 520px) and (orientation: landscape) {
+    font-size: clamp(44px, 8vw, 84px);
+  }
 }
 @utility label-wide {
-  font-size: 13px;
+  font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  @media (min-width: 768px) {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -191,9 +253,46 @@ html.lenis body {
   padding-inline: var(--gutter);
 }
 @utility section-y {
-  padding-block: 88px;
-  @media (min-width: 1024px) {
+  padding-block: 72px;
+  @media (min-width: 768px) {
+    padding-block: 104px;
+  }
+  @media (min-width: 1280px) {
     padding-block: 128px;
+  }
+}
+
+/* Viewport heights in dvh (with fallback) — e.g. min-h-vp-100, h-vp-88 */
+@utility min-h-vp-* {
+  min-height: calc(var(--vh) * --value(integer));
+}
+@utility h-vp-* {
+  height: calc(var(--vh) * --value(integer));
+}
+@utility max-h-vp-* {
+  max-height: calc(var(--vh) * --value(integer));
+}
+
+/* Native swipe rail for touch layouts (cards snap to the page gutter) */
+@utility swipe-rail {
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  padding-inline: var(--gutter);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  & > * {
+    scroll-snap-align: start;
+  }
+  /* trailing space so the last card can snap to the gutter */
+  &::after {
+    content: "";
+    flex: 0 0 1px;
   }
 }
 
@@ -293,6 +392,13 @@ html.lenis body {
   opacity: 0.08;
   mix-blend-mode: overlay;
   animation: grain 1.2s steps(6) infinite;
+}
+/* Animated full-bleed blend layers are expensive on phone/tablet GPUs — keep the texture, drop the motion */
+@media (hover: none), (max-width: 1023px) {
+  .grain::after {
+    animation: none;
+    inset: 0;
+  }
 }
 @keyframes grain {
   0%, 100% { transform: translate(0, 0); }

@@ -147,10 +147,10 @@ export default function Header() {
         }`}
         onMouseLeave={scheduleClose}
       >
-        <nav aria-label="Primary" className="container-x flex h-16 items-center justify-between gap-6">
+        <nav aria-label="Primary" className="container-x flex h-16 items-center justify-between gap-4 md:h-[72px] xl:h-16 xl:gap-6">
           <Logo onNavigate={() => setMobileOpen(false)} />
 
-          <ul className="hidden items-center gap-1 lg:flex">
+          <ul className="hidden items-center gap-1 xl:flex">
             {nav.map((item) => (
               <li key={item.href} className="relative" onMouseEnter={() => openMenu(item.children ? item.href : null)}>
                 <div className="flex items-center">
@@ -189,7 +189,7 @@ export default function Header() {
             ))}
           </ul>
 
-          <div className="hidden items-center gap-5 lg:flex">
+          <div className="hidden items-center gap-5 xl:flex">
             <Link href="/contact/" className="link-draw text-[15px] font-medium text-white/80 hover:text-white">
               Contact
             </Link>
@@ -198,13 +198,22 @@ export default function Header() {
             </Link>
           </div>
 
+          <div className="flex items-center gap-3 xl:hidden">
+          {/* Tablet: keep the primary action in reach next to the menu button */}
+          <Link
+            href="/contact/#enquiry"
+            onClick={() => setMobileOpen(false)}
+            className="btn btn-gold hidden !py-2.5 !text-[15px] md:inline-flex"
+          >
+            Start a project
+          </Link>
           <button
             type="button"
             onClick={() => setMobileOpen((o) => !o)}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            className="relative z-[60] flex h-11 w-11 items-center justify-center rounded-full text-white ring-1 ring-white/20 transition hover:bg-white/10 lg:hidden"
+            className="relative z-[60] flex h-11 w-11 items-center justify-center rounded-full text-white ring-1 ring-white/20 transition hover:bg-white/10"
           >
             <span className="relative block h-3 w-5">
               <span
@@ -219,10 +228,11 @@ export default function Header() {
               />
             </span>
           </button>
+          </div>
         </nav>
 
         {/* Desktop dropdown panels */}
-        <div className="pointer-events-none absolute inset-x-0 top-full hidden lg:block">
+        <div className="pointer-events-none absolute inset-x-0 top-full hidden xl:block">
           {/* Divisions — mega panel */}
           <div
             id="panel-Divisions"
@@ -319,17 +329,17 @@ export default function Header() {
         role="dialog"
         aria-modal="true"
         aria-label="Site menu"
-        className="fixed inset-0 z-40 hidden flex-col overflow-y-auto bg-midnight px-5 pb-10 pt-24 text-white lg:hidden"
+        className="fixed inset-x-0 top-0 z-40 hidden h-vp-100 flex-col overflow-y-auto overscroll-contain bg-midnight px-[var(--gutter)] pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-24 text-white md:pt-32 xl:hidden"
         data-lenis-prevent
       >
-        <ul className="flex flex-col">
+        <ul className="flex flex-col md:grid md:grid-cols-2 md:gap-x-12">
           {[{ href: "/", label: "Home" }, ...nav, { href: "/contact/", label: "Contact" }].map((item) => (
             <li key={item.href} className="overflow-hidden border-b border-white/10">
               <div data-m-item className="flex items-center justify-between">
                 <Link
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`block py-4 text-[32px] font-serif font-normal tracking-[-0.02em] ${
+                  className={`block py-3.5 text-[clamp(28px,8vw,34px)] font-serif font-normal tracking-[-0.02em] md:py-5 md:text-[40px] ${
                     isActive(item.href) ? "text-white" : "text-white/70"
                   }`}
                 >
@@ -341,7 +351,7 @@ export default function Header() {
                     aria-label={`Expand ${item.label}`}
                     aria-expanded={mobileSection === item.href}
                     onClick={() => setMobileSection(mobileSection === item.href ? null : item.href)}
-                    className="flex h-10 w-10 items-center justify-center rounded-full ring-1 ring-white/20"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full ring-1 ring-white/20"
                   >
                     <Icon
                       name="plus"
@@ -363,7 +373,7 @@ export default function Header() {
                         <Link
                           href={c.href}
                           onClick={() => setMobileOpen(false)}
-                          className="flex items-center justify-between py-2 text-[17px] text-white/70"
+                          className="flex items-center justify-between py-2.5 text-[17px] text-white/70"
                         >
                           {c.label}
                           <Icon name="arrow" size={16} className="text-white/40" />
@@ -377,13 +387,13 @@ export default function Header() {
           ))}
         </ul>
 
-        <div className="mt-auto pt-10">
-          <div data-m-item>
+        <div className="mt-auto pt-10 md:flex md:items-end md:justify-between md:gap-10">
+          <div data-m-item className="md:hidden">
             <Link href="/contact/#enquiry" onClick={() => setMobileOpen(false)} className="btn btn-gold w-full">
               Start a project
             </Link>
           </div>
-          <div data-m-item className="mt-8 grid gap-1 text-sm text-white/60">
+          <div data-m-item className="mt-8 grid gap-1 text-sm text-white/60 md:mt-0 md:text-[15px]">
             <a href={`mailto:${contact.email}`} className="hover:text-white">
               {contact.email}
             </a>

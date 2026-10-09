@@ -95,8 +95,8 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             </div>
           </div>
 
-          <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
-            <div data-clip className="aspect-[4/3] overflow-hidden rounded-[8px]">
+          <aside className="grid gap-6 md:grid-cols-2 md:items-start lg:sticky lg:top-28 lg:flex lg:flex-col lg:self-start">
+            <div data-clip className="aspect-[4/3] overflow-hidden rounded-[8px] md:row-span-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={photos[s.photo].src} alt={photos[s.photo].alt} loading="lazy" className="h-full w-full object-cover" />
             </div>
@@ -127,14 +127,14 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
       <section className="border-t border-ash bg-ivory">
         <div className="container-x grid sm:grid-cols-2">
           {prev ? (
-            <Link href={`/services/${prev.slug}/`} className="group border-ash py-12 sm:border-r sm:pr-10">
+            <Link href={`/services/${prev.slug}/`} className="group border-ash py-10 sm:border-r sm:pr-10 md:py-12">
               <p className="plex-label flex items-center gap-2 text-smoke">
                 <Icon name="arrow" size={16} className="rotate-180" /> Previous stage
               </p>
               <p className="heading-lg mt-2 text-onyx transition-colors group-hover:text-gold-ink">{prev.name}</p>
             </Link>
           ) : (
-            <Link href="/services/" className="group border-ash py-12 sm:border-r sm:pr-10">
+            <Link href="/services/" className="group border-ash py-10 sm:border-r sm:pr-10 md:py-12">
               <p className="plex-label flex items-center gap-2 text-smoke">
                 <Icon name="arrow" size={16} className="rotate-180" /> Overview
               </p>
@@ -142,14 +142,14 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             </Link>
           )}
           {next ? (
-            <Link href={`/services/${next.slug}/`} className="group border-t border-ash py-12 text-right sm:border-t-0 sm:pl-10">
+            <Link href={`/services/${next.slug}/`} className="group border-t border-ash py-10 text-right sm:border-t-0 sm:pl-10 md:py-12">
               <p className="plex-label flex items-center justify-end gap-2 text-smoke">
                 Next stage <Icon name="arrow" size={16} />
               </p>
               <p className="heading-lg mt-2 text-onyx transition-colors group-hover:text-gold-ink">{next.name}</p>
             </Link>
           ) : (
-            <Link href="/contact/#enquiry" className="group border-t border-ash py-12 text-right sm:border-t-0 sm:pl-10">
+            <Link href="/contact/#enquiry" className="group border-t border-ash py-10 text-right sm:border-t-0 sm:pl-10 md:py-12">
               <p className="plex-label flex items-center justify-end gap-2 text-smoke">
                 Ready? <Icon name="arrow" size={16} />
               </p>

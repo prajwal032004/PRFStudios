@@ -59,7 +59,7 @@ export default function WorkPage() {
               </Link>
             }
           />
-          <ul data-stagger className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul data-stagger className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-14 xl:grid-cols-3">
             {formats.map((f) => {
               const d = divisions.find((x) => x.slug === f.division)!;
               return (
@@ -85,7 +85,7 @@ export default function WorkPage() {
           <img src={photos.set.src} alt="" loading="lazy" className="h-full w-full object-cover" />
         </div>
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-midnight via-midnight/80 to-midnight/30" />
-        <div className="container-x py-28 md:py-36">
+        <div className="container-x py-24 md:py-32 xl:py-36">
           <p data-reveal="fade" className="eyebrow text-champagne">
             Videa Films · New slate
           </p>

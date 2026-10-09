@@ -25,9 +25,9 @@ export default function ContactPage() {
     <>
       <JsonLd data={breadcrumbLd([{ name: "Contact", path: "/contact/" }])} />
 
-      <section className="relative overflow-hidden bg-midnight pb-20 pt-36 text-white md:pb-28 md:pt-44">
+      <section className="relative overflow-hidden bg-midnight pb-16 pt-28 text-white md:pb-24 md:pt-40 xl:pb-28 xl:pt-44">
         <div className="grain pointer-events-none absolute inset-0 overflow-hidden" />
-        <div aria-hidden="true" className="absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-gold/25 blur-[120px]" />
+        <div aria-hidden="true" className="absolute -right-40 -top-40 h-[320px] w-[320px] rounded-full bg-gold/25 blur-[90px] md:h-[520px] md:w-[520px] md:blur-[120px]" />
         <div className="container-x relative">
           <Breadcrumbs crumbs={[{ name: "Contact", path: "/contact/" }]} />
           <p data-reveal="fade" data-instant className="eyebrow mt-8 text-champagne">

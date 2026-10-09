@@ -91,11 +91,11 @@ export default function Template({ children }: { children: React.ReactNode }) {
             <p data-pre className="mt-6 font-serif text-[30px] font-light uppercase tracking-[0.16em] text-champagne">
               PRF Studios
             </p>
-            <p data-pre className="eyebrow mt-2 text-white/50">
+            <p data-pre className="eyebrow mt-2 max-w-[22rem] px-6 text-center text-white/50 md:max-w-none">
               Stories · Music · Technology · Production
             </p>
           </div>
-          <div className="absolute inset-x-0 bottom-10 mx-auto flex w-[min(420px,80vw)] items-center gap-4">
+          <div className="absolute inset-x-0 bottom-[max(2.5rem,env(safe-area-inset-bottom))] mx-auto flex w-[min(420px,80vw)] items-center gap-4">
             <div className="h-px flex-1 bg-white/15">
               <div data-bar className="h-px origin-left bg-gold" />
             </div>

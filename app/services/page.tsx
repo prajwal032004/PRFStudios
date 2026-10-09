@@ -49,12 +49,12 @@ export default function ServicesPage() {
             <span aria-hidden="true" className="absolute bottom-6 left-[23px] top-6 w-px bg-ash" />
             <span aria-hidden="true" data-progress-line className="absolute bottom-6 left-[23px] top-6 w-px origin-top bg-gold" />
             {services.map((s) => (
-              <li key={s.slug} data-reveal className="relative pb-12 pl-20 last:pb-0">
+              <li key={s.slug} data-reveal className="relative pb-10 pl-16 last:pb-0 md:pb-12 md:pl-20">
                 <span className="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-full bg-ivory text-sm font-semibold text-carbon ring-1 ring-ash">
                   <span className="plex-label text-[14px]">{s.step}</span>
                 </span>
                 <Link href={`/services/${s.slug}/`} className="group block">
-                  <h2 className="flex items-center gap-3 text-[28px] font-serif font-normal tracking-[-0.02em] text-onyx transition-colors group-hover:text-gold-ink md:text-[34px]">
+                  <h2 className="flex items-center gap-3 text-[24px] font-serif font-normal tracking-[-0.02em] text-onyx transition-colors group-hover:text-gold-ink md:text-[34px]">
                     {s.name}
                     <Icon name="arrowUpRight" size={22} className="opacity-0 transition duration-300 group-hover:opacity-100" />
                   </h2>
@@ -77,7 +77,7 @@ export default function ServicesPage() {
       <section className="section-y bg-midnight text-white">
         <div className="container-x">
           <SectionHeading dark center eyebrow="Engagement" title="End-to-end, or exactly what you need." />
-          <div data-stagger className="mt-14 grid gap-px overflow-hidden rounded-[8px] bg-white/10 md:grid-cols-3">
+          <div data-stagger className="mt-10 grid gap-px overflow-hidden rounded-[8px] bg-white/10 md:mt-14 md:grid-cols-3">
             {[
               {
                 label: "Full production",

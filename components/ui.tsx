@@ -23,7 +23,7 @@ export function PageHero({
 }) {
   const img = photos[photo];
   return (
-    <section className={`relative isolate flex overflow-hidden bg-midnight text-white ${compact ? "min-h-[72svh]" : "min-h-[88svh]"}`}>
+    <section className={`relative isolate flex overflow-hidden bg-midnight text-white ${compact ? "min-h-vp-72" : "min-h-vp-88"}`}>
       <JsonLd data={breadcrumbLd(crumbs)} />
       <div data-parallax="0.18" className="absolute inset-0 -z-20">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -33,21 +33,21 @@ export function PageHero({
       <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-midnight to-transparent" />
       <div className="grain pointer-events-none absolute inset-0 -z-10 overflow-hidden" />
 
-      <div className="container-x flex flex-col justify-end pb-16 pt-36 md:pb-24">
+      <div className="container-x flex w-full flex-col justify-end pb-14 pt-28 md:pb-20 md:pt-40 xl:pb-24 xl:pt-36">
         <Breadcrumbs crumbs={crumbs} />
-        <p data-reveal="fade" data-instant className="eyebrow mt-8 text-champagne">
+        <p data-reveal="fade" data-instant className="eyebrow mt-6 text-champagne md:mt-8">
           {eyebrow}
         </p>
         <h1 data-split data-instant className="display-xl mt-4 max-w-[18ch]">
           {title}
         </h1>
         {lead && (
-          <p data-reveal data-instant data-delay="0.35" className="mt-7 max-w-2xl text-lg leading-relaxed text-white/75 md:text-xl">
+          <p data-reveal data-instant data-delay="0.35" className="mt-5 max-w-2xl text-[17px] leading-relaxed text-white/75 md:mt-7 md:text-xl">
             {lead}
           </p>
         )}
         {children && (
-          <div data-reveal data-instant data-delay="0.5" className="mt-10">
+          <div data-reveal data-instant data-delay="0.5" className="mt-8 md:mt-10">
             {children}
           </div>
         )}
@@ -104,9 +104,9 @@ export function SectionHeading({
 }) {
   return (
     <div
-      className={`flex flex-col gap-8 ${center ? "items-center text-center" : "md:flex-row md:items-end md:justify-between"}`}
+      className={`flex flex-col gap-6 md:gap-8 ${center ? "items-center text-center" : "lg:flex-row lg:items-end lg:justify-between"}`}
     >
-      <div className={center ? "max-w-[min(100%,26em)]" : "md:max-w-[60%]"}>
+      <div className={center ? "max-w-[min(100%,26em)]" : "md:max-w-[80%] lg:max-w-[60%]"}>
         <p data-reveal="fade" className={`eyebrow ${dark ? "text-champagne" : "text-gold-ink"}`}>
           {eyebrow}
         </p>
@@ -117,7 +117,7 @@ export function SectionHeading({
           <p
             data-reveal
             data-delay="0.15"
-            className={`mt-5 text-lg leading-relaxed ${dark ? "text-white/65" : "text-graphite"} ${center ? "mx-auto max-w-2xl" : "max-w-2xl"}`}
+            className={`mt-5 text-[17px] leading-relaxed md:text-lg ${dark ? "text-white/65" : "text-graphite"} ${center ? "mx-auto max-w-2xl" : "max-w-2xl"}`}
           >
             {lead}
           </p>

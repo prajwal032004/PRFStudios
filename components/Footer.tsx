@@ -53,20 +53,20 @@ export default function Footer() {
   return (
     <footer ref={root} className="glow-gold relative overflow-hidden bg-midnight text-white">
       {/* CTA band */}
-      <div className="container-x pb-20 pt-24 md:pb-28 md:pt-32">
-        <div data-foot-cta className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
-          <div className="lg:max-w-[62%]">
+      <div className="container-x pb-16 pt-20 md:pb-24 md:pt-28 xl:pb-28 xl:pt-32">
+        <div data-foot-cta className="flex flex-col gap-8 md:gap-10 lg:flex-row lg:items-end lg:justify-between">
+          <div className="md:max-w-[85%] lg:max-w-[62%]">
             <p className="eyebrow text-champagne">Start a project</p>
             <h2 className="display mt-4">Have a story worth telling? <span className="accent">Let&apos;s make it together.</span></h2>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <Magnetic>
-              <Link href="/contact/#enquiry" className="btn btn-gold">
+          <div className="grid gap-3 min-[420px]:flex min-[420px]:flex-wrap">
+            <Magnetic className="w-full min-[420px]:w-auto">
+              <Link href="/contact/#enquiry" className="btn btn-gold w-full min-[420px]:w-auto">
                 Start a project <Icon name="arrow" size={18} />
               </Link>
             </Magnetic>
-            <Magnetic>
-              <a href={contact.phoneHref} className="btn btn-ghost">
+            <Magnetic className="w-full min-[420px]:w-auto">
+              <a href={contact.phoneHref} className="btn btn-ghost w-full min-[420px]:w-auto">
                 <Icon name="phone" size={18} /> Call the studio
               </a>
             </Magnetic>
@@ -75,10 +75,10 @@ export default function Footer() {
       </div>
 
       <div className="container-x">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-12 border-t border-white/10 py-16 sm:grid-cols-3 lg:grid-cols-[1.5fr_1fr_1fr_1fr_1.3fr]">
-          <div className="col-span-2 sm:col-span-3 lg:col-span-1">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-t border-white/10 py-12 sm:grid-cols-3 md:gap-y-12 md:py-16 xl:grid-cols-[1.5fr_1fr_1fr_1fr_1.3fr]">
+          <div className="col-span-2 sm:col-span-3 md:col-span-2 xl:col-span-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/logo-prf-studios.webp" alt="PRF Studios" width={160} height={160} loading="lazy" className="h-28 w-auto" />
+            <img src="/brand/logo-prf-studios.webp" alt="PRF Studios" width={160} height={160} loading="lazy" className="h-20 w-auto md:h-24 xl:h-28" />
             <p className="mt-6 max-w-xs text-[15px] leading-relaxed text-white/60">
               An integrated film, music, digital-content and production-services platform in Bengaluru.
             </p>
@@ -93,9 +93,9 @@ export default function Footer() {
           <FooterColumn title="Divisions" links={divisions} />
           <FooterColumn title="Services" links={services} />
 
-          <div className="col-span-2 sm:col-span-3 lg:col-span-1">
+          <div className="col-span-2 sm:col-span-3 md:col-span-1 md:row-start-1 md:col-start-3 xl:col-start-auto xl:row-start-auto xl:col-span-1">
             <h3 className="plex-label text-white">Visit &amp; contact</h3>
-            <ul className="mt-5 space-y-4 text-[15px] text-white/60">
+            <ul className="mt-5 space-y-4 break-words text-[15px] text-white/60">
               <li className="flex gap-3">
                 <Icon name="pin" size={18} className="mt-0.5 shrink-0 text-champagne" />
                 <span>
@@ -136,11 +136,11 @@ export default function Footer() {
       </div>
 
       <div className="container-x">
-        <div className="flex flex-col gap-4 border-t border-white/10 py-7 text-sm text-white/45 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-4 border-t border-white/10 pb-[max(1.75rem,env(safe-area-inset-bottom))] pt-7 text-sm text-white/45 md:flex-row md:items-center md:justify-between">
           <p>
             © {new Date().getFullYear()} {site.name}. A {site.parent} company. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <Link href="/privacy/" className="hover:text-white">
               Privacy
             </Link>

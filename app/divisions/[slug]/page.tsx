@@ -118,7 +118,7 @@ export default async function DivisionPage({ params }: PageProps<"/divisions/[sl
             title="The stages this division leads."
             action={<ArrowLink href="/services/">All services</ArrowLink>}
           />
-          <ul data-stagger className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul data-stagger className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-12 xl:grid-cols-3">
             {related.map((s) => (
               <li key={s.slug}>
                 <Link
@@ -143,7 +143,7 @@ export default async function DivisionPage({ params }: PageProps<"/divisions/[sl
         <Link
           href={`/divisions/${next.slug}/`}
           data-cursor="Next"
-          className="container-x group flex items-center justify-between gap-6 py-16 md:py-20"
+          className="container-x group flex items-center justify-between gap-6 py-12 md:py-20"
         >
           <div>
             <p className="plex-label text-smoke">Next division</p>

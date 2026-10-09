@@ -5,7 +5,7 @@ export const metadata = { title: "Page not found", robots: { index: false } };
 
 export default function NotFound() {
   return (
-    <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-midnight text-white">
+    <section className="relative flex min-h-vp-100 items-center overflow-hidden bg-midnight text-white">
       <div className="grain pointer-events-none absolute inset-0 overflow-hidden" />
       <div className="container-x relative">
         <p className="eyebrow text-champagne">Error 404 · Scene missing</p>

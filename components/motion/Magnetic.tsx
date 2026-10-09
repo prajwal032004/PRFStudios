@@ -4,7 +4,15 @@ import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 
 // Pulls its child gently towards the pointer on fine-pointer devices.
-export default function Magnetic({ children, strength = 0.3 }: { children: React.ReactNode; strength?: number }) {
+export default function Magnetic({
+  children,
+  strength = 0.3,
+  className = "",
+}: {
+  children: React.ReactNode;
+  strength?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
 
   useGSAP(
@@ -33,7 +41,7 @@ export default function Magnetic({ children, strength = 0.3 }: { children: React
   );
 
   return (
-    <span ref={ref} className="inline-flex will-change-transform">
+    <span ref={ref} className={`inline-flex [@media(pointer:fine)]:will-change-transform ${className}`}>
       {children}
     </span>
   );
