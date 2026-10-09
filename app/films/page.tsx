@@ -4,6 +4,7 @@ import { pageMeta } from "@/lib/meta";
 import Icon from "@/components/Icon";
 import FilmGrid from "@/components/FilmGrid";
 import SlateCards from "@/components/SlateCards";
+import { RootsDivider } from "@/components/EmblemArt";
 import { ArrowLink, PageHero, SectionHeading } from "@/components/ui";
 
 export const metadata = pageMeta({
@@ -111,6 +112,7 @@ export default function FilmsPage() {
 
       {/* Heritage filmography */}
       <section className="section-y bg-ivory">
+        <RootsDivider className="mb-12 md:mb-16" />
         <div className="container-x">
           <SectionHeading
             eyebrow="Heritage filmography"

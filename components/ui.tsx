@@ -2,6 +2,7 @@ import Link from "next/link";
 import { photos, type Photo } from "@/lib/content";
 import { JsonLd, breadcrumbLd } from "./JsonLd";
 import Icon from "./Icon";
+import { PalmCrown } from "./EmblemArt";
 
 export function PageHero({
   eyebrow,
@@ -105,6 +106,7 @@ export function SectionHeading({
       className={`flex flex-col gap-6 md:gap-8 ${center ? "items-center text-center" : "lg:flex-row lg:items-end lg:justify-between"}`}
     >
       <div className={center ? "max-w-[min(100%,26em)]" : "md:max-w-[80%] lg:max-w-[60%]"}>
+        {center && <PalmCrown draw width={1.3} className={`mx-auto mb-6 h-auto w-16 ${dark ? "text-champagne" : "text-gold"}`} />}
         <p data-reveal="fade" className={`eyebrow ${dark ? "text-champagne" : "text-gold-ink"}`}>
           {eyebrow}
         </p>

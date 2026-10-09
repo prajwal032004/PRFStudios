@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { divisions, photos, services } from "@/lib/content";
 import { pageMeta } from "@/lib/meta";
 import Icon from "@/components/Icon";
+import { LeafPetal } from "@/components/EmblemArt";
 import { PageHero } from "@/components/ui";
 
 export const dynamicParams = false;
@@ -86,7 +87,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
                 {s.includes.map((inc) => (
                   <li key={inc} className="flex items-start gap-3 rounded-[8px] bg-fog p-4">
                     <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold text-midnight">
-                      <Icon name="check" size={14} strokeWidth={2} />
+                      <LeafPetal className="h-auto w-3.5" />
                     </span>
                     <span className="text-[15px] font-medium text-carbon">{inc}</span>
                   </li>

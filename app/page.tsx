@@ -9,6 +9,7 @@ import ServicesIndex from "@/components/ServicesIndex";
 import SlateCards from "@/components/SlateCards";
 import Philosophy from "@/components/Philosophy";
 import { ArrowLink, FilmPoster, SectionHeading } from "@/components/ui";
+import { LeafPetal, RootsDivider } from "@/components/EmblemArt";
 
 export const metadata = {
   ...pageMeta({
@@ -229,7 +230,8 @@ export default function Home() {
       </section>
 
       {/* --------------------------------------------------------------- Legacy */}
-      <section className="section-y glow-gold relative overflow-hidden bg-midnight text-white">
+      <section className="section-y root-lattice glow-gold relative isolate overflow-hidden bg-midnight text-white">
+        <RootsDivider dark className="mb-12 md:mb-16" />
         <div className="container-x">
           <SectionHeading
             dark
@@ -269,7 +271,7 @@ export default function Home() {
           <div className="container-x flex items-end justify-between gap-4">
             <p data-reveal className="plex-label text-white">Heritage filmography</p>
             <Link href="/films/" className="link-draw text-sm text-white/70 hover:text-white">
-              View all work
+              View all films
             </Link>
           </div>
           <ul
@@ -370,7 +372,7 @@ export default function Home() {
               <ul className="mt-8 space-y-3 text-[15px] text-white/80">
                 {["One producer-side contact throughout", "Integrated schedule and budget", "Music, digital and delivery included"].map((t) => (
                   <li key={t} className="flex items-center gap-3">
-                    <Icon name="check" size={18} className="text-champagne" /> {t}
+                    <LeafPetal className="h-auto w-5 shrink-0 text-champagne" /> {t}
                   </li>
                 ))}
               </ul>
@@ -390,7 +392,7 @@ export default function Home() {
               <ul className="mt-8 space-y-3 text-[15px] text-carbon">
                 {["Book a single stage or facility", "Experienced studio crew on hand", "Scale up to end-to-end at any time"].map((t) => (
                   <li key={t} className="flex items-center gap-3">
-                    <Icon name="check" size={18} className="text-gold-ink" /> {t}
+                    <LeafPetal className="h-auto w-5 shrink-0 text-gold-ink" /> {t}
                   </li>
                 ))}
               </ul>

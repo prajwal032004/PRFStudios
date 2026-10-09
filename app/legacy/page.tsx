@@ -3,6 +3,7 @@ import { banners, photos } from "@/lib/content";
 import { pageMeta } from "@/lib/meta";
 import Icon from "@/components/Icon";
 import { PageHero, SectionHeading } from "@/components/ui";
+import { RootsDivider } from "@/components/EmblemArt";
 
 export const metadata = pageMeta({
   title: "Heritage — Since 1994",
@@ -85,6 +86,7 @@ export default function LegacyPage() {
         </div>
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-midnight via-midnight/70 to-midnight/40" />
         <div className="container-x py-24 text-center md:py-32 xl:py-40">
+          <RootsDivider dark className="mb-10" />
           <p data-reveal="fade" className="eyebrow text-champagne">
             Kannada · Tamil · Telugu · Selected Hindi titles
           </p>

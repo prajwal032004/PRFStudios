@@ -7,6 +7,8 @@ import { scrollToTarget } from "@/lib/lenis";
 import { contact, nav, site } from "@/lib/site";
 import Icon from "./Icon";
 import Magnetic from "./motion/Magnetic";
+import { initEmblemProps } from "./motion/initMotion";
+import { PetalDrift, RootsDivider } from "./EmblemArt";
 
 const studioLinks = [
   { href: "/studio/", label: "About PRF Studios" },
@@ -23,6 +25,7 @@ export default function Footer() {
   useGSAP(
     () => {
       if (prefersReducedMotion()) return;
+      if (root.current) initEmblemProps(root.current);
       gsap.from("[data-wordmark] span", {
         yPercent: 100,
         duration: 1.4,
@@ -50,9 +53,11 @@ export default function Footer() {
   const services = nav.find((n) => n.href === "/services/")!.children!;
 
   return (
-    <footer ref={root} className="glow-gold relative overflow-hidden bg-midnight text-white">
+    <footer ref={root} className="root-lattice glow-gold relative isolate overflow-hidden bg-midnight text-white">
+      <PetalDrift count={5} />
+      <RootsDivider dark className="pt-14 md:pt-20" />
       {/* CTA band */}
-      <div className="container-x pb-16 pt-20 md:pb-24 md:pt-28 xl:pb-28 xl:pt-32">
+      <div className="container-x pb-16 pt-12 md:pb-24 md:pt-16 xl:pb-28 xl:pt-20">
         <div data-foot-cta className="flex flex-col gap-8 md:gap-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="md:max-w-[85%] lg:max-w-[62%]">
             <p className="eyebrow text-champagne">Start a project</p>

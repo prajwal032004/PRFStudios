@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { divisions, photos } from "@/lib/content";
 import Icon from "./Icon";
+import { CrownWatermark } from "./EmblemArt";
 
 export default function DivisionsScroller() {
   const root = useRef<HTMLElement>(null);
@@ -79,7 +80,8 @@ export default function DivisionsScroller() {
   );
 
   return (
-    <section ref={root} aria-labelledby="divisions-title" className="glow-gold relative overflow-hidden bg-midnight text-white">
+    <section ref={root} aria-labelledby="divisions-title" className="glow-gold relative isolate overflow-hidden bg-midnight text-white">
+      <CrownWatermark className="-right-[12%] -top-[4%] w-[78vw] max-w-[860px] md:w-[52vw]" />
       {/* Pinned on desktop: svh keeps the pin height stable while mobile browser chrome slides. */}
       <div className="flex flex-col justify-center py-20 md:py-24 lg:min-h-[100svh] lg:py-0">
         <div className="container-x flex flex-col gap-5 md:gap-6 xl:flex-row xl:items-end xl:justify-between">

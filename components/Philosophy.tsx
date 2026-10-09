@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { philosophy } from "@/lib/content";
+import { CrownWatermark, PetalDrift } from "./EmblemArt";
 
 const statement = ["Story first.", "Technology enabled.", "Professionally executed."];
 
@@ -62,7 +63,9 @@ export default function Philosophy() {
   );
 
   return (
-    <section ref={root} className="glow-gold relative overflow-hidden bg-midnight text-white" aria-labelledby="ph-title">
+    <section ref={root} className="glow-gold relative isolate overflow-hidden bg-midnight text-white" aria-labelledby="ph-title">
+      <CrownWatermark className="-bottom-[18%] -left-[14%] w-[80vw] max-w-[820px] md:w-[46vw]" />
+      <PetalDrift count={6} />
       <div className="container-x grid gap-12 py-20 md:py-28 lg:min-h-[100svh] lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-16 lg:py-24">
         <div className="relative flex gap-6 md:gap-8">
           <div aria-hidden="true" className="relative w-px shrink-0 bg-white/10">

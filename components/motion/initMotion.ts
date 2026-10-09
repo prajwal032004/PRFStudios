@@ -169,6 +169,8 @@ export function initMotion(root: HTMLElement, opts: { loadDelay?: number } = {})
     });
   });
 
+  initEmblemProps(root);
+
   // Images that load late change layout height — refresh trigger positions once they arrive.
   let timer: ReturnType<typeof setTimeout> | undefined;
   const refresh = () => {
@@ -177,5 +179,62 @@ export function initMotion(root: HTMLElement, opts: { loadDelay?: number } = {})
   };
   q<HTMLImageElement>("img").forEach((img) => {
     if (!img.complete) img.addEventListener("load", refresh, { once: true });
+  });
+}
+
+/**
+ * Emblem props (see components/EmblemArt): line-art that draws in, the floating crown
+ * watermark and drifting petals. Exported separately so the footer, which lives outside
+ * the page template, can run it too. Call inside a gsap.context / useGSAP scope.
+ */
+export function initEmblemProps(root: HTMLElement) {
+  const tier = deviceTier();
+  const t = tiers[tier];
+  const q = (sel: string) => Array.from(root.querySelectorAll<HTMLElement>(sel));
+
+  q("[data-draw-svg]").forEach((el) => {
+    gsap.fromTo(
+      el.querySelectorAll("path"),
+      { strokeDasharray: 1, strokeDashoffset: 1 },
+      {
+        strokeDashoffset: 0,
+        duration: 1.1 * t.time,
+        stagger: 0.07 * t.time,
+        ease: "power2.inOut",
+        scrollTrigger: { trigger: el, start: tier === "phone" ? "top 92%" : "top 85%", once: true },
+      },
+    );
+  });
+
+  q("[data-float-parallax]").forEach((el) => {
+    gsap.fromTo(
+      el,
+      { yPercent: -12 * t.parallax },
+      {
+        yPercent: 12 * t.parallax,
+        ease: "none",
+        scrollTrigger: { trigger: el.parentElement, start: "top bottom", end: "bottom top", scrub: tier === "desktop" ? true : 0.4 },
+      },
+    );
+  });
+  q("[data-float]").forEach((el) => {
+    gsap.to(el, { y: 18, rotation: 2.5, duration: 7, ease: "sine.inOut", repeat: -1, yoyo: true });
+  });
+
+  q("[data-petal]").forEach((el, i) => {
+    if (tier === "phone" && i % 2) {
+      gsap.set(el, { display: "none" });
+      return;
+    }
+    gsap.to(el, {
+      y: gsap.utils.random(-90, -40),
+      x: gsap.utils.random(-30, 30),
+      rotation: `+=${gsap.utils.random(-40, 40)}`,
+      duration: gsap.utils.random(9, 15),
+      delay: gsap.utils.random(0, 3),
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+    });
   });
 }
