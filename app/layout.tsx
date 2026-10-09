@@ -70,7 +70,7 @@ export const viewport: Viewport = {
 const vhFallback = `(function(){try{if(window.CSS&&CSS.supports('height','1dvh'))return;var r=document.documentElement,f=function(){r.style.setProperty('--vh',window.innerHeight*0.01+'px')};f();addEventListener('resize',f,{passive:true});addEventListener('orientationchange',f)}catch(e){}})();`;
 
 // Hide motion targets before first paint; un-hide if the JS bundle never boots.
-const motionBoot = `(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('js-motion');setTimeout(function(){if(!window.__motionBooted)d.classList.remove('js-motion')},5000)}catch(e){}})();`;
+const motionBoot = `(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('js-motion','preloading');setTimeout(function(){if(!window.__motionBooted)d.classList.remove('js-motion','preloading')},5000)}catch(e){}})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

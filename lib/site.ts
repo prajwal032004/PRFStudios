@@ -14,7 +14,7 @@ export const site = {
     "production house Bengaluru",
     "Kannada film production",
     "music recording studio Bengaluru",
-    "dubbing studio Bengaluru",
+    "music recording and sound production",
     "post-production Bengaluru",
     "editing and CG studio",
     "Videa Films",

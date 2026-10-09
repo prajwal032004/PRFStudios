@@ -9,6 +9,7 @@ import { contact, nav } from "@/lib/site";
 import { divisions, photos } from "@/lib/content";
 import Logo from "./Logo";
 import Icon from "./Icon";
+import Magnetic from "./motion/Magnetic";
 
 const norm = (p: string) => (p.length > 1 && p.endsWith("/") ? p.slice(0, -1) : p);
 const mobileItems = [{ href: "/", label: "Home" }, ...nav, { href: "/contact/", label: "Contact" }];
@@ -18,6 +19,9 @@ export default function Header() {
   const bar = useRef<HTMLElement>(null);
   const overlay = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
+  const pill = useRef<HTMLSpanElement>(null);
+  const progress = useRef<HTMLDivElement>(null);
+  const pillOn = useRef(false);
   const [menu, setMenu] = useState<string | null>(null); // desktop dropdown
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
@@ -60,6 +64,8 @@ export default function Header() {
       const delta = y - last;
       last = y;
       setScrolled(y > 12);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (progress.current) gsap.set(progress.current, { scaleX: max > 0 ? Math.min(1, y / max) : 0 });
       if (openRef.current || y < 160) return slide(false);
       travel = Math.sign(delta) === Math.sign(travel) ? travel + delta : delta;
       if (travel > 24) slide(true);
@@ -78,8 +84,8 @@ export default function Header() {
         const open = p.dataset.panel === menu;
         gsap.to(p, {
           autoAlpha: open ? 1 : 0,
-          y: open ? 0 : -8,
-          duration: open ? 0.45 : 0.2,
+          clipPath: open ? "inset(0% 0% 0% 0%)" : "inset(0% 0% 100% 0%)",
+          duration: open ? 0.6 : 0.3,
           ease: open ? "expo.out" : "power2.in",
           overwrite: true,
         });
@@ -169,6 +175,22 @@ export default function Header() {
     };
   }, []);
 
+  // Hover pill for the desktop links.
+  const movePill = (li: HTMLElement) => {
+    const el = pill.current;
+    if (!el) return;
+    const to = { x: li.offsetLeft, width: li.offsetWidth };
+    if (!pillOn.current) {
+      gsap.set(el, to);
+      gsap.to(el, { autoAlpha: 1, duration: 0.3, overwrite: "auto" });
+    } else gsap.to(el, { ...to, autoAlpha: 1, duration: 0.5, ease: "expo.out", overwrite: "auto" });
+    pillOn.current = true;
+  };
+  const hidePill = () => {
+    pillOn.current = false;
+    if (pill.current) gsap.to(pill.current, { autoAlpha: 0, duration: 0.3, overwrite: "auto" });
+  };
+
   const openMenu = (key: string | null) => {
     clearTimeout(closeTimer.current);
     setMenu(key);
@@ -184,7 +206,7 @@ export default function Header() {
     : menu
     ? "bg-midnight"
     : scrolled
-    ? "bg-midnight/90 shadow-[0_10px_40px_rgba(0,0,0,0.28)] ring-1 ring-white/10 backdrop-blur-xl backdrop-saturate-150 xl:bg-midnight/80 xl:shadow-[0_1px_0_rgba(255,255,255,0.06)] xl:ring-0"
+    ? "bg-midnight/90 shadow-[0_10px_40px_rgba(0,0,0,0.28)] ring-1 ring-white/10 backdrop-blur-xl backdrop-saturate-150 xl:shadow-[0_1px_0_rgba(255,255,255,0.06)] xl:ring-0"
     : "bg-transparent";
 
   return (
@@ -195,6 +217,16 @@ export default function Header() {
       >
         Skip to content
       </a>
+
+      {/* Desktop: dim the page behind an open dropdown */}
+      <div
+        aria-hidden="true"
+        onMouseEnter={scheduleClose}
+        onClick={() => setMenu(null)}
+        className={`fixed inset-0 z-40 hidden bg-black/45 backdrop-blur-[2px] transition-opacity duration-500 xl:block ${
+          menu ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      />
 
       <header
         ref={bar}
@@ -211,61 +243,107 @@ export default function Header() {
         <div
           className={`relative mx-[max(8px,calc(var(--gutter)-14px))] mt-2.5 rounded-[22px] transition-[background-color,box-shadow] duration-500 ease-[var(--ease-out-expo)] md:mt-3 xl:mx-0 xl:mt-0 xl:rounded-none ${surface}`}
         >
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-x-0 bottom-0 hidden h-px transition-opacity duration-500 xl:block ${
+            scrolled && !menu ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div ref={progress} className="h-full origin-left scale-x-0 bg-gradient-to-r from-gold/40 via-gold to-champagne" />
+        </div>
         <nav
           aria-label="Primary"
-          className="flex h-14 items-center justify-between gap-3 px-3.5 md:h-16 xl:gap-6 xl:px-[var(--gutter)]"
+          className={`flex h-14 items-center justify-between gap-3 px-3.5 transition-[height] duration-500 ease-[var(--ease-out-expo)] md:h-16 xl:gap-8 xl:px-[var(--gutter)] ${
+            scrolled && !menu ? "xl:h-16" : "xl:h-20"
+          }`}
         >
           <Logo onNavigate={() => setMobileOpen(false)} />
 
-          <ul className="hidden items-center gap-1 xl:flex">
-            {nav.map((item) => (
-              <li key={item.href} className="relative" onMouseEnter={() => openMenu(item.children ? item.href : null)}>
-                <div className="flex items-center">
+          {/* Desktop links: a soft pill glides to whichever link is hovered or focused */}
+          <ul className="relative hidden items-center xl:flex" onMouseLeave={hidePill}>
+            <span
+              ref={pill}
+              aria-hidden="true"
+              className="pointer-events-none invisible absolute left-0 top-1/2 h-10 -translate-y-1/2 rounded-full bg-white/[0.08] opacity-0 ring-1 ring-inset ring-white/10"
+            />
+            {nav.map((item) => {
+              const active = isActive(item.href);
+              const open = menu === item.href;
+              return (
+                <li
+                  key={item.href}
+                  data-nav-reveal
+                  className="relative flex items-center"
+                  onMouseEnter={(e) => {
+                    openMenu(item.children ? item.href : null);
+                    movePill(e.currentTarget);
+                  }}
+                  onFocus={(e) => movePill(e.currentTarget)}
+                >
                   <Link
                     href={item.href}
-                    className={`relative px-3 py-5 text-[15px] font-medium transition-colors duration-300 ${
-                      isActive(item.href) ? "text-white" : "text-white/70 hover:text-white"
-                    }`}
+                    aria-current={active ? "page" : undefined}
+                    className={`group/link relative flex h-10 items-center rounded-full text-[15px] font-medium transition-colors duration-300 ${
+                      item.children ? "pl-4 pr-1" : "px-4"
+                    } ${active || open ? "text-white" : "text-white/70 hover:text-white"}`}
                   >
-                    {item.label}
-                    <span
-                      className={`absolute inset-x-3 bottom-[14px] h-[2px] origin-left rounded-full bg-white transition-transform duration-500 ease-[var(--ease-out-expo)] ${
-                        isActive(item.href) ? "scale-x-100" : "scale-x-0"
-                      }`}
-                    />
+                    {/* Label rolls up to a fresh copy on hover */}
+                    <span className="relative block overflow-hidden leading-[1.3]">
+                      <span className="block transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover/link:-translate-y-full">
+                        {item.label}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="absolute left-0 top-full block transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover/link:-translate-y-full"
+                      >
+                        {item.label}
+                      </span>
+                    </span>
+                    {active && (
+                      <span aria-hidden="true" className="absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-gold" />
+                    )}
                   </Link>
                   {item.children && (
                     <button
                       type="button"
                       aria-label={`Show ${item.label} menu`}
-                      aria-expanded={menu === item.href}
+                      aria-expanded={open}
                       aria-controls={`panel-${item.label}`}
-                      onClick={() => setMenu(menu === item.href ? null : item.href)}
+                      onClick={() => setMenu(open ? null : item.href)}
                       onFocus={() => openMenu(item.href)}
-                      className="-ml-2 p-1 text-white/60 hover:text-white"
+                      className={`flex h-10 items-center pl-1 pr-3.5 transition-colors ${open ? "text-gold" : "text-white/55 hover:text-white"}`}
                     >
-                      <Icon
-                        name="chevron"
-                        size={14}
-                        className={`transition-transform duration-300 ${menu === item.href ? "rotate-180" : ""}`}
-                      />
+                      <Icon name="chevron" size={14} className={`transition-transform duration-500 ease-[var(--ease-out-expo)] ${open ? "rotate-180" : ""}`} />
                     </button>
                   )}
-                </div>
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ul>
 
-          <div className="hidden items-center gap-5 xl:flex">
-            <Link href="/contact/" className="link-draw text-[15px] font-medium text-white/80 hover:text-white">
+          <div className="hidden items-center gap-2 xl:flex">
+            <Link
+              href="/contact/"
+              data-nav-reveal
+              className={`flex h-10 items-center rounded-full px-4 text-[15px] font-medium transition-colors duration-300 hover:bg-white/[0.08] ${
+                isActive("/contact/") ? "text-white" : "text-white/75 hover:text-white"
+              }`}
+            >
               Contact
             </Link>
-            <Link href="/contact/#enquiry" className="btn btn-gold !py-2.5 !text-[15px]">
-              Start a project
-            </Link>
+            <span data-nav-reveal>
+              <Magnetic strength={0.2}>
+                <Link href="/contact/#enquiry" className="btn btn-gold group/cta !gap-3 !py-1.5 !pl-5 !pr-1.5 !text-[15px]">
+                  Start a project
+                  <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-midnight text-champagne">
+                    <Icon name="arrow" size={15} className="transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover/cta:translate-x-[3px]" />
+                  </span>
+                </Link>
+              </Magnetic>
+            </span>
           </div>
 
-          <div className="flex shrink-0 items-center gap-2.5 xl:hidden">
+          <div data-nav-reveal className="flex shrink-0 items-center gap-2.5 xl:hidden">
             {/* Tablet: keep the primary action in reach next to the menu button */}
             <Link
               href="/contact/#enquiry"
@@ -322,7 +400,7 @@ export default function Header() {
             data-panel="/divisions/"
             onMouseEnter={() => openMenu("/divisions/")}
             onMouseLeave={scheduleClose}
-            className="invisible pointer-events-auto border-t border-white/10 bg-midnight opacity-0 shadow-[0_24px_48px_rgba(0,0,0,0.35)]"
+            className="invisible pointer-events-auto border-t border-white/10 bg-midnight opacity-0 shadow-[0_24px_48px_rgba(0,0,0,0.35)] [clip-path:inset(0%_0%_100%_0%)]"
           >
             <div className="container-x grid grid-cols-[1fr_2.6fr] gap-10 py-8">
               <div data-item className="flex flex-col justify-between border-r border-white/10 pr-10">
@@ -364,7 +442,7 @@ export default function Header() {
             data-panel="/services/"
             onMouseEnter={() => openMenu("/services/")}
             onMouseLeave={scheduleClose}
-            className="invisible pointer-events-auto absolute inset-x-0 top-0 border-t border-white/10 bg-midnight opacity-0 shadow-[0_24px_48px_rgba(0,0,0,0.35)]"
+            className="invisible pointer-events-auto absolute inset-x-0 top-0 border-t border-white/10 bg-midnight opacity-0 shadow-[0_24px_48px_rgba(0,0,0,0.35)] [clip-path:inset(0%_0%_100%_0%)]"
           >
             <div className="container-x grid grid-cols-[1fr_2.6fr] gap-10 py-8">
               <div data-item className="flex flex-col justify-between border-r border-white/10 pr-10">

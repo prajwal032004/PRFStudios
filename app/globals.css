@@ -478,3 +478,14 @@ html.scroll-locked body {
 .js-motion .curtain {
   display: flex;
 }
+.curtain-fly {
+  display: none;
+}
+.js-motion .curtain-fly {
+  display: block;
+}
+/* While the preloader's lockup is in flight, the navbar's own logo waits for the hand-off */
+.js-motion.preloading [data-logo="nav"],
+.js-motion.preloading [data-nav-reveal] {
+  visibility: hidden;
+}

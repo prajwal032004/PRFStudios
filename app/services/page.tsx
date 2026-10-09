@@ -10,7 +10,7 @@ export const metadata = pageMeta({
     "Seven production stages, available end-to-end or individually: development, pre-production, production, music & sound, post-production, digital & promotion and delivery support.",
   path: "/services/",
   photo: "edit",
-  keywords: ["film production services", "pre-production", "post-production", "dubbing", "delivery support"],
+  keywords: ["film production services", "pre-production", "post-production", "music recording", "delivery support"],
 });
 
 export default function ServicesPage() {
@@ -92,7 +92,7 @@ export default function ServicesPage() {
               {
                 label: "Facilities",
                 title: "Book the rooms",
-                text: "Floor time, recording, dubbing, editing or CG sessions, with studio crew available to support your team.",
+                text: "Shooting floor, editing, computer graphics, music recording, sound or finishing — with studio crew available to support your team.",
               },
             ].map((m) => (
               <div key={m.title} className="bg-midnight p-8 md:p-10">

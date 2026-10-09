@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { divisions, photos } from "@/lib/content";
+import { divisions, mission, philosophy, photos, vision } from "@/lib/content";
 import { pageMeta } from "@/lib/meta";
 import Icon from "@/components/Icon";
 import { ArrowLink, PageHero, SectionHeading } from "@/components/ui";
@@ -22,12 +22,12 @@ const pillars = [
   {
     label: "Music",
     title: "A catalogue tradition, renewed",
-    text: "Music has been part of our story since Saptaswara Audio Company. Today PRF Music records soundtracks, independent, devotional and regional work.",
+    text: "Saptaswara Audio Company released more than 150 titles. Today PRF Music records soundtracks, independent, devotional and regional work.",
   },
   {
     label: "Technology",
     title: "Modern rooms, modern pipeline",
-    text: "Shooting floor, recording and dubbing rooms, editing suites and CG — set up for long-form cinema and fast-turnaround digital alike.",
+    text: "Editing, graphics, sound, digital distribution and content-management technologies integrated into the production workflow.",
   },
   {
     label: "Production",
@@ -36,12 +36,7 @@ const pillars = [
   },
 ];
 
-const principles = [
-  { title: "One roof, one standard", text: "Every stage — whether we run the whole project or a single session — is held to the same production discipline." },
-  { title: "Commercially viable", text: "Creative ambition matched with honest budgets, realistic schedules and a clear view of the audience." },
-  { title: "Rooted in Karnataka", text: "Three decades in Kannada cinema shape how we work, who we work with and the stories we choose." },
-  { title: "Built for every screen", text: "Theatrical, satellite, streaming, YouTube and social — we plan for the release before the first frame is shot." },
-];
+
 
 export default function StudioPage() {
   return (
@@ -135,9 +130,26 @@ export default function StudioPage() {
       {/* Principles */}
       <section className="section-y bg-ivory">
         <div className="container-x">
-          <SectionHeading eyebrow="Principles" title="How we approach every project." />
-          <div data-stagger className="mt-14 grid gap-5 md:grid-cols-2">
-            {principles.map((p, i) => (
+          <div data-stagger className="grid gap-px overflow-hidden rounded-[8px] bg-ash ring-1 ring-ash md:grid-cols-2">
+            {[
+              { label: "Our vision", text: vision },
+              { label: "Our mission", text: mission },
+            ].map((v) => (
+              <div key={v.label} className="bg-ivory p-6 md:p-10">
+                <p className="eyebrow text-gold-ink">{v.label}</p>
+                <p className="mt-4 font-serif text-[22px] font-light leading-[1.35] tracking-[-0.01em] text-onyx md:text-[26px]">{v.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-20 md:mt-28">
+            <SectionHeading
+              eyebrow="Creative philosophy"
+              title={<>Story first. Technology enabled. <span className="accent">Professionally executed.</span></>}
+            />
+          </div>
+          <div data-stagger className="mt-10 grid gap-5 md:mt-14 md:grid-cols-2 xl:grid-cols-3">
+            {philosophy.map((p, i) => (
               <article key={p.title} className="flex gap-4 rounded-[8px] bg-fog p-6 sm:gap-6 md:p-8">
                 <span className="plex-label text-gold-ink">0{i + 1}</span>
                 <div>

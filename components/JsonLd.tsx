@@ -5,7 +5,6 @@ export function JsonLd({ data }: { data: Record<string, unknown> | Record<string
   return (
     <script
       type="application/ld+json"
-      // JSON.stringify output with "<" escaped so content can never close the script tag.
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
@@ -35,7 +34,7 @@ export const organizationLd = {
   },
   areaServed: ["Karnataka", "India"],
   knowsLanguage: ["kn", "en", "ta", "te"],
-  knowsAbout: ["Film production", "Music recording", "Dubbing", "Editing", "CG", "Post-production", "Digital content"],
+  knowsAbout: ["Film production", "Music recording", "Sound production", "Editing", "CG", "Post-production", "Digital content"],
   parentOrganization: { "@type": "Organization", name: site.parent },
   subOrganization: divisions
     .filter((d) => d.name !== site.name)

@@ -6,12 +6,12 @@ import Marquee from "@/components/motion/Marquee";
 import { PageHero, SectionHeading } from "@/components/ui";
 
 export const metadata = pageMeta({
-  title: "Facilities — Shooting Floor, Recording, Dubbing & Editing",
+  title: "Facilities — Shooting Floor, Music Recording, Editing & CG",
   description:
-    "Shooting floor, music recording rooms, dubbing suites, editing suites and CG at PRF Studios, M. G. Road, Bengaluru — bookable for full productions or individual sessions.",
+    "A full-fledged shooting floor near Bengaluru and a Bengaluru post-production and music facility — editing suites, CG, music recording and sound — for full productions or individual sessions.",
   path: "/facilities/",
   photo: "music",
-  keywords: ["shooting floor Bengaluru", "recording studio Bengaluru", "dubbing studio Bengaluru", "editing suite Bengaluru"],
+  keywords: ["shooting floor Bengaluru", "recording studio Bengaluru", "post-production Bengaluru", "editing suite Bengaluru"],
 });
 
 export default function FacilitiesPage() {
@@ -19,8 +19,8 @@ export default function FacilitiesPage() {
     <>
       <PageHero
         eyebrow="Facilities"
-        title="Recording. Dubbing. Editing. Music."
-        lead="The rooms a production needs — floor, sound, edit and CG — in one place, supervised by one team."
+        title="Shoot. Edit. Sound. Music."
+        lead="Two facilities, one workflow — a full-fledged shooting floor near Bengaluru and a post-production and music facility in the city."
         photo="music"
         crumbs={[{ name: "Facilities", path: "/facilities/" }]}
         compact
@@ -51,7 +51,7 @@ export default function FacilitiesPage() {
                 </div>
                 <div>
                   <p data-reveal="fade" className="plex-label text-gold-ink">
-                    {String(i + 1).padStart(2, "0")} — {f.label}
+                    {String(i + 1).padStart(2, "0")} — {f.label} · {f.where}
                   </p>
                   <h2 data-split className="heading-lg mt-3 text-onyx">
                     {f.name}

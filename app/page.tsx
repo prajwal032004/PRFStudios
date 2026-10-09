@@ -1,28 +1,29 @@
 import Link from "next/link";
-import { banners, disciplines, films, photos } from "@/lib/content";
+import { banners, disciplines, films, photos, studioStats } from "@/lib/content";
 import { pageMeta } from "@/lib/meta";
 import Icon from "@/components/Icon";
 import Marquee from "@/components/motion/Marquee";
 import Magnetic from "@/components/motion/Magnetic";
 import DivisionsScroller from "@/components/DivisionsScroller";
 import ServicesIndex from "@/components/ServicesIndex";
+import SlateCards from "@/components/SlateCards";
+import Philosophy from "@/components/Philosophy";
 import { ArrowLink, FilmPoster, SectionHeading } from "@/components/ui";
 
 export const metadata = {
   ...pageMeta({
     title: "Film, Music & Production Studio in Bengaluru",
     description:
-      "PRF Studios is a Bengaluru-based integrated film, music, digital-content and production-services platform. Development, shooting floor, recording, dubbing, editing, CG and delivery — since 1994.",
+      "PRF Studios is a Bengaluru-based integrated film, music, digital-content and production-services platform. Development, shooting floor, music recording, editing, CG and delivery — with a legacy since 1994.",
     path: "/",
   }),
   title: { absolute: "PRF Studios — Film, Music & Production Studio in Bengaluru" },
 };
 
-const stats = [
-  { value: 1994, from: 1960, label: "Our legacy in Kannada cinema begins" },
-  { value: 4, label: "Specialist divisions under one roof" },
-  { value: 7, label: "Production stages, end to end" },
-  { value: 3, label: "Languages in our distribution history" },
+// Legacy timeline: 1994 → the four banners → today
+const timeline = [
+  ...banners.map((b) => ({ mark: b.mark, title: b.name, text: `${b.role} · ${b.metric}` })),
+  { mark: "Today", title: "PRF Studios", text: "One integrated entertainment platform" },
 ];
 
 export default function Home() {
@@ -65,8 +66,8 @@ export default function Home() {
             <div className="max-w-[640px]">
               <p data-reveal data-instant data-delay="0.45" className="text-[16px] leading-relaxed text-white/80 md:text-[19px]">
                 An integrated film, music, digital-content and production-services platform in Bengaluru — carrying a
-                Kannada cinema legacy into development, shooting floor, recording, dubbing, editing, CG and delivery for
-                every screen.
+                Kannada cinema legacy into development, production, music, editing, CG and delivery for every
+                screen.
               </p>
               <div data-reveal data-instant data-delay="0.6" className="mt-7 grid gap-3 min-[420px]:flex min-[420px]:flex-wrap min-[420px]:items-center md:mt-8">
                 <Magnetic className="w-full min-[420px]:w-auto">
@@ -122,17 +123,24 @@ export default function Home() {
             </div>
           </div>
 
-          <dl data-stagger className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-[8px] bg-ash ring-1 ring-ash md:mt-20 md:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} className="bg-ivory p-5 md:p-6 xl:p-8">
+          <dl data-stagger className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-[8px] bg-ash ring-1 ring-ash md:mt-20 md:grid-cols-3 xl:grid-cols-5">
+            {studioStats.map((s, i) => (
+              <div
+                key={s.label}
+                className={`bg-ivory p-5 md:p-6 xl:p-8 ${i === 0 ? "col-span-2 md:col-span-1" : ""} ${
+                  i === studioStats.length - 1 ? "md:col-span-2 xl:col-span-1" : ""
+                }`}
+              >
                 <dt className="sr-only">{s.label}</dt>
                 <dd>
                   <span
                     data-counter={s.value}
                     data-counter-from={s.from ?? 0}
-                    className="block font-serif text-[clamp(38px,11vw,56px)] md:text-[clamp(44px,6vw,64px)] xl:text-[clamp(64px,5.4vw,140px)] font-light leading-none tracking-[-0.03em] text-onyx tabular-nums"
+                    data-counter-suffix={s.suffix}
+                    className="block font-serif text-[clamp(38px,11vw,56px)] md:text-[clamp(44px,6vw,64px)] xl:text-[clamp(56px,4.4vw,120px)] font-light leading-none tracking-[-0.03em] text-onyx tabular-nums"
                   >
                     {s.value}
+                    {s.suffix}
                   </span>
                   <span className="mt-3 block max-w-[22ch] text-[14px] leading-snug text-graphite md:mt-4 md:text-[15px]">{s.label}</span>
                 </dd>
@@ -168,16 +176,16 @@ export default function Home() {
               Facilities
             </p>
             <h2 data-split className="heading-lg mt-4 text-onyx">
-              Recording. Dubbing. <span className="accent">Editing. Music.</span>
+              Shoot. Edit. <span className="accent">Sound. Music.</span>
             </h2>
             <p data-reveal className="mt-5 max-w-lg text-[17px] leading-relaxed text-graphite md:text-lg">
-              A shooting floor, recording and dubbing rooms, editing suites and CG — the infrastructure a production needs,
-              in one place and supervised by one team.
+              A full-fledged shooting floor near Bengaluru, and a post-production and music facility in the city — editing
+              suites, computer graphics, music recording and sound, coordinated as one workflow.
             </p>
             <ul data-stagger className="mt-8 grid grid-cols-2 gap-2.5 md:mt-10 md:grid-cols-4 md:gap-3 lg:grid-cols-2">
               {[
                 { icon: "camera", label: "Shooting floor" },
-                { icon: "mic", label: "Recording & dubbing" },
+                { icon: "mic", label: "Music recording" },
                 { icon: "scissors", label: "Editing suites" },
                 { icon: "layers", label: "CG & finishing" },
               ].map((f) => (
@@ -210,20 +218,35 @@ export default function Home() {
           <SectionHeading
             dark
             eyebrow="Legacy"
-            title={<>Built on three decades of <span className="accent">Kannada cinema.</span></>}
-            lead="PRF Studios brings together four established banners — in production, music publishing and distribution — whose work stretches back to 1994."
+            title={<>A legacy that began <span className="accent">in 1994.</span></>}
+            lead="PRF Studios is the contemporary expression of an entertainment journey built across film production, music publishing and film distribution."
             action={<ArrowLink dark href="/legacy/">Our legacy</ArrowLink>}
           />
 
-          <ul data-stagger className="mt-12 grid gap-px overflow-hidden rounded-[8px] bg-white/10 sm:grid-cols-2 md:mt-16 xl:grid-cols-4">
-            {banners.map((b) => (
-              <li key={b.slug} className="flex flex-col bg-midnight p-6 md:p-7">
-                <p className="plex-label text-champagne">{b.role}</p>
-                <h3 className="mt-3 text-[22px] font-serif font-normal tracking-[-0.01em]">{b.name}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-white/60">{b.description}</p>
-              </li>
-            ))}
-          </ul>
+          {/* 1994 → Today: the line draws as the section scrolls through */}
+          <div className="relative mt-12 md:mt-16">
+            <span aria-hidden="true" className="absolute bottom-2 left-[5px] top-2 w-px bg-white/10 xl:hidden" />
+            <span aria-hidden="true" data-draw="y" className="absolute bottom-2 left-[5px] top-2 w-px origin-top bg-gold xl:hidden" />
+            <span aria-hidden="true" className="absolute inset-x-0 top-[5px] hidden h-px bg-white/10 xl:block" />
+            <span aria-hidden="true" data-draw="x" className="absolute inset-x-0 top-[5px] hidden h-px origin-left bg-gold xl:block" />
+            <ol data-stagger="0.12" className="grid gap-9 md:grid-cols-2 md:gap-x-10 xl:grid-cols-5 xl:gap-6">
+              {timeline.map((t, i) => (
+                <li key={t.title} className="relative pl-8 xl:pl-0 xl:pt-10">
+                  <span
+                    aria-hidden="true"
+                    className={`absolute left-0 top-1 h-[11px] w-[11px] rounded-full ring-4 ring-midnight xl:top-0 ${
+                      i === timeline.length - 1 ? "bg-gold" : "border border-gold bg-midnight"
+                    }`}
+                  />
+                  <p className="font-serif text-[clamp(34px,8vw,48px)] font-light leading-none tracking-[-0.02em] text-champagne xl:text-[44px]">
+                    {t.mark}
+                  </p>
+                  <h3 className="mt-3 text-[20px] font-serif font-normal tracking-[-0.01em]">{t.title}</h3>
+                  <p className="mt-1.5 text-[14px] leading-relaxed text-white/55">{t.text}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
 
         <div className="mt-12 md:mt-16">
@@ -247,6 +270,34 @@ export default function Home() {
           </ul>
         </div>
       </section>
+
+      {/* -------------------------------------------------------- Current slate */}
+      <section className="section-y bg-ivory">
+        <div className="container-x">
+          <SectionHeading
+            eyebrow="Current slate"
+            title={<>The next chapter is <span className="accent">already in production.</span></>}
+            lead="Four films, one growing studio ecosystem — advanced through Videa Films, with PRF Music supporting music and audio development and the wider studio providing production, post-production and technical support."
+            action={<ArrowLink href="/divisions/videa-films/">About Videa Films</ArrowLink>}
+          />
+          <div className="mt-10 md:mt-14">
+            <SlateCards />
+          </div>
+          <div className="mt-8 flex flex-col gap-4 border-t border-ash pt-6 md:flex-row md:items-center md:justify-between">
+            <p data-reveal className="flex flex-wrap gap-x-5 gap-y-1 text-[14px] font-medium uppercase tracking-[0.14em] text-carbon">
+              <span>Commercially relevant.</span>
+              <span>Culturally grounded.</span>
+              <span className="text-gold-ink">Creatively differentiated.</span>
+            </p>
+            <p data-reveal className="max-w-md text-[14px] text-smoke">
+              Project titles, posters and stills will be published as each project is announced.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------- Creative philosophy */}
+      <Philosophy />
 
       {/* ------------------------------------------------------- Ways to work */}
       <section className="section-y bg-ivory">
@@ -277,7 +328,7 @@ export default function Home() {
               <span className="tag w-fit bg-sand text-carbon">Flexible</span>
               <h3 className="mt-6 text-[26px] font-serif font-normal tracking-[-0.02em] text-onyx md:text-[30px]">Individual services</h3>
               <p className="mt-3 max-w-md text-[16px] leading-relaxed text-graphite">
-                Book exactly what you need — floor time, a recording or dubbing session, an edit suite, CG, or delivery
+                Book exactly what you need — the shooting floor, a music-recording session, an edit suite, CG, or delivery
                 support — and plug it into your own production.
               </p>
               <ul className="mt-8 space-y-3 text-[15px] text-carbon">

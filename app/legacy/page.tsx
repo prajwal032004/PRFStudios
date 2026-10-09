@@ -7,7 +7,7 @@ import { PageHero, SectionHeading } from "@/components/ui";
 export const metadata = pageMeta({
   title: "Our Legacy — Since 1994",
   description:
-    "The story behind PRF Studios: Swati Movies, Saptaswara Audio Company, Sri Raghavendra Films and Shivashakti Cine Combines — production, music publishing and distribution in Kannada, Tamil and Telugu cinema since 1994.",
+    "The story behind PRF Studios: Swati Movies, Saptaswara Audio Company, Sri Raghavendra Films and Shivashakti Cine Combines — production, music publishing and distribution across Kannada, Tamil and Telugu cinema, with selected Hindi titles, since 1994.",
   path: "/legacy/",
   photo: "cinema",
   keywords: ["Swati Movies", "Saptaswara Audio", "Sri Raghavendra Films", "Shivashakti Cine Combines", "Kannada cinema history"],
@@ -17,9 +17,9 @@ const chapters = [
   {
     mark: "1994",
     title: "The beginning",
-    text: "The Pothraj Group's entertainment journey begins in Bengaluru — the start of a legacy in film that PRF Studios carries today.",
+    text: "The Pothraj Group's entertainment journey begins with film production under Swati Movies — and widens over three decades into music publishing and film distribution.",
   },
-  ...banners.map((b) => ({ mark: b.role, title: b.name, text: b.description, films: b.films })),
+  ...banners.map((b) => ({ mark: b.role, title: b.name, text: b.description, films: b.films, metric: `${b.mark} · ${b.metric}` })),
   {
     mark: "Today",
     title: "PRF Studios",
@@ -58,6 +58,11 @@ export default function LegacyPage() {
                 <p className="plex-label text-gold-ink">{c.mark}</p>
                 <h2 className="mt-1 text-[26px] font-serif font-normal tracking-[-0.02em] text-onyx md:text-[36px]">{c.title}</h2>
                 <p className="mt-3 max-w-xl text-[17px] leading-relaxed text-graphite md:text-lg">{c.text}</p>
+                {"metric" in c && c.metric && !c.metric.startsWith("1994") && (
+                  <p className="mt-4 inline-flex items-center gap-2 text-[14px] font-medium text-carbon">
+                    <span className="h-1.5 w-1.5 rounded-full bg-gold" /> {c.metric}
+                  </p>
+                )}
                 {"films" in c && c.films && (
                   <ul className="mt-5 flex flex-wrap gap-2">
                     {c.films.map((f) => (
@@ -81,7 +86,7 @@ export default function LegacyPage() {
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-midnight via-midnight/70 to-midnight/40" />
         <div className="container-x py-24 text-center md:py-32 xl:py-40">
           <p data-reveal="fade" className="eyebrow text-champagne">
-            Kannada · Tamil · Telugu
+            Kannada · Tamil · Telugu · Selected Hindi titles
           </p>
           <p data-split className="display mx-auto mt-5 max-w-[22ch]">
             Rooted in Karnataka. Made for every screen.

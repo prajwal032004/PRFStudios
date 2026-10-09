@@ -2,24 +2,6 @@
 
 import { gsap, ScrollTrigger, SplitText, deviceTier } from "@/lib/gsap";
 
-/**
- * Declarative scroll motion. Server-rendered markup opts in with data attributes:
- *
- *   data-reveal="up|fade|left|right|scale"  element rises / fades in on scroll
- *   data-split                              headline lines rise from a mask
- *   data-stagger                            direct children reveal in sequence
- *   data-clip                               image wipes up from its container
- *   data-parallax="0.15"                    child image drifts while scrolling
- *   data-counter="1994"                     number counts up when visible
- *   data-scrub-words                        words brighten as the reader scrolls
- *   data-delay="0.2"                        extra delay (seconds)
- *   data-instant                            animate on load, not on scroll
- *
- * Must be called inside a gsap.context / useGSAP scope so everything reverts on unmount.
- *
- * Intensity follows the device tier: phones get shorter travel, quicker tweens, lighter
- * parallax and no sideways entrances; tablets sit between phone and desktop.
- */
 const tiers = {
   phone: { travel: 0.6, time: 0.8, parallax: 0.45, start: "top 94%", zoom: 1.12 },
   tablet: { travel: 0.8, time: 0.9, parallax: 0.7, start: "top 90%", zoom: 1.2 },
@@ -38,7 +20,6 @@ export function initMotion(root: HTMLElement, opts: { loadDelay?: number } = {})
     el.hasAttribute("data-instant") ? undefined : { trigger: el, start, once: true };
   const extraDelay = (el: HTMLElement) => (el.hasAttribute("data-instant") ? loadDelay : 0) + delayOf(el);
 
-  // Split headlines
   q("[data-split]").forEach((el) => {
     SplitText.create(el, {
       type: "lines",
@@ -114,8 +95,9 @@ export function initMotion(root: HTMLElement, opts: { loadDelay?: number } = {})
   q("[data-counter]").forEach((el) => {
     const end = parseFloat(el.dataset.counter || "0");
     const start = parseFloat(el.dataset.counterFrom || "0");
+    const suffix = el.dataset.counterSuffix ?? "";
     const obj = { v: start };
-    el.textContent = String(start);
+    el.textContent = String(start) + suffix;
     gsap.to(obj, {
       v: end,
       duration: d(2),
@@ -123,7 +105,7 @@ export function initMotion(root: HTMLElement, opts: { loadDelay?: number } = {})
       delay: extraDelay(el),
       scrollTrigger: triggerFor(el),
       onUpdate: () => {
-        el.textContent = String(Math.round(obj.v));
+        el.textContent = String(Math.round(obj.v)) + suffix;
       },
     });
   });
@@ -138,6 +120,26 @@ export function initMotion(root: HTMLElement, opts: { loadDelay?: number } = {})
         ease: "none",
         transformOrigin: "top center",
         scrollTrigger: { trigger: el.parentElement, start: "top 60%", end: "bottom 60%", scrub: true },
+      },
+    );
+  });
+
+  // Hairlines that draw along a timeline, scrubbed to scroll
+  q("[data-draw]").forEach((el) => {
+    const axis = el.dataset.draw === "y" ? "scaleY" : "scaleX";
+    gsap.fromTo(
+      el,
+      { [axis]: 0 },
+      {
+        [axis]: 1,
+        ease: "none",
+        transformOrigin: axis === "scaleX" ? "left center" : "center top",
+        scrollTrigger: {
+          trigger: el.parentElement,
+          start: tier === "phone" ? "top 80%" : "top 75%",
+          end: axis === "scaleX" ? "bottom 55%" : "bottom 70%",
+          scrub: tier === "desktop" ? 0.6 : 0.3,
+        },
       },
     );
   });
