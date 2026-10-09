@@ -2,7 +2,11 @@ export const site = {
   name: "PRF Studios",
   legalName: "PRF Studios — A Pothraj Company",
   descriptor: "A POTHRAJ COMPANY",
-  url: "https://prfstudios.in",
+  // Primary host on Vercel (the bare domain 308-redirects here), so OG images and
+  // canonical URLs resolve without a redirect.
+  url: "https://www.prfstudios.in",
+  /** Bump when the OG banners change so platforms re-fetch them. */
+  ogVersion: "2",
   tagline: "Stories. Music. Technology. Production.",
   headline: "Entertainment built on legacy. Created for the future.",
   description:

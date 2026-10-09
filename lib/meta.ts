@@ -15,7 +15,13 @@ export function pageMeta({
   photo?: Photo;
   keywords?: string[];
 }): Metadata {
-  const image = { url: `/og/${photo}.jpg`, width: 1200, height: 630, alt: `${title} — PRF Studios, Bengaluru` };
+  const image = {
+    url: `/og/${photo}.jpg?v=${site.ogVersion}`,
+    width: 1200,
+    height: 630,
+    type: "image/jpeg",
+    alt: `${title} — PRF Studios, Bengaluru`,
+  };
   return {
     title,
     description,
@@ -34,7 +40,7 @@ export function pageMeta({
       card: "summary_large_image",
       title: `${title} | ${site.name}`,
       description,
-      images: [image.url],
+      images: [{ url: image.url, alt: image.alt }],
     },
   };
 }

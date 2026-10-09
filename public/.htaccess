@@ -7,10 +7,10 @@ ErrorDocument 404 /404.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Force HTTPS and the bare domain (prfstudios.in)
+  # Force HTTPS and the www host (matches the primary domain on Vercel)
   RewriteCond %{HTTPS} off [OR]
-  RewriteCond %{HTTP_HOST} ^www\. [NC]
-  RewriteRule ^ https://prfstudios.in%{REQUEST_URI} [L,R=301]
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteRule ^ https://www.prfstudios.in%{REQUEST_URI} [L,R=301]
 
   # /work moved to /films (October 2026 site structure)
   RewriteRule ^work/?$ /films/ [L,R=301]

@@ -18,7 +18,7 @@ export const organizationLd = {
   alternateName: ["PRF Studios Bengaluru", "PRF", site.legalName],
   url: site.url,
   logo: `${site.url}/media-kit/prf-studios-logo-black.png`,
-  image: `${site.url}/og/set.jpg`,
+  image: `${site.url}/og/set.jpg?v=${site.ogVersion}`,
   description: site.description,
   slogan: site.headline,
   foundingDate: site.founded,
