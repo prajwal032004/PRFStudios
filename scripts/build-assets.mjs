@@ -1,5 +1,3 @@
-// Generates every optimised image the site serves from the originals in /assets-src.
-// Run with `npm run assets` whenever a source image changes.
 import sharp from "sharp";
 import { mkdir, writeFile } from "node:fs/promises";
 
@@ -9,12 +7,9 @@ const PUB = "public";
 await mkdir(`${PUB}/brand`, { recursive: true });
 await mkdir(`${PUB}/images`, { recursive: true });
 
-// --- Brand marks ---------------------------------------------------------
-// Light lockup (gold emblem + white wordmark) exactly as supplied, trimmed of empty margin.
 const groupLight = await sharp(`${SRC}/pothraj-group-light.png`).trim().png().toBuffer();
 await sharp(groupLight).resize({ height: 160 }).webp({ quality: 92 }).toFile(`${PUB}/brand/pothraj-group-light.webp`);
 
-// Dark lockup for white surfaces: recolour the near-white wordmark to Carbon, keep the gold emblem.
 {
   const { data, info } = await sharp(groupLight).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   for (let i = 0; i < data.length; i += 4) {
@@ -26,9 +21,6 @@ await sharp(groupLight).resize({ height: 160 }).webp({ quality: 92 }).toFile(`${
   await sharp(data, { raw: info }).resize({ height: 160 }).webp({ quality: 92 }).toFile(`${PUB}/brand/pothraj-group-dark.webp`);
 }
 
-// --- Approved PRF Studios / Videa Films logos ("A POTHRAJ COMPANY") ---------
-// The supplied artwork is single-colour (black on white, white on black), so ink coverage
-// becomes the alpha channel and any brand colour can be laid in — crisp on every surface.
 async function inkToAlpha(src, { invert, crop }) {
   let img = sharp(src).greyscale();
   if (crop) img = img.extract(crop);
@@ -36,7 +28,6 @@ async function inkToAlpha(src, { invert, crop }) {
   const alpha = Buffer.alloc(info.width * info.height);
   for (let i = 0; i < alpha.length; i++) {
     const ink = invert ? 255 - data[i * info.channels] : data[i * info.channels];
-    // Lift paper noise to 0 and solid ink to 255 for clean edges.
     alpha[i] = Math.max(0, Math.min(255, Math.round(((ink - 28) * 255) / 190)));
   }
   return { alpha, width: info.width, height: info.height };
@@ -51,17 +42,14 @@ const BRAND = { gold: "#c6a36e", white: "#fbf8f2", black: "#12100c" };
 
 await mkdir(`${PUB}/media-kit`, { recursive: true });
 const prfInk = await inkToAlpha(`${SRC}/prf-studios-logo-source.jpg`, { invert: true });
-// Emblem only: everything above the wordmark.
 const prfEmblemInk = await inkToAlpha(`${SRC}/prf-studios-logo-source.jpg`, {
   invert: true,
   crop: { left: 0, top: 0, width: 1254, height: 840 },
 });
-// Wordmark only ("PRF STUDIOS", ink rows 868–996) — paired with the emblem in the navbar.
 const prfWordInk = await inkToAlpha(`${SRC}/prf-studios-logo-source.jpg`, {
   invert: true,
   crop: { left: 0, top: 850, width: 1254, height: 165 },
 });
-// Videa Films: phone screenshot — crop away the status and navigation bars.
 const videaInk = await inkToAlpha(`${SRC}/videa-films-logo-source.jpg`, {
   invert: false,
   crop: { left: 0, top: 480, width: 738, height: 640 },
