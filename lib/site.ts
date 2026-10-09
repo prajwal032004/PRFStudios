@@ -1,14 +1,13 @@
 export const site = {
   name: "PRF Studios",
   legalName: "PRF Studios — A Pothraj Company",
-  /** Approved brand descriptor — use exactly this, never earlier variants. */
   descriptor: "A POTHRAJ COMPANY",
   url: "https://prfstudios.in",
   tagline: "Stories. Music. Technology. Production.",
   headline: "Entertainment built on legacy. Created for the future.",
   description:
     "Bengaluru-based PRF Studios develops films, music and digital content and provides integrated production, post-production and studio services — with an entertainment legacy dating back to 1994.",
-  /** Short media boilerplate (October 2026 profile). */
+
   boilerplate:
     "PRF Studios is a Bengaluru-based integrated film, music and digital-content studio with an entertainment legacy dating back to 1994. Through Videa Films, PRF Music, PRF Digital and its studio-services platform, PRF Studios develops original entertainment and supports creative partners from concept through production, post-production and delivery.",
   founded: "1994",
@@ -39,7 +38,6 @@ export const contact = {
   region: "Karnataka",
   postalCode: "560008",
   country: "IN",
-  /** Media and business enquiries */
   email: "balaji@pothrajgroup.com",
   phone: "+91 91641 41888",
   phoneHref: "tel:+919164141888",
@@ -49,7 +47,6 @@ export const contact = {
 
 export type NavItem = { href: string; label: string; children?: { href: string; label: string; note?: string }[] };
 
-// Primary navigation, following the October 2026 website blueprint.
 export const nav: NavItem[] = [
   { href: "/studio/", label: "About" },
   { href: "/films/", label: "Films" },

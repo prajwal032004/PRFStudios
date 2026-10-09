@@ -23,10 +23,6 @@ export const photos: Record<Photo, { src: string; sm: string; alt: string }> = {
   },
 };
 
-/* -------------------------------------------------------------------------- */
-/* Divisions                                                                  */
-/* -------------------------------------------------------------------------- */
-
 export type Division = {
   slug: string;
   name: string;
@@ -135,10 +131,6 @@ export const divisions: Division[] = [
     photo: "set",
   },
 ];
-
-/* -------------------------------------------------------------------------- */
-/* Services — the seven stages                                                */
-/* -------------------------------------------------------------------------- */
 
 export type Service = {
   slug: string;
@@ -273,15 +265,10 @@ export const services: Service[] = [
   },
 ];
 
-/* -------------------------------------------------------------------------- */
-/* Heritage banners & filmography                                             */
-/* -------------------------------------------------------------------------- */
-
 export type Banner = {
   slug: string;
   name: string;
   role: string;
-  /** Headline figure or year shown on timelines */
   mark: string;
   metric: string;
   description: string;
@@ -331,7 +318,6 @@ export const banners: Banner[] = [
 
 export type Film = { title: string; banner: string; bannerSlug: string; language: string; tone: string };
 
-// Warm, logo-matched poster grades
 const tones = [
   "from-[#3a2c1a] via-[#1d1610] to-[#0d0a07]",
   "from-[#2e2418] via-[#17120c] to-[#0b0906]",
@@ -393,20 +379,12 @@ export const facilities = [
 
 export const disciplines = ["Development", "Production", "Music", "Recording", "Editing", "CG", "Sound", "Mastering", "Digital", "Delivery"];
 
-/* -------------------------------------------------------------------------- */
-/* Studio facts — as published on the Pothraj Group's PRF Studios pages       */
-/* -------------------------------------------------------------------------- */
-
 export const studioStats = [
   { value: 1994, from: 1960, suffix: "", label: "Entertainment legacy" },
   { value: 10, suffix: "+", label: "Feature films produced" },
   { value: 150, suffix: "+", label: "Music titles" },
   { value: 150, suffix: "+", label: "Films distributed" },
 ];
-
-/* -------------------------------------------------------------------------- */
-/* Current slate & IP — PRF Studios profile, October 2026                     */
-/* -------------------------------------------------------------------------- */
 
 export type Project = {
   slug: string;
@@ -466,10 +444,6 @@ export const projects: Project[] = [
 export const slateNote =
   "Project titles, casting, collaborators, production status, IP structures and commercial arrangements are subject to definitive agreements and final public announcements.";
 
-/* -------------------------------------------------------------------------- */
-/* Leadership                                                                 */
-/* -------------------------------------------------------------------------- */
-
 export const filmLead = {
   name: "Vindhya Balaji Pothraj",
   role: "Head of Film Production · Videa Films",
@@ -483,7 +457,6 @@ export const videaPrinciples = [
   { title: "Audience-focused", text: "Commercially viable cinema with cultural grounding and multi-platform potential." },
 ];
 
-// As published on the Pothraj Group website.
 export const groupLeaders = [
   {
     name: "M. K. Pothraj",
@@ -496,10 +469,6 @@ export const groupLeaders = [
     text: "Unified the businesses into Pothraj Group and expanded it into a diversified institution.",
   },
 ];
-
-/* -------------------------------------------------------------------------- */
-/* AI & emerging media — capability only (no commercial or ownership terms)   */
-/* -------------------------------------------------------------------------- */
 
 export const aiCapability = {
   intro:
@@ -533,10 +502,6 @@ export const aiCapability = {
     "Hybrid live-action + AI experimentation",
   ],
 };
-
-/* -------------------------------------------------------------------------- */
-/* Partnerships                                                               */
-/* -------------------------------------------------------------------------- */
 
 export const engagementModels = [
   { title: "Owned productions", text: "Studio-led film, music and digital IP developed within the PRF ecosystem." },

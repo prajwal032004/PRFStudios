@@ -1,6 +1,5 @@
 import type Lenis from "lenis";
 
-// Single shared Lenis instance so any component can scroll programmatically.
 let instance: Lenis | null = null;
 let locks = 0;
 
@@ -10,10 +9,6 @@ export const setLenis = (l: Lenis | null) => {
 };
 export const getLenis = () => instance;
 
-/**
- * Freeze page scrolling (preloader, mobile menu). Ref-counted, so overlapping locks
- * never release each other early. Returns an idempotent release function.
- */
 export const lockScroll = () => {
   locks += 1;
   instance?.stop();

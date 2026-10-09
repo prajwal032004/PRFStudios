@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import type { Photo } from "./content";
 import { site } from "./site";
 
-// Builds complete per-page metadata: canonical URL, Open Graph and Twitter card.
 export function pageMeta({
   title,
   description,

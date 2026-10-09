@@ -3,7 +3,6 @@ import { photos, type Photo } from "@/lib/content";
 import { JsonLd, breadcrumbLd } from "./JsonLd";
 import Icon from "./Icon";
 
-/* Full-bleed dark page opener with a parallax photograph. */
 export function PageHero({
   eyebrow,
   title,
@@ -86,7 +85,6 @@ export function Breadcrumbs({ crumbs }: { crumbs: { name: string; path: string }
   );
 }
 
-/* Section opener — typography alone carries the entrance. */
 export function SectionHeading({
   eyebrow,
   title,
@@ -132,7 +130,6 @@ export function SectionHeading({
   );
 }
 
-/* Arrow link used as a quiet tertiary action. */
 export function ArrowLink({ href, children, dark = false }: { href: string; children: React.ReactNode; dark?: boolean }) {
   return (
     <Link
@@ -141,9 +138,8 @@ export function ArrowLink({ href, children, dark = false }: { href: string; chil
     >
       <span className="link-draw">{children}</span>
       <span
-        className={`flex h-8 w-8 items-center justify-center rounded-full transition duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-1 ${
-          dark ? "bg-white/10 group-hover:bg-white group-hover:text-carbon" : "bg-sand group-hover:bg-carbon group-hover:text-white"
-        }`}
+        className={`flex h-8 w-8 items-center justify-center rounded-full transition duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-1 ${dark ? "bg-white/10 group-hover:bg-white group-hover:text-carbon" : "bg-sand group-hover:bg-carbon group-hover:text-white"
+          }`}
       >
         <Icon name="arrow" size={15} />
       </span>
@@ -151,12 +147,11 @@ export function ArrowLink({ href, children, dark = false }: { href: string; chil
   );
 }
 
-/* Typographic "poster" for heritage titles that have no artwork on file. */
 export function FilmPoster({ title, banner, tone, index }: { title: string; banner: string; tone: string; index: number }) {
   return (
     <div className={`grain relative flex aspect-[2/3] flex-col justify-between overflow-hidden rounded-[4px] bg-gradient-to-br p-5 text-white ${tone}`}>
       <div className="flex items-start justify-between text-[11px] uppercase tracking-[0.18em] text-white/50">
-        <span>Kannada</span>
+        <span>ಕನ್ನಡ</span>
         <span className="tabular-nums">{String(index + 1).padStart(2, "0")}</span>
       </div>
       <div aria-hidden="true" className="absolute -right-6 top-1/2 -translate-y-1/2 select-none text-[180px] font-serif italic font-light leading-none text-champagne/[0.07]">

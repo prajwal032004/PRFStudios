@@ -1,15 +1,10 @@
 @import "tailwindcss";
 
-/* ---------------------------------------------------------------------------
-   Design tokens — "Studio darkroom behind frosted glass"
-   Near-monochrome system with one chromatic switch: Studio Violet.
---------------------------------------------------------------------------- */
 :root {
-  /* Palette sampled from the Pothraj Group emblem (#c6a36e) */
   --color-gold: #c6a36e;
   --color-gold-hover: #d4b583;
-  --color-gold-ink: #8a6a3a; /* gold for text on light surfaces (AA contrast) */
-  --color-champagne: #dcc7a0; /* gold for text on dark surfaces */
+  --color-gold-ink: #8a6a3a;
+  --color-champagne: #dcc7a0;
   --color-sand: #f4ede1;
   --color-linen: #eadfca;
   --color-ivory: #fbf8f2;
@@ -21,17 +16,13 @@
   --color-smoke: #968c7d;
   --color-midnight: #12100c;
   --color-onyx: #0b0a08;
-
   --nav-h: 64px;
-  /* Fluid side gutter: content spans the full screen at any width or zoom level */
   --gutter: clamp(20px, 5vw, 128px);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* One viewport-height unit. Uses dvh (tracks Chrome Android's collapsing URL bar)
-     where supported; older browsers fall back to vh, and the boot script in <head>
-     patches --vh with the real innerHeight on engines without dvh support. */
   --vh: 1vh;
 }
+
 @supports (height: 1dvh) {
   :root {
     --vh: 1dvh;
@@ -76,7 +67,8 @@ html {
   -webkit-tap-highlight-color: transparent;
   /* Off-canvas reveals (x-translated, scaled) must never create sideways scroll on phones */
   overflow-x: clip;
-  scrollbar-width: none; /* hide the browser scrollbar; Lenis still scrolls */
+  scrollbar-width: none;
+  /* hide the browser scrollbar; Lenis still scrolls */
   -ms-overflow-style: none;
   scroll-padding-top: calc(var(--nav-h) + 16px);
 }
@@ -121,18 +113,23 @@ html.lenis,
 html.lenis body {
   height: auto;
 }
+
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
+
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
+
 .lenis.lenis-stopped {
   overflow: clip;
 }
+
 .lenis.lenis-smooth iframe {
   pointer-events: none;
 }
+
 /* Scroll lock that also holds when Lenis is off (reduced motion) */
 html.scroll-locked,
 html.scroll-locked body {
@@ -151,17 +148,21 @@ html.scroll-locked body {
   font-size: clamp(38px, 10.6vw, 64px);
   line-height: 1;
   letter-spacing: -0.03em;
+
   @media (min-width: 768px) {
     font-size: clamp(60px, 8.4vw, 100px);
     line-height: 0.98;
   }
+
   @media (min-width: 1280px) {
     font-size: clamp(92px, 7.2vw, 240px);
   }
+
   @media (max-height: 520px) and (orientation: landscape) {
     font-size: clamp(36px, 6.4vw, 64px);
   }
 }
+
 @utility display {
   font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
   font-variation-settings: "opsz" 144;
@@ -169,14 +170,17 @@ html.scroll-locked body {
   font-size: clamp(34px, 9vw, 52px);
   line-height: 1.04;
   letter-spacing: -0.025em;
+
   @media (min-width: 768px) {
     font-size: clamp(50px, 6.4vw, 76px);
     line-height: 1.02;
   }
+
   @media (min-width: 1280px) {
     font-size: clamp(64px, 5vw, 160px);
   }
 }
+
 @utility heading-lg {
   font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
   font-variation-settings: "opsz" 144;
@@ -184,14 +188,17 @@ html.scroll-locked body {
   font-size: clamp(30px, 8.2vw, 42px);
   line-height: 1.08;
   letter-spacing: -0.02em;
+
   @media (min-width: 768px) {
     font-size: clamp(40px, 4.8vw, 56px);
     line-height: 1.06;
   }
+
   @media (min-width: 1280px) {
     font-size: clamp(48px, 3.4vw, 104px);
   }
 }
+
 @utility heading {
   font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
   font-variation-settings: "opsz" 144;
@@ -199,13 +206,16 @@ html.scroll-locked body {
   font-size: clamp(22px, 6vw, 26px);
   line-height: 1.2;
   letter-spacing: -0.012em;
+
   @media (min-width: 768px) {
     font-size: clamp(26px, 2.8vw, 32px);
   }
+
   @media (min-width: 1280px) {
     font-size: clamp(28px, 2vw, 56px);
   }
 }
+
 @utility eyebrow {
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   font-weight: 500;
@@ -214,6 +224,7 @@ html.scroll-locked body {
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
+
 @utility plex-label {
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   font-weight: 500;
@@ -231,17 +242,21 @@ html.scroll-locked body {
   line-height: 0.94;
   letter-spacing: -0.035em;
   font-variation-settings: "opsz" 144;
+
   @media (min-width: 768px) {
     font-size: clamp(92px, 12vw, 124px);
     line-height: 0.92;
   }
+
   @media (min-width: 1280px) {
     font-size: clamp(120px, 9.4vw, 320px);
   }
+
   @media (max-height: 520px) and (orientation: landscape) {
     font-size: clamp(44px, 8vw, 84px);
   }
 }
+
 /* Home hero headline is longer than a display word pair — a slightly smaller step of the same scale */
 @utility hero-title {
   font-family: var(--font-fraunces), "Cormorant Garamond", ui-serif, Georgia, serif;
@@ -250,21 +265,26 @@ html.scroll-locked body {
   letter-spacing: -0.035em;
   font-variation-settings: "opsz" 144;
   font-size: clamp(42px, 11.4vw, 72px);
+
   @media (min-width: 768px) {
     font-size: clamp(76px, 9.6vw, 108px);
   }
+
   @media (min-width: 1280px) {
     font-size: clamp(96px, 7.2vw, 240px);
   }
+
   @media (max-height: 520px) and (orientation: landscape) {
     font-size: clamp(40px, 6.6vw, 72px);
   }
 }
+
 @utility label-wide {
   font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+
   @media (min-width: 768px) {
     font-size: 13px;
     letter-spacing: 0.22em;
@@ -278,11 +298,14 @@ html.scroll-locked body {
   width: 100%;
   padding-inline: var(--gutter);
 }
+
 @utility section-y {
   padding-block: 72px;
+
   @media (min-width: 768px) {
     padding-block: 104px;
   }
+
   @media (min-width: 1280px) {
     padding-block: 128px;
   }
@@ -292,9 +315,11 @@ html.scroll-locked body {
 @utility min-h-vp-* {
   min-height: calc(var(--vh) * --value(integer));
 }
+
 @utility h-vp-* {
   height: calc(var(--vh) * --value(integer));
 }
+
 @utility max-h-vp-* {
   max-height: calc(var(--vh) * --value(integer));
 }
@@ -309,12 +334,15 @@ html.scroll-locked body {
   padding-inline: var(--gutter);
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+
   &::-webkit-scrollbar {
     display: none;
   }
-  & > * {
+
+  &>* {
     scroll-snap-align: start;
   }
+
   /* trailing space so the last card can snap to the gutter */
   &::after {
     content: "";
@@ -346,40 +374,50 @@ html.scroll-locked body {
     border-color 0.3s var(--ease-out-expo),
     transform 0.3s var(--ease-out-expo);
 }
+
 @utility btn-gold {
   background: var(--color-gold);
   color: var(--color-midnight);
+
   &:hover {
     background: var(--color-gold-hover);
   }
 }
+
 @utility btn-white {
   background: #fff;
   color: var(--color-carbon);
+
   &:hover {
     background: var(--color-sand);
   }
 }
+
 @utility btn-dark {
   background: var(--color-carbon);
   color: #fff;
+
   &:hover {
     background: var(--color-graphite);
   }
 }
+
 @utility btn-ghost {
   background: transparent;
   color: #fff;
   box-shadow: inset 0 0 0 1px rgba(220, 199, 160, 0.55);
+
   &:hover {
     background: rgba(198, 163, 110, 0.12);
     box-shadow: inset 0 0 0 1px var(--color-champagne);
   }
 }
+
 @utility btn-outline {
   background: transparent;
   color: var(--color-carbon);
   box-shadow: inset 0 0 0 1px var(--color-ash);
+
   &:hover {
     box-shadow: inset 0 0 0 1px var(--color-carbon);
   }
@@ -403,6 +441,7 @@ html.scroll-locked body {
   background-position: 0 100%;
   background-repeat: no-repeat;
   transition: background-size 0.5s var(--ease-out-expo);
+
   &:hover {
     background-size: 100% 1px;
   }
@@ -419,19 +458,38 @@ html.scroll-locked body {
   mix-blend-mode: overlay;
   animation: grain 1.2s steps(6) infinite;
 }
+
 /* Animated full-bleed blend layers are expensive on phone/tablet GPUs — keep the texture, drop the motion */
-@media (hover: none), (max-width: 1023px) {
+@media (hover: none),
+(max-width: 1023px) {
   .grain::after {
     animation: none;
     inset: 0;
   }
 }
+
 @keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  20% { transform: translate(-3%, 2%); }
-  40% { transform: translate(2%, -3%); }
-  60% { transform: translate(-2%, -1%); }
-  80% { transform: translate(3%, 3%); }
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(-3%, 2%);
+  }
+
+  40% {
+    transform: translate(2%, -3%);
+  }
+
+  60% {
+    transform: translate(-2%, -1%);
+  }
+
+  80% {
+    transform: translate(3%, 3%);
+  }
 }
 
 /* Gold italic accent inside serif headings */
@@ -439,6 +497,7 @@ html.scroll-locked body {
   font-style: italic;
   color: var(--color-gold-ink);
 }
+
 .bg-midnight .accent,
 .bg-carbon .accent,
 .text-white .accent {
@@ -463,6 +522,7 @@ html.scroll-locked body {
   padding-bottom: 0.08em;
   margin-bottom: -0.08em;
 }
+
 /* Serif italics overhang their box — give the mask room for swashes and descenders */
 .display-serif .split-line,
 .hero-title .split-line {
@@ -476,11 +536,12 @@ html.scroll-locked body {
 --------------------------------------------------------------------------- */
 .js-motion [data-reveal],
 .js-motion [data-split],
-.js-motion [data-stagger] > * {
+.js-motion [data-stagger]>* {
   visibility: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -494,15 +555,19 @@ html.scroll-locked body {
 .curtain {
   display: none;
 }
+
 .js-motion .curtain {
   display: flex;
 }
+
 .curtain-fly {
   display: none;
 }
+
 .js-motion .curtain-fly {
   display: block;
 }
+
 /* While the preloader's lockup is in flight, the navbar's own logo waits for the hand-off */
 .js-motion.preloading [data-logo="nav"],
 .js-motion.preloading [data-nav-reveal] {

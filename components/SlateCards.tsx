@@ -4,8 +4,6 @@ import { useRef } from "react";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { projects } from "@/lib/content";
 
-// The current slate. Bombay Dada leads as the featured card; on fine pointers every card
-// tilts towards the cursor with a moving sheen.
 export default function SlateCards() {
   const root = useRef<HTMLUListElement>(null);
 
