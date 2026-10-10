@@ -11,7 +11,6 @@ export function PageHero({
   photo,
   crumbs,
   children,
-  compact = false,
 }: {
   eyebrow: string;
   title: React.ReactNode;
@@ -19,11 +18,10 @@ export function PageHero({
   photo: Photo;
   crumbs: { name: string; path: string }[];
   children?: React.ReactNode;
-  compact?: boolean;
 }) {
   const img = photos[photo];
   return (
-    <section className={`relative isolate flex overflow-hidden bg-midnight text-white ${compact ? "min-h-vp-72" : "min-h-vp-88"}`}>
+    <section className="relative isolate flex min-h-vp-100 overflow-hidden bg-midnight text-white">
       <JsonLd data={breadcrumbLd(crumbs)} />
       <div data-parallax="0.18" className="absolute inset-0 -z-20">
         {/* eslint-disable-next-line @next/next/no-img-element */}

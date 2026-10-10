@@ -22,7 +22,6 @@ export default function DivisionsPage() {
         lead="A connected operating model designed to retain creative control, reduce production fragmentation and build long-term film, music and digital intellectual property."
         photo="cinema"
         crumbs={[{ name: "Divisions", path: "/divisions/" }]}
-        compact
       />
 
       <section className="section-y bg-ivory">

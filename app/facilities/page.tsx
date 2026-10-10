@@ -23,7 +23,6 @@ export default function FacilitiesPage() {
         lead="Two facilities, one workflow — a full-fledged shooting floor near Bengaluru and a post-production and music facility in the city."
         photo="music"
         crumbs={[{ name: "Facilities", path: "/facilities/" }]}
-        compact
       >
         <Link href="/contact/#enquiry" className="btn btn-gold">
           Book a session <Icon name="arrow" size={18} />

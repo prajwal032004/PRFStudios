@@ -80,5 +80,4 @@ export const nav: NavItem[] = [
     ],
   },
   { href: "/legacy/", label: "Heritage" },
-  { href: "/media/", label: "Media" },
 ];

@@ -499,8 +499,9 @@ export const aiCapability = {
     },
     {
       label: "Specialist partner",
-      name: "Synkyn / Dhiraj Kishore",
+      name: "Synkyn Studios / Dhiraj Kishore",
       text: "Creative and technical advisory for AI content workflows, team supervision and project delivery.",
+      link: { href: "https://synkynstudios.com", label: "synkynstudios.com" },
     },
     {
       label: "Infrastructure",

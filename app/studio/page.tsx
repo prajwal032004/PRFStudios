@@ -1,8 +1,13 @@
 import Link from "next/link";
-import { aiCapability, divisions, filmLead, groupLeaders, mission, philosophy, photos, vision } from "@/lib/content";
+import { aiCapability, divisions, filmLead, groupLeaders, mission, photos, studioStats, vision } from "@/lib/content";
 import { pageMeta } from "@/lib/meta";
 import Icon from "@/components/Icon";
+import Marquee from "@/components/motion/Marquee";
+import ExpandingImage from "@/components/ExpandingImage";
+import PillarStack, { type Pillar } from "@/components/PillarStack";
+import Philosophy from "@/components/Philosophy";
 import { ArrowLink, PageHero, SectionHeading } from "@/components/ui";
+import { CrownWatermark, RootsDivider } from "@/components/EmblemArt";
 
 export const metadata = pageMeta({
   title: "About PRF Studios",
@@ -13,30 +18,36 @@ export const metadata = pageMeta({
   keywords: ["about PRF Studios", "Bengaluru production company", "Kannada film studio"],
 });
 
-const pillars = [
+const pillars: Pillar[] = [
   {
     label: "Stories",
+    icon: "film",
     title: "Culturally rooted, built to travel",
     text: "We develop work that belongs to the place it comes from — and is strong enough to reach theatrical, satellite, digital and international audiences.",
+    points: ["Original film, music and digital IP", "Commercially relevant, culturally grounded", "Cross-language development"],
   },
   {
     label: "Music",
+    icon: "mic",
     title: "A catalogue tradition, renewed",
     text: "Saptaswara Audio Company released more than 150 titles. Today PRF Music records soundtracks, independent, devotional and regional work.",
+    points: ["Film soundtracks and score", "Independent, devotional and regional releases", "Artist collaborations and music videos"],
   },
   {
     label: "Technology",
+    icon: "layers",
     title: "Modern rooms, modern pipeline",
     text: "Editing, graphics, sound, digital distribution and content-management technologies integrated into the production workflow.",
+    points: ["Editing suites and computer graphics", "AI-assisted content and previsualisation", "Platform-ready packaging and delivery"],
   },
   {
     label: "Production",
+    icon: "camera",
     title: "Producer-first, start to finish",
     text: "Development, planning, shoot, post and delivery — available end-to-end or stage by stage, with the same supervision either way.",
+    points: ["Full-fledged shooting floor near Bengaluru", "End-to-end or selected services", "One point of accountability"],
   },
 ];
-
-
 
 export default function StudioPage() {
   return (
@@ -58,164 +69,187 @@ export default function StudioPage() {
         </div>
       </PageHero>
 
-      {/* Story */}
+      {/* ------------------------------------------------- Manifesto (scrub) */}
       <section className="section-y bg-ivory">
-        <div className="container-x grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
-          <div>
-            <p data-reveal="fade" className="eyebrow text-gold-ink">
+        <div className="container-x">
+          <div className="grid gap-6 md:grid-cols-[150px_1fr] md:gap-10 xl:grid-cols-[220px_1fr]">
+            <p data-reveal="fade" className="eyebrow pt-2 text-gold-ink">
               Executive profile
             </p>
-            <h2 data-split className="heading-lg mt-4 text-onyx">
-              A legacy reimagined for a new era of entertainment.
-            </h2>
-          </div>
-          <div className="space-y-6 text-lg leading-relaxed text-graphite">
-            <p data-reveal>
-              PRF Studios is the contemporary entertainment platform within the Pothraj ecosystem, bringing film production,
-              music, digital content, studio infrastructure, post-production and emerging media into one coordinated
-              creative business.
-            </p>
-            <p data-reveal>
-              Its entertainment heritage developed through established banners —{" "}
-              <strong className="font-semibold text-carbon">Swati Movies</strong>,{" "}
-              <strong className="font-semibold text-carbon">Saptaswara Audio Company</strong>,{" "}
-              <strong className="font-semibold text-carbon">Sri Raghavendra Films</strong> and{" "}
-              <strong className="font-semibold text-carbon">Shivashakti Cine Combines</strong> — across film production,
-              music publishing and distribution. The purpose of PRF Studios is not to erase those earlier identities, but to
-              carry forward their experience, relationships and catalogue knowledge within one modern, technology-aware
-              studio platform.
-            </p>
-            <p data-reveal>
-              The platform develops original intellectual property, supports feature-film production through{" "}
-              <Link href="/divisions/videa-films/" className="link-draw font-medium text-carbon">Videa Films</Link>, builds music
-              through <Link href="/divisions/prf-music/" className="link-draw font-medium text-carbon">PRF Music</Link>, develops
-              online programming through <Link href="/divisions/prf-digital/" className="link-draw font-medium text-carbon">PRF Digital</Link>,
-              and provides professional{" "}
-              <Link href="/divisions/production-services/" className="link-draw font-medium text-carbon">production and post-production capability</Link>{" "}
-              for owned and external projects.
+            <p
+              data-scrub-words
+              className="font-serif text-[clamp(26px,6.6vw,34px)] font-light leading-[1.18] tracking-[-0.02em] text-onyx md:text-[clamp(32px,4vw,44px)] xl:text-[clamp(40px,3.4vw,58px)]"
+            >
+              A legacy reimagined for a new era of entertainment — the contemporary platform within the Pothraj ecosystem,
+              bringing film production, music, digital content, studio infrastructure, post-production and emerging media
+              into one coordinated creative business.
             </p>
           </div>
-        </div>
-      </section>
 
-      {/* Wide image */}
-      <section aria-hidden="true" className="bg-ivory">
-        <div className="container-x">
-          <div data-clip className="relative aspect-[16/9] overflow-hidden rounded-[8px] md:aspect-[21/9]">
-            <div data-parallax="0.12" className="absolute inset-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photos.edit.src} alt="" loading="lazy" className="h-full w-full object-cover" />
+          <div className="mt-16 grid gap-8 md:mt-20 md:grid-cols-[150px_1fr] md:gap-10 xl:grid-cols-[220px_1fr]">
+            <span aria-hidden="true" />
+            <div className="grid gap-8 text-[17px] leading-relaxed text-graphite md:grid-cols-2 md:gap-12 md:text-lg">
+              <p data-reveal>
+                Its entertainment heritage developed through established banners —{" "}
+                <strong className="font-semibold text-carbon">Swati Movies</strong>,{" "}
+                <strong className="font-semibold text-carbon">Saptaswara Audio Company</strong>,{" "}
+                <strong className="font-semibold text-carbon">Sri Raghavendra Films</strong> and{" "}
+                <strong className="font-semibold text-carbon">Shivashakti Cine Combines</strong>. The purpose is not to erase
+                those identities, but to carry forward their experience, relationships and catalogue knowledge.{" "}
+                <Link href="/legacy/" className="link-draw font-medium text-carbon">
+                  Read the heritage
+                </Link>
+              </p>
+              <p data-reveal data-delay="0.1">
+                The platform develops original intellectual property, supports feature-film production through{" "}
+                <Link href="/divisions/videa-films/" className="link-draw font-medium text-carbon">Videa Films</Link>, builds music
+                through <Link href="/divisions/prf-music/" className="link-draw font-medium text-carbon">PRF Music</Link>, develops
+                online programming through{" "}
+                <Link href="/divisions/prf-digital/" className="link-draw font-medium text-carbon">PRF Digital</Link>, and provides{" "}
+                <Link href="/divisions/production-services/" className="link-draw font-medium text-carbon">
+                  production and post-production capability
+                </Link>{" "}
+                for owned and external projects.
+              </p>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Four pillars — dark presentation section */}
-      <section className="section-y mt-24 bg-midnight text-white lg:mt-32">
-        <div className="container-x">
-          <SectionHeading
-            dark
-            eyebrow="What we do"
-            title="Four strengths every project draws on."
-            lead="Four words that describe the studio — and the four strengths every project draws on."
-          />
-          <div data-stagger className="mt-12 grid gap-8 sm:grid-cols-2 md:mt-16 md:gap-10 xl:grid-cols-4 xl:gap-8">
-            {pillars.map((p) => (
-              <div key={p.label} className="border-t border-white/15 pt-6">
-                <p className="plex-label text-white">{p.label}</p>
-                <h3 className="mt-4 text-[20px] font-bold leading-snug tracking-[-0.02em]">{p.title}</h3>
-                <p className="mt-3 text-[15px] font-light leading-relaxed text-white/65">{p.text}</p>
+          <dl data-stagger className="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-[8px] bg-ash ring-1 ring-ash md:mt-24 md:grid-cols-4">
+            {studioStats.map((s) => (
+              <div key={s.label} className="bg-ivory p-5 md:p-6 xl:p-8">
+                <dt className="sr-only">{s.label}</dt>
+                <dd>
+                  <span
+                    data-counter={s.value}
+                    data-counter-from={s.from ?? 0}
+                    data-counter-suffix={s.suffix}
+                    className="block font-serif text-[clamp(38px,11vw,56px)] font-light leading-none tracking-[-0.03em] text-onyx tabular-nums md:text-[clamp(44px,6vw,64px)] xl:text-[clamp(64px,5.2vw,120px)]"
+                  >
+                    {s.value}
+                    {s.suffix}
+                  </span>
+                  <span className="mt-3 block text-[14px] leading-snug text-graphite md:text-[15px]">{s.label}</span>
+                </dd>
               </div>
             ))}
-          </div>
-          <div data-reveal className="mt-14">
-            <Link href="/services/" className="btn btn-gold">
-              See how we work
-            </Link>
-          </div>
+          </dl>
         </div>
       </section>
 
-      {/* AI & emerging media */}
-      <section id="ai" className="section-y scroll-mt-16 bg-ivory">
-        <div className="container-x">
-          <SectionHeading
-            eyebrow="AI & emerging media"
-            title={<>Building a practical AI-enabled <span className="accent">creative production capability.</span></>}
-            lead={aiCapability.intro}
-          />
-          <div data-stagger className="mt-10 grid gap-4 md:mt-14 md:grid-cols-3">
-            {aiCapability.model.map((m) => (
-              <article key={m.label} className="flex flex-col rounded-[8px] bg-fog p-6 md:p-8">
-                <p className="plex-label text-[12px] text-gold-ink">{m.label}</p>
-                <h3 className="mt-3 font-serif text-[24px] font-normal tracking-[-0.015em] text-onyx">{m.name}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-graphite">{m.text}</p>
-              </article>
-            ))}
-          </div>
-          <div className="mt-12 grid gap-8 border-t border-ash pt-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
-            <div>
-              <p data-reveal className="plex-label text-carbon">
-                Priority use cases
-              </p>
-              <p data-reveal className="mt-4 max-w-sm text-[15px] leading-relaxed text-graphite">
-                {aiCapability.stance}
-              </p>
-            </div>
-            <ul data-stagger="0.05" className="flex flex-wrap content-start gap-2.5">
-              {aiCapability.useCases.map((u) => (
-                <li key={u} className="tag bg-sand text-[15px] text-carbon">
-                  <span className="h-1.5 w-1.5 rounded-full bg-gold" /> {u}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+      {/* ----------------------------------------------- Expanding image */}
+      <ExpandingImage
+        src={photos.edit.src}
+        alt={photos.edit.alt}
+        eyebrow="Bengaluru · Legacy since 1994"
+        caption={
+          <>
+            From the first idea <span className="accent">to the final screen.</span>
+          </>
+        }
+      />
 
-      {/* Principles */}
+      {/* --------------------------------------------------- Four pillars */}
       <section className="section-y bg-ivory">
         <div className="container-x">
-          <div data-stagger className="grid gap-px overflow-hidden rounded-[8px] bg-ash ring-1 ring-ash md:grid-cols-2">
+          <SectionHeading
+            eyebrow="What we do"
+            title={<>Four strengths <span className="accent">every project draws on.</span></>}
+            lead="Stories. Music. Technology. Production. Four words that describe the studio — and how a project moves through it."
+            action={<ArrowLink href="/services/">How we work</ArrowLink>}
+          />
+          <div className="mt-12 md:mt-16">
+            <PillarStack pillars={pillars} />
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------ AI & emerging media */}
+      <section id="ai" className="scroll-mt-16 bg-midnight text-white">
+        <div className="section-y root-lattice glow-gold relative isolate overflow-hidden">
+          <CrownWatermark className="-right-[14%] top-[4%] w-[80vw] max-w-[760px] md:w-[46vw]" />
+          <div className="container-x">
+            <SectionHeading
+              dark
+              eyebrow="AI & emerging media"
+              title={<>Building a practical AI-enabled <span className="accent">creative production capability.</span></>}
+              lead={aiCapability.intro}
+            />
+            <div data-stagger className="mt-10 grid gap-px overflow-hidden rounded-[8px] bg-white/10 md:mt-14 md:grid-cols-3">
+              {aiCapability.model.map((m, i) => (
+                <article key={m.label} className="group flex flex-col bg-midnight/95 p-6 transition-colors duration-500 hover:bg-carbon md:p-8">
+                  <p className="flex items-center justify-between plex-label text-[12px] text-champagne">
+                    {m.label}
+                    <span className="text-white/30">{String(i + 1).padStart(2, "0")}</span>
+                  </p>
+                  <h3 className="mt-5 font-serif text-[26px] font-normal tracking-[-0.015em]">{m.name}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-white/60">{m.text}</p>
+                  {"link" in m && m.link && (
+                    <a
+                      href={m.link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-5 inline-flex w-fit items-center gap-2 rounded-full py-1.5 pl-3.5 pr-2 text-[14px] font-medium text-champagne ring-1 ring-gold/40 transition-colors duration-300 hover:bg-gold hover:text-midnight"
+                    >
+                      {m.link.label}
+                      <Icon name="arrowUpRight" size={15} />
+                    </a>
+                  )}
+                  <span className="mt-6 h-px w-10 bg-gold transition-all duration-700 ease-[var(--ease-out-expo)] group-hover:w-24" />
+                </article>
+              ))}
+            </div>
+            <p data-reveal className="mt-10 max-w-2xl text-[15px] leading-relaxed text-white/55">
+              {aiCapability.stance}
+            </p>
+          </div>
+        </div>
+        <div className="border-y border-white/10 py-6 md:py-8">
+          <Marquee
+            items={aiCapability.useCases}
+            speed={45}
+            separator="✦"
+            className="font-serif text-[clamp(24px,4vw,44px)] font-light tracking-[-0.02em] text-white/85"
+          />
+        </div>
+      </section>
+
+      {/* ------------------------------------------------ Vision & mission */}
+      <section className="section-y bg-ivory">
+        <div className="container-x">
+          <RootsDivider className="mb-12 md:mb-16" />
+          <div className="grid gap-px overflow-hidden rounded-[10px] bg-ash ring-1 ring-ash lg:grid-cols-2">
             {[
               { label: "Our vision", text: vision },
               { label: "Our mission", text: mission },
-            ].map((v) => (
-              <div key={v.label} className="bg-ivory p-6 md:p-10">
-                <p className="eyebrow text-gold-ink">{v.label}</p>
-                <p className="mt-4 font-serif text-[22px] font-light leading-[1.35] tracking-[-0.01em] text-onyx md:text-[26px]">{v.text}</p>
+            ].map((v, i) => (
+              <div key={v.label} className="bg-ivory p-6 md:p-12">
+                <p data-reveal="fade" className="eyebrow text-gold-ink">
+                  {v.label}
+                </p>
+                <p
+                  data-split
+                  data-delay={i * 0.1}
+                  className="mt-5 font-serif text-[clamp(22px,2.4vw,32px)] font-light leading-[1.32] tracking-[-0.01em] text-onyx"
+                >
+                  {v.text}
+                </p>
               </div>
-            ))}
-          </div>
-
-          <div className="mt-20 md:mt-28">
-            <SectionHeading
-              eyebrow="Creative philosophy"
-              title={<>Story first. Technology enabled. <span className="accent">Professionally executed.</span></>}
-            />
-          </div>
-          <div data-stagger className="mt-10 grid gap-5 md:mt-14 md:grid-cols-2 xl:grid-cols-3">
-            {philosophy.map((p, i) => (
-              <article key={p.title} className="flex gap-4 rounded-[8px] bg-fog p-6 sm:gap-6 md:p-8">
-                <span className="plex-label text-gold-ink">0{i + 1}</span>
-                <div>
-                  <h3 className="text-[22px] font-serif font-normal tracking-[-0.01em] text-onyx">{p.title}</h3>
-                  <p className="mt-2 text-[16px] leading-relaxed text-graphite">{p.text}</p>
-                </div>
-              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Leadership */}
-      <section className="section-y bg-midnight text-white">
+      {/* --------------------------------------- Creative philosophy (pinned) */}
+      <Philosophy />
+
+      {/* ---------------------------------------------------------- Leadership */}
+      <section className="section-y bg-ivory">
         <div className="container-x">
-          <SectionHeading dark eyebrow="Leadership" title={<>Stewardship, <span className="accent">carried forward.</span></>} />
+          <SectionHeading eyebrow="Leadership" title={<>Stewardship, <span className="accent">carried forward.</span></>} />
           <div className="mt-10 grid gap-4 md:mt-14 lg:grid-cols-[1.3fr_1fr]">
-            <article data-reveal className="flex flex-col justify-between gap-10 rounded-[8px] bg-white/[0.04] p-6 ring-1 ring-white/10 md:p-10">
+            <article data-reveal="scale" className="flex flex-col justify-between gap-10 rounded-[10px] bg-midnight p-6 text-white md:p-10">
               <figure>
-                <blockquote className="font-serif text-[clamp(22px,2.4vw,32px)] font-light leading-[1.3] tracking-[-0.01em]">
+                <blockquote className="font-serif text-[clamp(22px,2.4vw,34px)] font-light leading-[1.28] tracking-[-0.01em]">
                   &ldquo;{filmLead.quote}&rdquo;
                 </blockquote>
               </figure>
@@ -232,10 +266,10 @@ export default function StudioPage() {
             </article>
             <div data-stagger className="grid gap-4">
               {groupLeaders.map((l) => (
-                <article key={l.name} className="rounded-[8px] bg-white/[0.04] p-6 ring-1 ring-white/10 md:p-8">
-                  <p className="plex-label text-[12px] text-champagne">{l.role}</p>
-                  <h3 className="mt-3 font-serif text-[24px] font-normal tracking-[-0.01em]">{l.name}</h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-white/60">{l.text}</p>
+                <article key={l.name} className="rounded-[10px] bg-fog p-6 md:p-8">
+                  <p className="plex-label text-[12px] text-gold-ink">{l.role}</p>
+                  <h3 className="mt-3 font-serif text-[24px] font-normal tracking-[-0.01em] text-onyx">{l.name}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-graphite">{l.text}</p>
                 </article>
               ))}
             </div>
@@ -243,33 +277,37 @@ export default function StudioPage() {
         </div>
       </section>
 
-      {/* Divisions quick links */}
+      {/* ----------------------------------------------------------- Divisions */}
       <section className="bg-fog">
-        <div className="container-x py-20 md:py-24">
+        <div className="container-x py-20 md:py-28">
           <SectionHeading
             eyebrow="Divisions"
-            title="One studio. Multiple creative divisions."
+            title={<>One studio. <span className="accent">Multiple creative divisions.</span></>}
             action={<ArrowLink href="/divisions/">All divisions</ArrowLink>}
           />
-          <ul data-stagger className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-12 xl:grid-cols-4">
-            {divisions.map((d) => (
+          <ul data-stagger className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-14 xl:grid-cols-4">
+            {divisions.map((d, i) => (
               <li key={d.slug}>
                 <Link
                   href={`/divisions/${d.slug}/`}
-                  className="group flex h-full flex-col overflow-hidden rounded-[8px] bg-ivory ring-1 ring-ash transition hover:ring-carbon"
+                  data-cursor="Explore"
+                  className="group flex h-full flex-col overflow-hidden rounded-[10px] bg-ivory ring-1 ring-ash transition duration-500 hover:-translate-y-1 hover:shadow-[var(--shadow-card)] hover:ring-gold/50"
                 >
-                  <div className="aspect-[4/3] overflow-hidden p-3 pb-0">
+                  <div data-clip className="relative aspect-[4/3] overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={photos[d.photo].sm}
                       alt=""
                       loading="lazy"
-                      className="h-full w-full rounded-[4px] object-cover transition duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.04]"
+                      className="h-full w-full object-cover transition duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.06]"
                     />
+                    <span className="absolute left-3 top-3 rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-medium text-white/85 backdrop-blur-md">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
                   </div>
-                  <div className="flex flex-1 flex-col p-5">
-                    <p className="plex-label text-[14px] text-smoke">{d.label}</p>
-                    <h3 className="mt-1 text-[20px] font-serif font-normal tracking-[-0.01em] text-onyx">{d.name}</h3>
+                  <div className="flex flex-1 flex-col p-5 md:p-6">
+                    <p className="plex-label text-[12px] text-gold-ink">{d.label}</p>
+                    <h3 className="mt-1.5 font-serif text-[22px] font-normal tracking-[-0.01em] text-onyx">{d.name}</h3>
                     <p className="mt-2 text-[14px] leading-relaxed text-graphite">{d.short}</p>
                     <span className="mt-auto flex items-center gap-2 pt-5 text-sm font-medium text-carbon">
                       Explore <Icon name="arrow" size={15} className="transition-transform group-hover:translate-x-1" />
@@ -282,7 +320,7 @@ export default function StudioPage() {
         </div>
       </section>
 
-      {/* Parent group */}
+      {/* ------------------------------------------------------- Parent group */}
       <section className="section-y bg-ivory">
         <div className="container-x grid items-center gap-12 lg:grid-cols-2">
           <div>
@@ -298,7 +336,7 @@ export default function StudioPage() {
               commerce and media — and PRF Studios is the group&apos;s home for film, music and content.
             </p>
           </div>
-          <div data-reveal="scale" className="flex items-center justify-center rounded-[8px] bg-midnight p-10 md:p-16">
+          <div data-reveal="scale" className="grain relative flex items-center justify-center overflow-hidden rounded-[10px] bg-midnight p-10 md:p-16">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/pothraj-group-light.webp" alt="Pothraj Group" width={636} height={160} loading="lazy" className="h-16 w-auto md:h-20" />
           </div>

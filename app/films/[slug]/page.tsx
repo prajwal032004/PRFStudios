@@ -116,7 +116,6 @@ export default async function FilmPage({ params }: PageProps<"/films/[slug]">) {
           { name: "Films", path: "/films/" },
           { name: p.title, path: `/films/${p.slug}/` },
         ]}
-        compact
       >
         <div className="flex flex-wrap items-center gap-3">
           <Link href="/contact/#enquiry" className="btn btn-gold">

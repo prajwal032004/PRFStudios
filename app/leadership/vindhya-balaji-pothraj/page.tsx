@@ -52,7 +52,6 @@ export default function LeadershipProfile() {
           { name: "About", path: "/studio/" },
           { name: filmLead.name, path },
         ]}
-        compact
       >
         <Link href="/films/" className="btn btn-gold">
           Videa Films slate <Icon name="arrow" size={18} />

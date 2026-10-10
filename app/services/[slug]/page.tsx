@@ -45,7 +45,6 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           { name: "Services", path: "/services/" },
           { name: s.name, path: `/services/${s.slug}/` },
         ]}
-        compact
       >
         <Link href="/contact/#enquiry" className="btn btn-gold">
           Enquire about {s.name.toLowerCase()} <Icon name="arrow" size={18} />

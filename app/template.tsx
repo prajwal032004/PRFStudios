@@ -144,8 +144,13 @@ export default function Template({ children }: { children: React.ReactNode }) {
           .set(curtain, { display: "none" });
       }
 
+      // React (dev Strict Mode, route changes) can tear this mount down before the webfonts
+      // resolve. A stale callback must never start a second, overlapping set of animations.
+      let alive = true;
       const start = contextSafe!(() => {
-        if (root.current) initMotion(root.current, { loadDelay });
+        if (!alive || !root.current || root.current.dataset.motionInit === "1") return;
+        root.current.dataset.motionInit = "1";
+        initMotion(root.current, { loadDelay });
         requestAnimationFrame(() => {
           ScrollTrigger.sort();
           ScrollTrigger.refresh();
@@ -157,6 +162,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
       else start();
 
       return () => {
+        alive = false;
+        if (root.current) delete root.current.dataset.motionInit;
         release?.();
         endPreload();
       };

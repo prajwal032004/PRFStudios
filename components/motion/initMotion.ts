@@ -28,9 +28,9 @@ export function initMotion(root: HTMLElement, opts: { loadDelay?: number } = {})
       autoSplit: true,
       onSplit(self) {
         gsap.set(el, { visibility: "visible" });
-        return gsap.from(self.lines, {
-          yPercent: 115,
-          rotate: tier === "phone" ? 0 : 2,
+        return gsap.fromTo(self.lines, { yPercent: 115, rotate: tier === "phone" ? 0 : 2 }, {
+          yPercent: 0,
+          rotate: 0,
           duration: d(1.25),
           stagger: d(0.09),
           delay: extraDelay(el),
@@ -50,14 +50,16 @@ export function initMotion(root: HTMLElement, opts: { loadDelay?: number } = {})
     if (kind === "left") from.x = -px(48);
     if (kind === "right") from.x = px(48);
     if (kind === "scale") Object.assign(from, { scale: 0.96, y: px(24) });
-    gsap.from(el, { ...from, duration: d(1.2), delay: extraDelay(el), scrollTrigger: triggerFor(el) });
+    // Explicit end state: even if a reveal is ever started twice, it always finishes fully visible.
+    const to: gsap.TweenVars = { autoAlpha: 1, x: 0, y: 0, scale: 1 };
+    gsap.fromTo(el, from, { ...to, duration: d(1.2), delay: extraDelay(el), scrollTrigger: triggerFor(el) });
   });
 
   // Staggered children
   q("[data-stagger]").forEach((el) => {
-    gsap.from(el.children, {
-      autoAlpha: 0,
-      y: px(36),
+    gsap.fromTo(el.children, { autoAlpha: 0, y: px(36) }, {
+      autoAlpha: 1,
+      y: 0,
       duration: d(1),
       stagger: d(parseFloat(el.dataset.stagger || "") || 0.08),
       delay: extraDelay(el),

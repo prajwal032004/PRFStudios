@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import Cursor from "@/components/motion/Cursor";
+import ContextMenu from "@/components/ContextMenu";
 import { JsonLd, organizationLd, websiteLd } from "@/components/JsonLd";
 import { site } from "@/lib/site";
 import { twitterHandles } from "@/lib/meta";
@@ -101,6 +102,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <Footer />
         <Cursor />
+        <ContextMenu />
       </body>
     </html>
   );

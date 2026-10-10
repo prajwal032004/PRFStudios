@@ -22,7 +22,6 @@ export default function ServicesPage() {
         lead="Choose end-to-end execution, or book exactly the stage you need. Either way, the same team and the same standard."
         photo="edit"
         crumbs={[{ name: "Studio & Services", path: "/services/" }]}
-        compact
       >
         <div className="flex flex-wrap gap-3">
           <Link href="/contact/#enquiry" className="btn btn-gold">

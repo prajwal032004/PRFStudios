@@ -15,7 +15,6 @@ const studioLinks = [
   { href: "/films/", label: "Films & current slate" },
   { href: "/facilities/", label: "Studio infrastructure" },
   { href: "/legacy/", label: "Heritage since 1994" },
-  { href: "/media/", label: "Media & press kit" },
   { href: "/contact/", label: "Work with PRF" },
 ];
 

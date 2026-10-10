@@ -39,7 +39,6 @@ export default function MediaPage() {
         lead="Approved boilerplate, key facts, logos and contacts for press, partners and platforms."
         photo="edit"
         crumbs={[{ name: "Media", path: "/media/" }]}
-        compact
       >
         <div className="flex flex-wrap items-center gap-3">
           <a href="/media-kit/prf-studios-media-kit.zip" download className="btn btn-gold">

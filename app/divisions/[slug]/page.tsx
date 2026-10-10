@@ -43,7 +43,6 @@ export default async function DivisionPage({ params }: PageProps<"/divisions/[sl
           { name: "Divisions", path: "/divisions/" },
           { name: d.name, path: `/divisions/${d.slug}/` },
         ]}
-        compact
       >
         <div className="flex flex-wrap items-center gap-3">
           <Link href="/contact/#enquiry" className="btn btn-gold">

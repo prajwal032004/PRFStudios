@@ -34,7 +34,6 @@ export default function FilmsPage() {
         lead="Videa Films is the feature-film production banner within the PRF Studios ecosystem, developing commercially viable and culturally relevant cinema for theatrical, satellite, digital and international audiences."
         photo="cinema"
         crumbs={[{ name: "Films", path: "/films/" }]}
-        compact
       >
         <div className="flex flex-wrap items-center gap-3">
           <Link href="#slate" className="btn btn-gold">
@@ -183,9 +182,6 @@ export default function FilmsPage() {
           <div data-reveal className="mt-10 flex flex-wrap gap-3">
             <Link href="/contact/#enquiry" className="btn btn-gold">
               Work with PRF Studios <Icon name="arrow" size={18} />
-            </Link>
-            <Link href="/media/" className="btn btn-ghost">
-              Media kit
             </Link>
           </div>
         </div>
