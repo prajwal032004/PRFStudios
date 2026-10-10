@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { gsap, ScrollTrigger, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { lockScroll, scrollToTarget } from "@/lib/lenis";
 import { initMotion } from "@/components/motion/initMotion";
@@ -17,7 +18,16 @@ let firstLoad = true;
 
 const endPreload = () => document.documentElement.classList.remove("preloading");
 
+// Next.js only remounts a template when the route *segment* changes. Moving between pages of the
+// same dynamic route (/divisions/a → /divisions/b, /services/x → /services/y, /films/p → /films/q)
+// would keep this mounted, so the new page's reveals would never run. Keying by pathname makes every
+// page change — sibling slugs included — a fresh mount with fresh motion.
 export default function Template({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  return <PageMotion key={pathname}>{children}</PageMotion>;
+}
+
+function PageMotion({ children }: { children: React.ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
   const [isFirst] = useState(() => firstLoad);
 
