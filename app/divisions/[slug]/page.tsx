@@ -16,8 +16,8 @@ export async function generateMetadata({ params }: PageProps<"/divisions/[slug]"
   const d = divisions.find((x) => x.slug === slug);
   if (!d) return {};
   return pageMeta({
-    title: `${d.name} — ${d.short}`,
-    description: `${d.summary} ${d.intro[0]}`.slice(0, 300),
+    title: d.seoTitle,
+    description: d.seoDescription,
     path: `/divisions/${d.slug}/`,
     photo: d.photo,
     keywords: [d.name, ...d.covers],
@@ -45,7 +45,7 @@ export default async function DivisionPage({ params }: PageProps<"/divisions/[sl
         ]}
       >
         <div className="flex flex-wrap items-center gap-3">
-          <Link href="/contact/#enquiry" className="btn btn-gold">
+          <Link href={`/contact/?interest=${d.slug}#enquiry`} className="btn btn-gold">
             Talk to {d.name} <Icon name="arrow" size={18} />
           </Link>
           {d.logo && (

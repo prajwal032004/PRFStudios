@@ -10,9 +10,9 @@ import { ArrowLink, PageHero, SectionHeading } from "@/components/ui";
 import { CrownWatermark, RootsDivider } from "@/components/EmblemArt";
 
 export const metadata = pageMeta({
-  title: "About PRF Studios",
+  title: "About the Studio — Film, Music & Production in Bengaluru",
   description:
-    "PRF Studios is a Bengaluru-based integrated entertainment and content-production platform with a legacy dating back to 1994 — Videa Films, PRF Music, PRF Digital, studio services and an AI-enabled content capability.",
+    "PRF Studios is a Bengaluru film, music and digital-content studio with a legacy dating back to 1994 — home to Videa Films, PRF Music, PRF Digital and studio services.",
   path: "/studio/",
   photo: "set",
   keywords: ["about PRF Studios", "Bengaluru production company", "Kannada film studio"],
@@ -208,6 +208,7 @@ export default function StudioPage() {
             items={aiCapability.useCases}
             speed={45}
             separator="✦"
+            dark
             className="font-serif text-[clamp(24px,4vw,44px)] font-light tracking-[-0.02em] text-white/85"
           />
         </div>

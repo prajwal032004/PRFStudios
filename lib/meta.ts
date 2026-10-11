@@ -20,6 +20,14 @@ export const ogVideo = (v: Video) => ({
   height: v.height,
 });
 
+/** Trim a meta description to what search results show (~160 chars), ending on a whole word. */
+export const clip = (text: string, max = 160) => {
+  const t = text.replace(/\s+/g, " ").trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[\s,;:—–-]+$/, "")}…`;
+};
+
 export function pageMeta({
   title,
   description,
@@ -44,10 +52,11 @@ export function pageMeta({
     type: "image/jpeg",
     alt: `${title} — PRF Studios, Bengaluru`,
   };
+  description = clip(description);
   return {
     title,
     description,
-    keywords: [...keywords, ...site.keywords],
+    ...(keywords.length ? { keywords } : {}),
     alternates: { canonical: path },
     openGraph: {
       type: "website",

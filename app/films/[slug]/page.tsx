@@ -5,6 +5,7 @@ import { ogImageUrl, ogVideo, pageMeta } from "@/lib/meta";
 import { site } from "@/lib/site";
 import Icon from "@/components/Icon";
 import { JsonLd } from "@/components/JsonLd";
+import { TrackOnView } from "@/components/Analytics";
 import { ArrowLink, PageHero } from "@/components/ui";
 
 export const dynamicParams = false;
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/films/[slug]">) {
   const where = p.languages ? ` (${p.languages})` : "";
   return pageMeta({
     title: `${fullTitle(p)} — Videa Films`,
-    description: `${fullTitle(p)}${where}: ${p.text}`.slice(0, 300),
+    description: `${fullTitle(p)}${where}${p.actors?.length ? ` with ${p.actors.join(" and ")}` : ""} — Videa Films. ${p.text}`,
     path: `/films/${p.slug}/`,
     ogImage: `film-${p.slug}`,
     keywords: [p.title, ...(p.subtitle ? [p.subtitle] : []), ...(p.actors ?? []), ...tagsOf(p)],
@@ -102,6 +103,7 @@ export default async function FilmPage({ params }: PageProps<"/films/[slug]">) {
   return (
     <>
       <JsonLd data={movieLd} />
+      <TrackOnView event="project_view" props={{ project: p.slug }} />
       <PageHero
         eyebrow={`Videa Films · ${p.kind}${p.languages ? ` · ${p.languages}` : ""}`}
         title={
@@ -118,7 +120,7 @@ export default async function FilmPage({ params }: PageProps<"/films/[slug]">) {
         ]}
       >
         <div className="flex flex-wrap items-center gap-3">
-          <Link href="/contact/#enquiry" className="btn btn-gold">
+          <Link href="/contact/?interest=videa-films#enquiry" className="btn btn-gold">
             Discuss this project <Icon name="arrow" size={18} />
           </Link>
           <Link href="/films/#slate" className="btn btn-ghost">

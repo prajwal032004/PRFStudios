@@ -8,13 +8,16 @@ const tiers = {
   desktop: { travel: 1, time: 1, parallax: 1, start: "top 88%", zoom: 1.3 },
 };
 
-export function initMotion(root: HTMLElement, opts: { loadDelay?: number } = {}) {
+export function initMotion(root: HTMLElement, opts: { loadDelay?: number; cssInstant?: boolean } = {}) {
   const loadDelay = opts.loadDelay ?? 0;
   const tier = deviceTier();
   const t = tiers[tier];
   const d = (seconds: number) => seconds * t.time;
   const px = (distance: number) => Math.round(distance * t.travel);
-  const q = <T extends Element = HTMLElement>(sel: string) => Array.from(root.querySelectorAll<T & HTMLElement>(sel));
+  const all = <T extends Element = HTMLElement>(sel: string) => Array.from(root.querySelectorAll<T & HTMLElement>(sel));
+  // With cssInstant, above-the-fold elements are already animating in via CSS (see globals.css).
+  const q = <T extends Element = HTMLElement>(sel: string) =>
+    opts.cssInstant ? all<T>(sel).filter((el) => !el.hasAttribute("data-instant")) : all<T>(sel);
   const delayOf = (el: HTMLElement) => parseFloat(el.dataset.delay ?? "0") || 0;
   const triggerFor = (el: HTMLElement, start = t.start) =>
     el.hasAttribute("data-instant") ? undefined : { trigger: el, start, once: true };
@@ -179,7 +182,7 @@ export function initMotion(root: HTMLElement, opts: { loadDelay?: number } = {})
     clearTimeout(timer);
     timer = setTimeout(() => ScrollTrigger.refresh(), 200);
   };
-  q<HTMLImageElement>("img").forEach((img) => {
+  all<HTMLImageElement>("img").forEach((img) => {
     if (!img.complete) img.addEventListener("load", refresh, { once: true });
   });
 }

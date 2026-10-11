@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: PageProps<"/services/[slug]">
   const s = services.find((x) => x.slug === slug);
   if (!s) return {};
   return pageMeta({
-    title: `${s.name} Services in Bengaluru`,
-    description: `${s.short} ${s.description}`.slice(0, 300),
+    title: s.seoTitle,
+    description: s.seoDescription,
     path: `/services/${s.slug}/`,
     photo: s.photo,
     keywords: [s.name, ...s.includes],
@@ -46,7 +46,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           { name: s.name, path: `/services/${s.slug}/` },
         ]}
       >
-        <Link href="/contact/#enquiry" className="btn btn-gold">
+        <Link href={`/contact/?interest=production-services&stage=${s.slug}#enquiry`} className="btn btn-gold">
           Enquire about {s.name.toLowerCase()} <Icon name="arrow" size={18} />
         </Link>
       </PageHero>
@@ -149,7 +149,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
               <p className="heading-lg mt-2 text-onyx transition-colors group-hover:text-gold-ink">{next.name}</p>
             </Link>
           ) : (
-            <Link href="/contact/#enquiry" className="group border-t border-ash py-10 text-right sm:border-t-0 sm:pl-10 md:py-12">
+            <Link href={`/contact/?interest=production-services&stage=${s.slug}#enquiry`} className="group border-t border-ash py-10 text-right sm:border-t-0 sm:pl-10 md:py-12">
               <p className="plex-label flex items-center justify-end gap-2 text-smoke">
                 Ready? <Icon name="arrow" size={16} />
               </p>

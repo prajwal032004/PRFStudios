@@ -3,13 +3,14 @@ import { engagementModels } from "@/lib/content";
 import { pageMeta } from "@/lib/meta";
 import Icon from "@/components/Icon";
 import ContactForm from "@/components/ContactForm";
+import MapEmbed from "@/components/MapEmbed";
 import { JsonLd, breadcrumbLd } from "@/components/JsonLd";
 import { Breadcrumbs } from "@/components/ui";
 
 export const metadata = pageMeta({
   title: "Contact — Work with PRF Studios",
   description:
-    "Talk to PRF Studios about a co-production, production services, music, digital or AI content, or a media enquiry. Trinity Pothraj Building, 154 Old Madras Road, Trinity Circle, Bengaluru 560008 · balaji@pothrajgroup.com · +91 91641 41888.",
+    "Start a project with PRF Studios — co-productions, production services, music, digital or AI content. Trinity Pothraj Building, Old Madras Road, Bengaluru.",
   path: "/contact/",
   photo: "set",
   keywords: ["contact PRF Studios", "book recording studio Bengaluru", "film production enquiry"],
@@ -111,14 +112,8 @@ export default function ContactPage() {
 
       <section aria-label="Map" className="bg-fog pb-24">
         <div className="container-x">
-          <div data-clip className="relative aspect-[16/10] overflow-hidden rounded-[8px] ring-1 ring-ash md:aspect-[21/8]">
-            <iframe
-              title="PRF Studios — Trinity Pothraj Building, 154 Old Madras Road, Trinity Circle, Bengaluru"
-              src={`https://www.google.com/maps?q=${encodeURIComponent(contact.mapsQuery)}&output=embed`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="absolute inset-0 h-full w-full grayscale-[0.9] contrast-[1.05]"
-            />
+          <div data-clip className="relative min-h-[360px] overflow-hidden rounded-[8px] ring-1 ring-ash md:aspect-[21/8] md:min-h-[320px]">
+            <MapEmbed />
           </div>
         </div>
       </section>

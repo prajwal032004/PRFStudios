@@ -8,7 +8,7 @@ import { PageHero, SectionHeading } from "@/components/ui";
 export const metadata = pageMeta({
   title: "Facilities — Shooting Floor, Music Recording, Editing & CG",
   description:
-    "A full-fledged shooting floor near Bengaluru and a Bengaluru post-production and music facility — editing suites, CG, music recording and sound — for full productions or individual sessions.",
+    "A shooting floor near Bengaluru plus a post-production and music facility in the city — editing suites, CG, music recording and sound, for full productions or single sessions.",
   path: "/facilities/",
   photo: "music",
   keywords: ["shooting floor Bengaluru", "recording studio Bengaluru", "post-production Bengaluru", "editing suite Bengaluru"],
@@ -24,7 +24,7 @@ export default function FacilitiesPage() {
         photo="music"
         crumbs={[{ name: "Facilities", path: "/facilities/" }]}
       >
-        <Link href="/contact/#enquiry" className="btn btn-gold">
+        <Link href="/contact/?interest=production-services#enquiry" className="btn btn-gold">
           Book a session <Icon name="arrow" size={18} />
         </Link>
       </PageHero>
@@ -83,7 +83,7 @@ export default function FacilitiesPage() {
             ))}
           </ol>
           <div data-reveal className="mt-12">
-            <Link href="/contact/#enquiry" className="btn btn-gold">
+            <Link href="/contact/?interest=production-services#enquiry" className="btn btn-gold">
               Check availability
             </Link>
           </div>

@@ -7,7 +7,7 @@ import { PageHero } from "@/components/ui";
 export const metadata = pageMeta({
   title: "Divisions — Production, Videa Films, PRF Music & PRF Digital",
   description:
-    "One studio, multiple creative divisions: Videa Films for feature-film production, PRF Music, PRF Digital and PRF Studios production services — from development to delivery.",
+    "One studio, four divisions: Videa Films for feature films, PRF Music, PRF Digital and PRF Studios production services — from development to delivery.",
   path: "/divisions/",
   photo: "cinema",
   keywords: ["Videa Films", "PRF Music", "PRF Digital", "production services Bengaluru"],

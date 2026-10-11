@@ -36,4 +36,8 @@ async function walk(dir) {
 if (await stat(OUT).catch(() => null)) {
   await walk(OUT);
   console.log(moved ? `fix-export: flattened ${moved} segment files` : "fix-export: nothing to flatten");
+
+  // The export also writes the not-found page as /404/ and /_not-found/, which hosts serve with a
+  // 200 status. Only out/404.html (served with a real 404) is needed.
+  for (const dir of ["404", "_not-found"]) await rm(path.join(OUT, dir), { recursive: true, force: true });
 }

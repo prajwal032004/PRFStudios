@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import Cursor from "@/components/motion/Cursor";
 import ContextMenu from "@/components/ContextMenu";
+import Analytics from "@/components/Analytics";
 import { JsonLd, organizationLd, websiteLd } from "@/components/JsonLd";
 import { site } from "@/lib/site";
 import { twitterHandles } from "@/lib/meta";
@@ -82,7 +83,10 @@ export const viewport: Viewport = {
 const vhFallback = `(function(){try{if(window.CSS&&CSS.supports('height','1dvh'))return;var r=document.documentElement,f=function(){r.style.setProperty('--vh',window.innerHeight*0.01+'px')};f();addEventListener('resize',f,{passive:true});addEventListener('orientationchange',f)}catch(e){}})();`;
 
 // Hide motion targets before first paint; un-hide if the JS bundle never boots.
-const motionBoot = `(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('js-motion','preloading');setTimeout(function(){if(!window.__motionBooted)d.classList.remove('js-motion','preloading')},5000)}catch(e){}})();`;
+// The logo intro plays once per browser, only when the visit starts on the home page and the
+// connection isn't on Save-Data or 2G. Everyone else (search landings on inner pages, repeat
+// visitors) gets the content straight away — the intro otherwise delays LCP by ~2 s.
+const motionBoot = `(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement,c=navigator.connection||{},seen=false;try{seen=localStorage.getItem('prf-intro')==='1'}catch(e){}var intro=location.pathname==='/'&&!seen&&!c.saveData&&!/2g/.test(c.effectiveType||'');d.classList.add('js-motion');if(intro)d.classList.add('preloading');else d.classList.add('no-intro','instant-css');setTimeout(function(){if(!window.__motionBooted)d.classList.remove('js-motion','preloading')},5000)}catch(e){}})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -103,6 +107,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Footer />
         <Cursor />
         <ContextMenu />
+        <Analytics />
       </body>
     </html>
   );

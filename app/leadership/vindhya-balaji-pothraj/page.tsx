@@ -10,7 +10,7 @@ const path = `/leadership/${filmLead.slug}/`;
 
 export const metadata = pageMeta({
   title: `${filmLead.name} — ${filmLead.jobTitle}, Videa Films`,
-  description: `${filmLead.name} is ${filmLead.jobTitle} at Videa Films, the feature-film banner of PRF Studios. ${filmLead.bio}`.slice(0, 300),
+  description: `${filmLead.name} is ${filmLead.jobTitle} at Videa Films, the feature-film banner of PRF Studios. ${filmLead.bio}`,
   path,
   ogImage: `profile-${filmLead.slug}`,
   keywords: [filmLead.name, "Videa Films", "Head of Film Production", "Bombay Dada"],

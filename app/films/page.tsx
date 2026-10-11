@@ -10,7 +10,7 @@ import { ArrowLink, PageHero, SectionHeading } from "@/components/ui";
 export const metadata = pageMeta({
   title: "Films — Bombay Dada & the Videa Films Slate",
   description:
-    "The current PRF Studios slate through Videa Films: Bombay Dada (Sharan × Diganth), Koosa Mattu Kutumba, Maarsan – Mallappa vs Marappa, MKP – Sarai King and Jungle Diaries / Naagarahole — plus heritage Kannada features since 1994.",
+    "Bombay Dada (Sharan × Diganth) and the Videa Films slate — Koosa Mattu Kutumba, Maarsan, MKP – Sarai King, Jungle Diaries — plus heritage Kannada features.",
   path: "/films/",
   photo: "cinema",
   keywords: ["Bombay Dada", "Sharan", "Diganth", "Videa Films", "Koosa Mattu Kutumba", "Maarsan", "Naagarahole", "Kannada films"],

@@ -49,7 +49,7 @@ export default function Home() {
           {/* Top: label + editorial headline */}
           <div>
             <p data-reveal="fade" data-instant className="label-wide flex flex-wrap items-center gap-x-4 gap-y-1 text-white/70">
-              Entertainment legacy since 1994 — Bengaluru
+              Film, music &amp; production studio · Bengaluru · Since 1994
               <span className="hidden h-px w-12 bg-gold/70 md:block" />
               <span className="hidden text-white/45 md:inline">A Pothraj Company</span>
             </p>
@@ -78,12 +78,12 @@ export default function Home() {
               <div data-reveal data-instant data-delay="0.6" className="mt-7 grid gap-3 min-[420px]:flex min-[420px]:flex-wrap min-[420px]:items-center md:mt-8">
                 <Magnetic className="w-full min-[420px]:w-auto">
                   <Link href="/films/" className="btn btn-gold w-full min-[420px]:w-auto">
-                    Explore projects <Icon name="arrow" size={18} />
+                    Explore our work <Icon name="arrow" size={18} />
                   </Link>
                 </Magnetic>
                 <Magnetic className="w-full min-[420px]:w-auto">
                   <Link href="/contact/#enquiry" className="btn btn-ghost w-full min-[420px]:w-auto">
-                    Work with PRF Studios
+                    Start a project
                   </Link>
                 </Magnetic>
               </div>
@@ -383,7 +383,7 @@ export default function Home() {
                 ))}
               </ul>
               <div className="mt-auto pt-8 md:pt-10">
-                <Link href="/contact/#enquiry" className="btn btn-white w-full sm:w-auto">
+                <Link href="/contact/?interest=production-services#enquiry" className="btn btn-white w-full sm:w-auto">
                   Plan a production
                 </Link>
               </div>

@@ -1,4 +1,4 @@
-import { contact, site } from "@/lib/site";
+import { contact, integrations, site } from "@/lib/site";
 import { pageMeta } from "@/lib/meta";
 import { Breadcrumbs } from "@/components/ui";
 
@@ -11,15 +11,25 @@ export const metadata = pageMeta({
 const sections = [
   {
     title: "What we collect",
-    body: "This website does not use accounts, cookies for tracking, or advertising scripts. When you send an enquiry, the form opens your own email app; we receive only what you choose to send — typically your name, contact details and project information.",
+    body: integrations.enquiryEndpoint
+      ? "This website has no accounts or advertising scripts. When you send an enquiry, the details you enter — your name, email, optional phone number and company, and your project information — are delivered to the studio team through a secure form-processing service. Nothing else is collected through the form."
+      : "This website has no accounts or advertising scripts. When you send an enquiry, the form opens your own email app; we receive only what you choose to send — typically your name, contact details and project information.",
   },
   {
     title: "How we use it",
     body: "We use enquiry details solely to respond to you and to discuss the project or booking you asked about. We do not sell or rent personal information.",
   },
+  ...(integrations.gaId
+    ? [
+        {
+          title: "Analytics",
+          body: "We use Google Analytics to understand how the site is used — pages visited, buttons clicked and whether an enquiry was sent. These measurements use cookies and never include what you type into the form. You can block them with your browser's privacy settings or an extension.",
+        },
+      ]
+    : []),
   {
     title: "Third-party services",
-    body: "The contact page shows an embedded Google Map, and fonts are served with the site. When you interact with the map, Google's own privacy policy applies.",
+    body: "Fonts are served with the site. The map on the contact page loads from Google only when you choose to show it; Google's own privacy policy then applies.",
   },
   {
     title: "Retention",

@@ -8,7 +8,7 @@ import { CrownWatermark, LeafPetal, RootsDivider } from "@/components/EmblemArt"
 export const metadata = pageMeta({
   title: "Heritage — Since 1994",
   description:
-    "The story behind PRF Studios: Swati Movies, Saptaswara Audio Company, Sri Raghavendra Films and Shivashakti Cine Combines — production, music publishing and distribution across Kannada, Tamil and Telugu cinema, with selected Hindi titles, since 1994.",
+    "The film production, music publishing and distribution banners behind PRF Studios since 1994: Swati Movies, Saptaswara Audio, Sri Raghavendra Films, Shivashakti.",
   path: "/legacy/",
   photo: "cinema",
   keywords: ["Swati Movies", "Saptaswara Audio", "Sri Raghavendra Films", "Shivashakti Cine Combines", "Kannada cinema history"],

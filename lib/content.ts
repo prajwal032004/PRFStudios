@@ -35,11 +35,17 @@ export type Division = {
   services: string[];
   photo: Photo;
   logo?: string;
+  /** Search-result title and description (~60 / ~155 chars). */
+  seoTitle: string;
+  seoDescription: string;
 };
 
 export const divisions: Division[] = [
   {
     slug: "videa-films",
+    seoTitle: "Videa Films — Feature-Film Production",
+    seoDescription:
+      "Videa Films, the feature-film banner of PRF Studios, develops Kannada, Malayalam and Tamil cinema. Its first major public project is Bombay Dada.",
     name: "Videa Films",
     label: "Film production",
     short: "Feature-film production banner",
@@ -63,6 +69,9 @@ export const divisions: Division[] = [
   },
   {
     slug: "prf-music",
+    seoTitle: "PRF Music — Film Soundtracks, Independent & Devotional Music",
+    seoDescription:
+      "PRF Music makes film soundtracks, independent, devotional and regional music and music videos, continuing a publishing legacy of 150+ titles.",
     name: "PRF Music",
     label: "Music & audio",
     short: "Soundtracks, independent & regional music",
@@ -86,6 +95,9 @@ export const divisions: Division[] = [
   },
   {
     slug: "prf-digital",
+    seoTitle: "PRF Digital — YouTube, Short-Form & Branded Content",
+    seoDescription:
+      "PRF Digital produces YouTube programming, short-form entertainment, interviews, behind-the-scenes features, branded content and digital series.",
     name: "PRF Digital",
     label: "Digital first",
     short: "YouTube, short-form & branded content",
@@ -109,6 +121,9 @@ export const divisions: Division[] = [
   },
   {
     slug: "production-services",
+    seoTitle: "Studio Services & Production Infrastructure",
+    seoDescription:
+      "Creative development, shooting-floor access, editing, CG, sound, music recording, post-production supervision and final delivery in Bengaluru.",
     name: "PRF Studios",
     label: "Studio services",
     short: "Studio services & production infrastructure",
@@ -141,11 +156,17 @@ export type Service = {
   includes: string[];
   outcome: string;
   photo: Photo;
+  /** Search-result title and description (~60 / ~155 chars). */
+  seoTitle: string;
+  seoDescription: string;
 };
 
 export const services: Service[] = [
   {
     slug: "development",
+    seoTitle: "Film Development & Script Consultation",
+    seoDescription:
+      "Concept and story development, script consultation, project packaging and early budget estimates for film and digital projects in Bengaluru.",
     name: "Development",
     step: "01",
     short: "Shape the idea into a project that can be financed, cast and made.",
@@ -163,6 +184,9 @@ export const services: Service[] = [
   },
   {
     slug: "pre-production",
+    seoTitle: "Film Pre-Production Services in Bengaluru",
+    seoDescription:
+      "Scheduling, casting support, location planning, crew coordination and studio-floor preparation for film, music-video and digital shoots.",
     name: "Pre-Production",
     step: "02",
     short: "Plan the shoot so the days on set are spent making, not solving.",
@@ -180,6 +204,9 @@ export const services: Service[] = [
   },
   {
     slug: "production",
+    seoTitle: "Film Production Services & Shooting Floor, Bengaluru",
+    seoDescription:
+      "Shoot management, production coordination and studio-floor operations at the PRF Studios shooting floor near Bengaluru.",
     name: "Production",
     step: "03",
     short: "Shoot management, production coordination, controlled studio access and project execution.",
@@ -196,6 +223,9 @@ export const services: Service[] = [
   },
   {
     slug: "music-and-sound",
+    seoTitle: "Music Recording & Sound Production in Bengaluru",
+    seoDescription:
+      "Music recording, soundtrack production, artist collaboration and audio finishing at the PRF Studios music and post-production facility in Bengaluru.",
     name: "Music & Sound",
     step: "04",
     short: "Recording, soundtrack development, artist collaboration, sound production and audio finishing.",
@@ -213,6 +243,9 @@ export const services: Service[] = [
   },
   {
     slug: "post-production",
+    seoTitle: "Post-Production in Bengaluru: Editing, CG & Mastering",
+    seoDescription:
+      "Editing suites, computer graphics, visual enhancement, sound integration, finishing and mastering, with post-production supervision in Bengaluru.",
     name: "Post-Production",
     step: "05",
     short: "Editing, CG, visual enhancement, finishing and mastering.",
@@ -231,6 +264,9 @@ export const services: Service[] = [
   },
   {
     slug: "digital-and-promotion",
+    seoTitle: "Trailers, Promos & Digital Content for Film Releases",
+    seoDescription:
+      "Trailers, promotional films, behind-the-scenes content, music videos and YouTube programming for film releases, produced by PRF Digital.",
     name: "Digital & Promotion",
     step: "06",
     short: "Trailers, interviews, behind-the-scenes and the campaign around a release.",
@@ -248,6 +284,9 @@ export const services: Service[] = [
   },
   {
     slug: "delivery-support",
+    seoTitle: "Film Delivery & Distribution Support",
+    seoDescription:
+      "Content packaging, platform-ready delivery in theatrical and digital formats, distribution coordination and deliverables tracking.",
     name: "Delivery Support",
     step: "07",
     short: "Promotional adaptation, platform-ready packaging and distribution coordination.",

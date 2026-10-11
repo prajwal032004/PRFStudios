@@ -1,21 +1,35 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { gsap, ScrollTrigger, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import Icon from "@/components/Icon";
 
-// Endless ticker whose speed and direction react to scroll velocity.
+// Endless ticker whose speed and direction react to scroll velocity. It pauses while hovered and has
+// a pause button, since content that moves for more than five seconds must be stoppable (WCAG 2.2.2).
 export default function Marquee({
   items,
   speed = 40,
   className = "",
   separator = "✦",
+  dark = false,
 }: {
   items: string[];
   speed?: number;
   className?: string;
   separator?: string;
+  dark?: boolean;
 }) {
   const root = useRef<HTMLDivElement>(null);
+  const loopRef = useRef<gsap.core.Tween | null>(null);
+  const held = useRef({ paused: false, hover: false, onScreen: true });
+  const [paused, setPaused] = useState(false);
+
+  // Runs only when the strip is on screen, not hovered and not paused by the visitor.
+  const sync = () => {
+    const h = held.current;
+    if (h.onScreen && !h.hover && !h.paused) loopRef.current?.resume();
+    else loopRef.current?.pause();
+  };
 
   useGSAP(
     () => {
@@ -23,6 +37,8 @@ export default function Marquee({
       const track = root.current?.querySelector<HTMLElement>("[data-track]");
       if (!track) return;
       const loop = gsap.to(track, { xPercent: -50, ease: "none", duration: speed, repeat: -1, force3D: true });
+      loopRef.current = loop;
+      sync();
 
       // One eased value per frame instead of spawning tweens on every scroll event:
       // velocity sets a target, the ticker glides timeScale towards it and back to cruise.
@@ -47,17 +63,15 @@ export default function Marquee({
       };
       // Only spend frames while the strip is on screen.
       const visible = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) {
-          loop.resume();
-          gsap.ticker.add(tick);
-        } else {
-          loop.pause();
-          gsap.ticker.remove(tick);
-        }
+        held.current.onScreen = entry.isIntersecting;
+        sync();
+        if (entry.isIntersecting) gsap.ticker.add(tick);
+        else gsap.ticker.remove(tick);
       });
       visible.observe(root.current!);
 
       return () => {
+        loopRef.current = null;
         visible.disconnect();
         gsap.ticker.remove(tick);
         st.kill();
@@ -78,11 +92,38 @@ export default function Marquee({
   );
 
   return (
-    <div ref={root} className={`overflow-hidden whitespace-nowrap ${className}`}>
+    <div
+      ref={root}
+      onPointerEnter={() => ((held.current.hover = true), sync())}
+      onPointerLeave={() => ((held.current.hover = false), sync())}
+      className={`relative overflow-hidden whitespace-nowrap ${className}`}
+    >
       <div data-track className="flex w-max will-change-transform">
         {row(false)}
         {row(true)}
       </div>
+      <button
+        type="button"
+        onClick={() => {
+          held.current.paused = !paused;
+          setPaused(!paused);
+          sync();
+        }}
+        aria-pressed={paused}
+        aria-label={paused ? "Play scrolling text" : "Pause scrolling text"}
+        className={`absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full font-sans ring-1 backdrop-blur transition-colors motion-reduce:hidden md:right-4 ${
+          dark ? "bg-midnight/80 text-white ring-white/20 hover:bg-white/10" : "bg-ivory/90 text-carbon ring-ash hover:bg-sand"
+        }`}
+      >
+        {paused ? (
+          <Icon name="play" size={14} />
+        ) : (
+          <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+            <rect x="2" y="1.5" width="2.6" height="9" rx="0.6" />
+            <rect x="7.4" y="1.5" width="2.6" height="9" rx="0.6" />
+          </svg>
+        )}
+      </button>
     </div>
   );
 }

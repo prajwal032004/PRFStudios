@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Icon from "@/components/Icon";
 
-export const metadata = { title: "Page not found", robots: { index: false } };
+export const metadata: Metadata = {
+  title: "Page not found",
+  description: "This page could not be found on prfstudios.in.",
+  robots: { index: false, follow: true },
+  alternates: { canonical: null },
+};
 
 export default function NotFound() {
   return (
@@ -14,6 +20,9 @@ export default function NotFound() {
         <div className="mt-10 flex flex-wrap gap-3">
           <Link href="/" className="btn btn-gold">
             Back to home <Icon name="arrow" size={18} />
+          </Link>
+          <Link href="/films/" className="btn btn-ghost">
+            Explore our work
           </Link>
           <Link href="/contact/" className="btn btn-ghost">
             Contact the studio

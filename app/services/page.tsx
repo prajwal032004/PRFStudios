@@ -7,7 +7,7 @@ import { PageHero, SectionHeading } from "@/components/ui";
 export const metadata = pageMeta({
   title: "Services — Development to Delivery",
   description:
-    "Seven production stages, available end-to-end or individually: development, pre-production, production, music & sound, post-production, digital & promotion and delivery support.",
+    "Seven production stages, end-to-end or individually: development, pre-production, production, music & sound, post-production, promotion and delivery.",
   path: "/services/",
   photo: "edit",
   keywords: ["film production services", "pre-production", "post-production", "music recording", "delivery support"],
@@ -24,7 +24,7 @@ export default function ServicesPage() {
         crumbs={[{ name: "Studio & Services", path: "/services/" }]}
       >
         <div className="flex flex-wrap gap-3">
-          <Link href="/contact/#enquiry" className="btn btn-gold">
+          <Link href="/contact/?interest=production-services#enquiry" className="btn btn-gold">
             Start a project <Icon name="arrow" size={18} />
           </Link>
           <Link href="/facilities/" className="btn btn-ghost">
@@ -102,7 +102,7 @@ export default function ServicesPage() {
             ))}
           </div>
           <div data-reveal className="mt-12 flex justify-center">
-            <Link href="/contact/#enquiry" className="btn btn-gold">
+            <Link href="/contact/?interest=production-services#enquiry" className="btn btn-gold">
               Discuss your project
             </Link>
           </div>

@@ -81,3 +81,16 @@ export const nav: NavItem[] = [
   },
   { href: "/legacy/", label: "Heritage" },
 ];
+
+/**
+ * Optional integrations, set as environment variables at build time (see .env.example).
+ * Both are public by design: they end up in the browser bundle, so never put a secret here.
+ */
+export const integrations = {
+  /** Form-service URL that accepts a JSON POST (Formspree, Web3Forms, Basin, or your own API). */
+  enquiryEndpoint: process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT || undefined,
+  /** Public access key some form services expect in the payload (e.g. Web3Forms). */
+  enquiryAccessKey: process.env.NEXT_PUBLIC_ENQUIRY_ACCESS_KEY || undefined,
+  /** Google Analytics 4 measurement ID, e.g. G-XXXXXXXXXX. Without it no analytics script loads. */
+  gaId: process.env.NEXT_PUBLIC_GA_ID || undefined,
+};

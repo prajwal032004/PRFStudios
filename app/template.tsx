@@ -35,6 +35,10 @@ function PageMotion({ children }: { children: React.ReactNode }) {
     (_ctx, contextSafe) => {
       firstLoad = false;
       window.__motionBooted = true;
+      const html = document.documentElement;
+      const cssInstant = isFirst && html.classList.contains("instant-css");
+      // A later page must not inherit the first page's CSS entrance; GSAP owns its reveals.
+      if (!cssInstant) html.classList.remove("instant-css");
       const curtain = root.current?.querySelector<HTMLElement>("[data-curtain]");
 
       if (prefersReducedMotion()) {
@@ -53,7 +57,14 @@ function PageMotion({ children }: { children: React.ReactNode }) {
       const fly = root.current?.querySelector<HTMLElement>("[data-fly-logo]");
       const navLogo = document.querySelector<HTMLElement>('[data-logo="nav"]');
 
-      if (curtain && isFirst && fly && navLogo) {
+      const playIntro = isFirst && !document.documentElement.classList.contains("no-intro");
+
+      if (curtain && playIntro && fly && navLogo) {
+        try {
+          localStorage.setItem("prf-intro", "1");
+        } catch {
+          // Private mode: the intro may simply play again next visit.
+        }
         // Hold the page still under the preloader so nothing scrolls past unseen.
         release = lockScroll();
         const counter = curtain.querySelector<HTMLElement>("[data-count]");
@@ -145,9 +156,10 @@ function PageMotion({ children }: { children: React.ReactNode }) {
           .set(curtain, { display: "none" });
         loadDelay = 2.0;
       } else if (curtain && isFirst) {
-        // Header not found (should not happen) — plain lift.
+        // No intro on this visit: the page is already showing, reveal it straight away.
         endPreload();
-        tl.to(curtain, { yPercent: -100, duration: 1, delay: 0.2 }).set(curtain, { display: "none" });
+        curtain.style.display = "none";
+        loadDelay = 0.1;
       } else if (curtain) {
         tl.fromTo(curtain, { yPercent: 0 }, { yPercent: -100, duration: 0.9, delay: 0.05 })
           .from(curtain.querySelector("[data-mark]"), { autoAlpha: 0, scale: 0.8, duration: 0.4, ease: "power2.out" }, 0)
@@ -160,7 +172,7 @@ function PageMotion({ children }: { children: React.ReactNode }) {
       const start = contextSafe!(() => {
         if (!alive || !root.current || root.current.dataset.motionInit === "1") return;
         root.current.dataset.motionInit = "1";
-        initMotion(root.current, { loadDelay });
+        initMotion(root.current, { loadDelay, cssInstant });
         requestAnimationFrame(() => {
           ScrollTrigger.sort();
           ScrollTrigger.refresh();
@@ -171,7 +183,18 @@ function PageMotion({ children }: { children: React.ReactNode }) {
       if (document.fonts && document.fonts.status !== "loaded") document.fonts.ready.then(start);
       else start();
 
+      // Once the CSS entrance has finished, pin those elements visible and hand back to GSAP.
+      const handBack = cssInstant
+        ? setTimeout(() => {
+            root.current?.querySelectorAll<HTMLElement>("[data-instant], [data-stagger][data-instant] > *").forEach((el) => {
+              el.style.visibility = "visible";
+            });
+            html.classList.remove("instant-css");
+          }, 1400)
+        : undefined;
+
       return () => {
+        clearTimeout(handBack);
         alive = false;
         if (root.current) delete root.current.dataset.motionInit;
         release?.();
@@ -188,7 +211,7 @@ function PageMotion({ children }: { children: React.ReactNode }) {
           <div
             data-curtain
             aria-hidden="true"
-            className="curtain fixed inset-0 z-[100] flex-col items-center justify-center bg-midnight text-white"
+            className="curtain curtain-intro fixed inset-0 z-[100] flex-col items-center justify-center bg-midnight text-white"
           >
             <div aria-hidden="true" className="glow-gold pointer-events-none absolute inset-0" />
             <p data-tagline className="absolute inset-x-0 top-1/2 px-6 text-center">
