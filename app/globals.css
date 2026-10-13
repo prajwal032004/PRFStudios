@@ -563,31 +563,6 @@ html.scroll-locked body {
   display: none;
 }
 
-/* First page of a visit without the intro: above-the-fold copy (data-instant) animates in with CSS
-   from first paint instead of waiting for the JS bundle — this is the page's LCP. The template drops
-   .instant-css once that page has settled, so later route changes use the GSAP reveals again. */
-.js-motion.instant-css [data-instant],
-.js-motion.instant-css [data-stagger][data-instant] > * {
-  visibility: visible;
-  animation: instant-in 0.6s var(--ease-out-expo) both;
-}
-
-.js-motion.instant-css [data-instant][data-delay] {
-  animation-delay: 0.08s;
-}
-
-@keyframes instant-in {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-}
-
-/* Visits that skip the logo intro never show the first-load curtain */
-.js-motion.no-intro .curtain-intro,
-.js-motion.no-intro .curtain-fly {
-  display: none;
-}
 
 .js-motion .curtain-fly {
   display: block;

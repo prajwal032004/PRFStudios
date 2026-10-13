@@ -54,7 +54,11 @@ Pages are server components that opt into animation with data attributes, handle
 
 `data-split` (masked line reveal) · `data-reveal` · `data-stagger` · `data-clip` (image wipe) · `data-parallax` · `data-counter` · `data-scrub-words` · `data-progress-line` · `data-instant` (play on load).
 
-`app/template.tsx` runs the logo intro and the curtain transition between routes. The intro plays once per browser, and only when the visit starts on the home page (and not on Save-Data or 2G connections). Visitors landing on inner pages, usually from search, see the content immediately. Everything respects `prefers-reduced-motion`, and content stays visible if JavaScript fails to load.
+`app/template.tsx` runs the logo intro and the curtain transition between routes. The intro plays on every full page load. Every load and refresh starts at the top of the page unless the URL has a #section anchor.
+
+## Maintenance notice
+
+`components/MaintenanceNotice.tsx` shows a blocking "under maintenance" popup over a blurred page, with scrolling disabled. It appears after the logo intro. To take it down, delete that file and the two `MaintenanceNotice` lines in `app/layout.tsx`. Everything respects `prefers-reduced-motion`, and content stays visible if JavaScript fails to load.
 
 ## Enquiry form
 

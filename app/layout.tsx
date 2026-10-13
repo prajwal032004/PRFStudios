@@ -6,6 +6,7 @@ import SmoothScroll from "@/components/motion/SmoothScroll";
 import Cursor from "@/components/motion/Cursor";
 import ContextMenu from "@/components/ContextMenu";
 import Analytics from "@/components/Analytics";
+import MaintenanceNotice from "@/components/MaintenanceNotice"; // remove with the component to end maintenance
 import { JsonLd, organizationLd, websiteLd } from "@/components/JsonLd";
 import { site } from "@/lib/site";
 import { twitterHandles } from "@/lib/meta";
@@ -83,10 +84,12 @@ export const viewport: Viewport = {
 const vhFallback = `(function(){try{if(window.CSS&&CSS.supports('height','1dvh'))return;var r=document.documentElement,f=function(){r.style.setProperty('--vh',window.innerHeight*0.01+'px')};f();addEventListener('resize',f,{passive:true});addEventListener('orientationchange',f)}catch(e){}})();`;
 
 // Hide motion targets before first paint; un-hide if the JS bundle never boots.
-// The logo intro plays once per browser, only when the visit starts on the home page and the
-// connection isn't on Save-Data or 2G. Everyone else (search landings on inner pages, repeat
-// visitors) gets the content straight away — the intro otherwise delays LCP by ~2 s.
-const motionBoot = `(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement,c=navigator.connection||{},seen=false;try{seen=localStorage.getItem('prf-intro')==='1'}catch(e){}var intro=location.pathname==='/'&&!seen&&!c.saveData&&!/2g/.test(c.effectiveType||'');d.classList.add('js-motion');if(intro)d.classList.add('preloading');else d.classList.add('no-intro','instant-css');setTimeout(function(){if(!window.__motionBooted)d.classList.remove('js-motion','preloading')},5000)}catch(e){}})();`;
+// Every full page load starts at the top: the browser's own scroll restoration would put a refreshed
+// page back mid-way and then visibly jump as the animations measure themselves.
+const scrollReset = `(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual';if(!location.hash)window.scrollTo(0,0)}catch(e){}})();`;
+
+// Hide motion targets before first paint; un-hide if the JS bundle never boots.
+const motionBoot = `(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('js-motion','preloading');setTimeout(function(){if(!window.__motionBooted)d.classList.remove('js-motion','preloading')},5000)}catch(e){}})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -95,7 +98,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       prefix="og: https://ogp.me/ns# video: https://ogp.me/ns/video# profile: https://ogp.me/ns/profile#"
       className={`${inter.variable} ${plex.variable} ${fraunces.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: vhFallback + motionBoot }} />
+        <script dangerouslySetInnerHTML={{ __html: vhFallback + scrollReset + motionBoot }} />
       </head>
       <body className="min-h-vp-100 bg-ivory">
         <JsonLd data={[organizationLd, websiteLd]} />
@@ -108,6 +111,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Cursor />
         <ContextMenu />
         <Analytics />
+        <MaintenanceNotice />
       </body>
     </html>
   );
