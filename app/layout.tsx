@@ -6,7 +6,6 @@ import SmoothScroll from "@/components/motion/SmoothScroll";
 import Cursor from "@/components/motion/Cursor";
 import ContextMenu from "@/components/ContextMenu";
 import Analytics from "@/components/Analytics";
-import MaintenanceNotice from "@/components/MaintenanceNotice"; // remove with the component to end maintenance
 import { JsonLd, organizationLd, websiteLd } from "@/components/JsonLd";
 import { site } from "@/lib/site";
 import { twitterHandles } from "@/lib/meta";
@@ -111,7 +110,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Cursor />
         <ContextMenu />
         <Analytics />
-        <MaintenanceNotice />
       </body>
     </html>
   );

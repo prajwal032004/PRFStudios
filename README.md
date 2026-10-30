@@ -56,10 +56,6 @@ Pages are server components that opt into animation with data attributes, handle
 
 `app/template.tsx` runs the logo intro and the curtain transition between routes. The intro plays on every full page load. Every load and refresh starts at the top of the page unless the URL has a #section anchor.
 
-## Maintenance notice
-
-`components/MaintenanceNotice.tsx` shows a blocking "under maintenance" popup over a blurred page, with scrolling disabled. It appears after the logo intro. To take it down, delete that file and the two `MaintenanceNotice` lines in `app/layout.tsx`. Everything respects `prefers-reduced-motion`, and content stays visible if JavaScript fails to load.
-
 ## Enquiry form
 
 `components/ContactForm.tsx` adapts its follow-up question to the enquiry type and validates inline. Links can preselect a type: `/contact/?interest=prf-music#enquiry`, or `?interest=production-services&stage=post-production` for a service stage.
